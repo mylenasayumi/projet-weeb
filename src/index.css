@@ -1,0 +1,13 @@
+/* Fichier de styles global pour l'ensemble de l'application. 
+Vous pouvez y définir des styles généraux, comme les styles de 
+base pour le body ou d'autres éléments HTML communs. */
+@import "tailwindcss";
+
+@theme {
+  --font-roboto: "Roboto";
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-dark-blue: #0F172A;
+  --color-purple: #9333EA;
+  --color-light-purple: #C084FC;
+}
