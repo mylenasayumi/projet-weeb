@@ -1,1 +1,0 @@
-// FooterDesktop.jsx

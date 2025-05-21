@@ -5,11 +5,10 @@
 import { useState } from 'react'
 
 import './App.css'
-import NavbarHomeDesktop from './components/Home/NavbarHomeDesktop';
-import SectionExplorezLeWeb from './components/Home/SectionExplorezLeWeb';
-import SectionEntreprisesConfiance from './components/Home/SectionEntreprisesConfiance';
-import SectionApprenezEtProgressez from './components/Home/SectionApprenezEtProgressez';
-import SectionRestezInforme from './components/Home/SectionRestezInforme';
+import Home from './pages/Home';
+import Contact from './pages/Contact';
+import Login from './pages/Login';
+
 
 // function App() {
 //   const [count, setCount] = useState(0)
@@ -43,16 +42,11 @@ import SectionRestezInforme from './components/Home/SectionRestezInforme';
 
 function App() {
   return (
-    <div className="font-roboto bg-dark-blue text-white">
-      <header>
-        <NavbarHomeDesktop />
-      </header>
-      {/* Sections */}
-      <SectionExplorezLeWeb />
-      <SectionEntreprisesConfiance />
-      <SectionApprenezEtProgressez />
-      <SectionRestezInforme />
-    </div>
+    // <div className="font-roboto bg-dark-blue text-white">
+    //   <Home />
+    //   <Contact />
+    //   <Login />
+    // </div>
   );
 }
 
