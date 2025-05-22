@@ -1,10 +1,10 @@
-// Login.jsx
+// SeConnecter.jsx
 
 import Footer from "../components/Footer";
-import SectionSeConnecter from "../components/login/SectionSeConnecter";
+import SectionSeConnecter from "../components/se-connecter/SectionSeConnecter";
 import Navbar from "../components/Navbar";
 
-function Login() {
+function SeConnecter() {
     return (
         <div className="font-roboto bg-dark-blue text-white">
             {/* Header */}
@@ -17,4 +17,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default SeConnecter;

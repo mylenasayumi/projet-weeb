@@ -9,9 +9,9 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './index.css'
 import '@fontsource/roboto';
-import Home from './pages/Home.jsx';
+import AProposDeNous from './pages/AProposDeNous.jsx';
 import Contact from './pages/Contact.jsx';
-import Login from './pages/Login.jsx';
+import SeConnecter from './pages/SeConnecter.jsx';
 
 // Configuration des routes avec createBrowserRouter
 const router = createBrowserRouter([
@@ -20,16 +20,16 @@ const router = createBrowserRouter([
     children: [
       {
         index: true, // Route par défaut
-        path: "home",
-        element: <Home />, // Composant Home
+        path: "a-propos-de-nous",
+        element: <AProposDeNous />, // Composant AProposDeNous
       },
       {
         path: "contact", // Route /contact
         element: <Contact />, // Composant Contact
       },
       {
-        path: "login", // Route /login
-        element: <Login />, // Composant Login
+        path: "se-connecter", // Route /se-connecter
+        element: <SeConnecter />, // Composant SeConnecter
       },
     ],
   },
