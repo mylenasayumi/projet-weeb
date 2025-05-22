@@ -5,9 +5,9 @@
 import { useState } from 'react'
 
 import './App.css'
-import Home from './pages/Home';
+import AProposDeNous from './pages/AProposDeNous';
 import Contact from './pages/Contact';
-import Login from './pages/Login';
+import SeConnecter from './pages/SeConnecter';
 
 
 // function App() {
@@ -42,11 +42,11 @@ import Login from './pages/Login';
 
 function App() {
   return (
-    // <div className="font-roboto bg-dark-blue text-white">
-    //   <Home />
-    //   <Contact />
-    //   <Login />
-    // </div>
+    <div className="">
+      {/* <AProposDeNous />
+      <Contact />
+      <SeConnecter /> */}
+    </div>
   );
 }
 

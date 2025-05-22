@@ -1,14 +1,13 @@
-// Home.jsx
+// AProposDeNous.jsx
 
 import Footer from "../components/Footer";
+import SectionApprenezEtProgressez from "../components/a-propos-de-nous/SectionApprenezEtProgressez";
+import SectionEntreprisesConfiance from "../components/a-propos-de-nous/SectionEntreprisesConfiance";
+import SectionExplorezLeWeb from "../components/a-propos-de-nous/SectionExplorezLeWeb";
+import SectionRestezInforme from "../components/a-propos-de-nous/SectionRestezInforme";
 import Navbar from "../components/Navbar";
-import SectionApprenezEtProgressez from "../components/home/SectionApprenezEtProgressez";
-import SectionEntreprisesConfiance from "../components/home/SectionEntreprisesConfiance";
-import SectionExplorezLeWeb from "../components/home/SectionExplorezLeWeb";
-import SectionRestezInforme from "../components/home/SectionRestezInforme";
 
-
-function Home() {
+function AProposDeNous() {
     return (
         <div className="font-roboto bg-dark-blue text-white">
             {/* Header */}
@@ -24,4 +23,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default AProposDeNous;
