@@ -2,7 +2,7 @@
 
 function SectionEntreprisesConfiance() {
     return (
-        <section className="bg-dark-blue flex flex-col justify-between items-center my-10">
+        <section className="flex flex-col justify-between items-center my-10">
             <h2 className="text-6xl font-extrabold my-12 mb-20 text-center">Ils nous font confiance</h2>
             {/* <div className="flex justify-between gap-8"> */}
             <div className="grid lg:grid-cols-5 md:grid-cols-5 sm:grid-cols-1 place-items-center gap-9 mx-14 mb-20">

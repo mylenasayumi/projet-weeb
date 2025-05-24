@@ -12,15 +12,17 @@ import '@fontsource/roboto';
 import AProposDeNous from './pages/AProposDeNous.jsx';
 import Contact from './pages/Contact.jsx';
 import SeConnecter from './pages/SeConnecter.jsx';
+import PageErreur from './components/PageErreur.jsx';
 
 // Configuration des routes avec createBrowserRouter
 const router = createBrowserRouter([
   {
     path: "/", // Route racine
+    errorElement: <PageErreur />, // Page d'erreur
     children: [
       {
         index: true, // Route par défaut
-        path: "a-propos-de-nous",
+        path: "/",
         element: <AProposDeNous />, // Composant AProposDeNous
       },
       {

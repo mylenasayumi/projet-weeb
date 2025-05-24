@@ -1,9 +1,10 @@
 // SectionSeConnecter.jsx
+import { motion } from "framer-motion";
 
 function SectionSeConnecter() {
     return (
-        <section className="bg-dark-blue flex flex-col items-center">
-            <h1 className="text-7xl font-extrabold mt-10">Se connecter</h1>
+        <section className="flex flex-col items-center my-10">
+            <h1 className="md:text-7xl text-5xl font-extrabold">Se connecter</h1>
 
             <form className="p-8 w-full max-w-md space-y-8">
 
@@ -30,20 +31,22 @@ function SectionSeConnecter() {
                 </div>
 
                 <div className="text-base font-normal flex justify-center">
-                    <button 
+                    <motion.button
                         type="submit"
-                        className="bg-purple text-white text-base font-normal px-8 py-3 rounded-[8px] hover:bg-light-purple cursor-pointer transition duration-100"
-                        >
+                        className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] hover:bg-light-purple cursor-pointer transition duration-100"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.5 }}
+                    >
                         Se connecter
-                    </button>
+                    </motion.button>
                 </div>
             </form>
 
             <a href="#mot-de-passe-oublie" className="hover:text-light-purple">Mot de passe oublié ?</a>
 
-            <p className="text-light-gray my-10">
+            <p className="text-light-gray my-10 mx-10 text-center">
                 Vous n’avez pas de compte ? Vous pouvez en 
-                <a href="" className="text-white hover:text-light-purple"> créer un</a>
+                <a href="/inscription" className="text-white hover:text-light-purple"> créer un</a>
             </p>
         </section>
     );
