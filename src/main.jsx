@@ -1,9 +1,6 @@
-// C’est le point d’entrée JavaScript de votre application React. 
-// Ce fichier importe React, ReactDOM et le composant <App />, 
-// puis le monte dans la balise <div> ayant l'identifiant root du 
-// fichier index.html. C’est également ici que vous pourriez ajouter 
-// des outils globaux, comme un provider de contexte, une configuration 
-// de router ou une intégration de bibliothèque tierce, selon les besoins de votre application.
+// C’est le point d’entrée JavaScript de l'application React. 
+// Ce fichier importe React, ReactDOM et le composant <App />
+// Ici le router est configuré
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -13,11 +10,13 @@ import AProposDeNous from './pages/AProposDeNous.jsx';
 import Contact from './pages/Contact.jsx';
 import SeConnecter from './pages/SeConnecter.jsx';
 import PageErreur from './components/PageErreur.jsx';
+import App from './App.jsx';
 
 // Configuration des routes avec createBrowserRouter
 const router = createBrowserRouter([
   {
     path: "/", // Route racine
+    element: <App />, // Composant racine
     errorElement: <PageErreur />, // Page d'erreur
     children: [
       {

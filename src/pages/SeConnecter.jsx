@@ -6,13 +6,9 @@ import Footer from "../components/Footer";
 
 function SeConnecter() {
     return (
-        <div className="font-roboto bg-dark-blue text-white">
-            {/* Header */}
-            <Navbar />
-            {/* Sections */}
+        <div>
+            {/* Section */}
             <SectionSeConnecter />
-            {/* Footer */}
-            <Footer />
         </div>
     );
 }

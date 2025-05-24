@@ -10,16 +10,12 @@ import SectionRestezInforme from "../components/a-propos-de-nous/SectionRestezIn
 
 function AProposDeNous() {
     return (
-        <div className="font-roboto bg-dark-blue text-white">
-            {/* Header */}
-            <Navbar />
+        <div>
             {/* Sections */}
             <SectionExplorezLeWeb />
             <SectionEntreprisesConfiance />
             <SectionApprenezEtProgressez />
             <SectionRestezInforme />
-            {/* Footer */}
-            <Footer />
         </div>
     );
 }
