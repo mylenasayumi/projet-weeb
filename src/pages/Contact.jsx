@@ -6,13 +6,9 @@ import SectionAvis from "../components/contact/SectionAvis";
 
 function Contact() {
     return (
-        <div className="font-roboto bg-dark-blue text-white">
-            {/* Header */}
-            <Navbar />
-            {/* Sections */}
+        <div>
+            {/* Section */}
             <SectionAvis />
-            {/* Footer */}
-            <Footer />
         </div>
     );
 }
