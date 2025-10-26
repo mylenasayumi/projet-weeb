@@ -2,7 +2,7 @@
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-export const api = {
+export const apiService = {
     // Service général pour les requêtes API
 
     async get(endpoint) {
@@ -116,27 +116,27 @@ export const api = {
 
 // Services spécifiques pour les articles du blog
 export const articleService = {
-    getAll: () => api.get('/api/articles/'),
-    getById: (id) => api.get(`/api/articles/${id}/`),
-    create: (data) => api.post('/api/articles/', data),
-    update: (id, data) => api.put(`/api/articles/${id}/`, data),
-    partialUpdate: (id, data) => api.patch(`/api/articles/${id}/`, data),
-    delete: (id) => api.delete(`/api/articles/${id}/`),
+    getAll: () => apiService.get('/api/articles/'),
+    getById: (id) => apiService.get(`/api/articles/${id}/`),
+    create: (data) => apiService.post('/api/articles/', data),
+    update: (id, data) => apiService.put(`/api/articles/${id}/`, data),
+    partialUpdate: (id, data) => apiService.patch(`/api/articles/${id}/`, data),
+    delete: (id) => apiService.delete(`/api/articles/${id}/`),
 };
 
 // Services spécifiques pour l'analyse de satisfaction (formulaire de contact)
 // IMPORTANT: Nécessite une authentification (IsAuthenticated)
 export const satisfactionService = {
-    create: (data) => api.post('/api/satisfactions/', data),
+    create: (data) => apiService.post('/api/satisfactions/', data),
 };
 
 // Services spécifiques pour l'authentification (users)
 export const authService = {
-    register: (userData) => api.post('/api/users/', userData), // Créer un nouvel utilisateur (inscription)
-    getCurrentUser: () => api.get('/api/users/me/'),
-    getAll: () => api.get('/api/users/'),
-    getById: (id) => api.get(`/api/users/${id}/`),
-    update: (id, data) => api.put(`/api/users/${id}/`, data),
-    partialUpdate: (id, data) => api.patch(`/api/users/${id}/`, data),
-    delete: (id) => api.delete(`/api/users/${id}/`),
+    register: (userData) => apiService.post('/api/users/', userData), // Créer un nouvel utilisateur (inscription)
+    getCurrentUser: () => apiService.get('/api/users/me/'),
+    getAll: () => apiService.get('/api/users/'),
+    getById: (id) => apiService.get(`/api/users/${id}/`),
+    update: (id, data) => apiService.put(`/api/users/${id}/`, data),
+    partialUpdate: (id, data) => apiService.patch(`/api/users/${id}/`, data),
+    delete: (id) => apiService.delete(`/api/users/${id}/`),
 };
