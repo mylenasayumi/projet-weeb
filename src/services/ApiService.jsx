@@ -130,7 +130,7 @@ export const satisfactionService = {
     create: (data) => apiService.post('/api/satisfactions/', data),
 };
 
-// Services spécifiques pour l'authentification (users)
+// Services spécifiques pour les utilisateurs
 export const authService = {
     register: (userData) => apiService.post('/api/users/', userData), // Créer un nouvel utilisateur (inscription)
     getCurrentUser: () => apiService.get('/api/users/me/'),
