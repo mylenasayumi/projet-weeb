@@ -54,14 +54,13 @@ function Navbar() {
                                 >        
                                     <Link to="/se-connecter" className="transition-colors duration-150 hover:text-purple">Se Connecter</Link>
                                 </MotionLink>
-                                <motion.button
+                                <MotionLink
                                     transition={{ duration: 0.5 }}
                                     whileHover={{ scale: 1.1 }}
-                                    className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] transition-colors duration-150 hover:bg-light-purple cursor-pointer"
                                     onClick={() => setIsOpen(!isOpen)}
-                                >
-                                    S'inscrire
-                                </motion.button>
+                                >        
+                                    <Link to="/sign-in" className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] transition-colors duration-150 hover:bg-light-purple cursor-pointer">S'inscrire</Link>
+                                </MotionLink>
                             </div>
                         </div>
                     </div>
@@ -79,7 +78,7 @@ function Navbar() {
                                     <Link to="/se-connecter" className="block hover:text-purple" onClick={() => setIsOpen(false)}>Se Connecter</Link>
                                 </li>
                                 <li>
-                                    <Link to="/inscription" className="block text-light-purple font-bold hover:text-purple" onClick={() => setIsOpen(false)}>S'inscrire</Link>
+                                    <Link to="/sign-in" className="block text-light-purple font-bold hover:text-purple" onClick={() => setIsOpen(false)}>S'inscrire</Link>
                                 </li>
                             </ul>
                             {/* <div className="text-base font-normal space-y-3">                                
