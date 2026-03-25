@@ -12,6 +12,7 @@ import SeConnecter from './pages/SeConnecter.jsx';
 import SignIn from './pages/SignIn.jsx';
 import PageErreur from './components/PageErreur.jsx';
 import App from './App.jsx';
+import Articles from './pages/Articles.jsx';
 
 // Configuration des routes avec createBrowserRouter
 const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "sign-in",
         element: <SignIn />,
+      },
+      {
+        path: "articles",
+        element: <Articles />,
       },
     ],
   },
