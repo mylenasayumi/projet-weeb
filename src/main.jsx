@@ -9,6 +9,7 @@ import '@fontsource/roboto';
 import AProposDeNous from './pages/AProposDeNous.jsx';
 import Contact from './pages/Contact.jsx';
 import SeConnecter from './pages/SeConnecter.jsx';
+import SignIn from './pages/SignIn.jsx';
 import PageErreur from './components/PageErreur.jsx';
 import App from './App.jsx';
 
@@ -17,20 +18,24 @@ const router = createBrowserRouter([
   {
     path: "/", // Route racine
     element: <App />, // Composant racine
-    errorElement: <PageErreur />, // Page d'erreur
+    errorElement: <PageErreur />,
     children: [
       {
         index: true, // Route par défaut
         path: "/",
-        element: <AProposDeNous />, // Composant AProposDeNous
+        element: <AProposDeNous />,
       },
       {
-        path: "contact", // Route /contact
-        element: <Contact />, // Composant Contact
+        path: "contact",
+        element: <Contact />,
       },
       {
-        path: "se-connecter", // Route /se-connecter
-        element: <SeConnecter />, // Composant SeConnecter
+        path: "se-connecter",
+        element: <SeConnecter />,
+      },
+      {
+        path: "sign-in",
+        element: <SignIn />,
       },
     ],
   },
