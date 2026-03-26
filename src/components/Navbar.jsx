@@ -36,30 +36,38 @@ function Navbar() {
                             {/* Liste Navbar */}
                             <ul className="flex space-x-8 text-base font-medium">
                                 <motion.li
+                                    to="/"
                                     whileHover={{ scale: 1.1 }}
+                                    className="transition-colors duration-150 hover:text-purple"
                                 >        
-                                    <Link to="/" className="transition-colors duration-150 hover:text-purple">À propos</Link>
+                                    À propos
                                 </motion.li>
                                 <motion.li
+                                    to="/contact"
                                     whileHover={{ scale: 1.1 }}
+                                    className="transition-colors duration-150 hover:text-purple"
                                 >        
-                                    <Link to="/contact" className="transition-colors duration-150 hover:text-purple">Contact</Link>
+                                    Contact
                                 </motion.li>
                             </ul>
 
                             {/* Se Connecter/S'inscrire */}
                             <div className="text-base font-normal flex items-center space-x-8">
                                 <MotionLink
+                                    to="/se-connecter"
                                     whileHover={{ scale: 1.1 }}
+                                    className="transition-colors duration-150 hover:text-purple"
                                 >        
-                                    <Link to="/se-connecter" className="transition-colors duration-150 hover:text-purple">Se Connecter</Link>
+                                    Se Connecter
                                 </MotionLink>
                                 <MotionLink
+                                    to="/sign-in"
                                     transition={{ duration: 0.5 }}
                                     whileHover={{ scale: 1.1 }}
                                     onClick={() => setIsOpen(!isOpen)}
+                                    className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] transition-colors duration-150 hover:bg-light-purple cursor-pointer"
                                 >        
-                                    <Link to="/sign-in" className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] transition-colors duration-150 hover:bg-light-purple cursor-pointer">S'inscrire</Link>
+                                    S'inscrire
                                 </MotionLink>
                             </div>
                         </div>

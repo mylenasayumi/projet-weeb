@@ -11,10 +11,12 @@ function SectionExplorezLeWeb() {
             <p className="text-lg font-normal text-center 2xl:mx-100 xl:mx-50 lg:mx-30 mx-15">Le monde du web évolue constamment, et nous sommes là pour vous guider à travers ses tendances, technologies et meilleures pratiques. Que vous soyez développeur, designer ou passionné du digital, notre blog vous offre du contenu de qualité pour rester à la pointe.</p>
             <div className="text-lg md:text-xl font-medium flex items-center m-6 my-10 space-x-8">
                 <MotionLink
+                    to="/articles"
                     transition={{ duration: 0.5 }}
                     whileHover={{ scale: 1.1 }}
+                    className="bg-purple px-4 py-4 rounded-[8px] hover:bg-light-purple cursor-pointer"
                 >        
-                    <Link to="/articles" className="bg-purple px-4 py-4 rounded-[8px] hover:bg-light-purple cursor-pointer">Découvrir les articles</Link>
+                    Découvrir les articles
                 </MotionLink>
                 <motion.button
                     transition={{ duration: 0.5 }}
