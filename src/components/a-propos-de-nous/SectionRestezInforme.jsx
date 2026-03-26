@@ -1,7 +1,10 @@
 // SectionRestezInforme.jsx
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function SectionRestezInforme() {
+    const MotionLink = motion(Link);
+
     return (
         <section className="my-14 p-4">
             <div className="container max-w-screen-2xl mx-auto flex flex-col lg:flex-col xl:flex-row justify-between items-center p-10 px-15">
@@ -21,13 +24,14 @@ function SectionRestezInforme() {
                     <h1 className="md:text-7xl text-5xl font-extrabold">Restez informé des dernières <span className="text-light-purple">tendances</span></h1>
                     <p className="text-lg font-normal">Chaque semaine, nous analysons les nouveautés du web : frameworks émergents, bonnes pratiques SEO, accessibilité, et bien plus encore. Ne manquez aucune actualité du digital !</p>
                     <div className="flex items-center space-x-8">
-                        <motion.button
+                        <MotionLink
+                            to="/articles"
                             transition={{ duration: 0.5 }}
                             whileHover={{ scale: 1.05 }}
                             className="text-xl font-medium py-2 hover:text-light-purple cursor-pointer"
                         >
                             Lire les articles récents →
-                        </motion.button>
+                        </MotionLink>
                     </div>
                 </div>
             </div>
