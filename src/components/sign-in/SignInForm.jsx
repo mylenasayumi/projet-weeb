@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authTokenService } from "../../services/AuthTokenService";
+import authTokenService from "../../services/AuthTokenService";
 
 function SignInForm() {
     const [formData, setFormData] = useState({

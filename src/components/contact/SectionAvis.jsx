@@ -1,8 +1,8 @@
 // SectionAvis.jsx
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { satisfactionService } from "../../services/ApiService";
-import { authTokenService } from "../../services/AuthTokenService";
+import satisfactionService from "../../services/ApiService";
+import authTokenService from "../../services/AuthTokenService";
 import { useNavigate } from "react-router-dom";
 
 function SectionAvis() {
@@ -91,13 +91,14 @@ function SectionAvis() {
             <h1 className="md:text-7xl text-5xl font-extrabold m-10">Votre avis compte !</h1>
             <p className="text-lg font-normal m-2 text-center 2xl:mx-100 xl:mx-50 mx-20">Votre retour est essentiel pour nous améliorer ! Partagez votre expérience, dites-nous ce que vous aimez et ce que nous pourrions améliorer. Vos suggestions nous aident à faire de ce blog une ressource toujours plus utile et enrichissante. </p>
 
-            {/* Messages de feedback */}
-            {message.text && (
-                <div className={`mt-4 p-4 rounded-lg ${message.type === "success"
+            {/* Avis */}
+            {avis.text && (
+                <div className={`mt-4 p-4 rounded-lg ${
+                    avis.type === "success"
                         ? "bg-green-100 text-green-800 border-2 border-green-500"
                         : "bg-red-100 text-red-800 border-2 border-red-500"
                     }`}>
-                    {message.text}
+                    {avis.text}
                 </div>
             )}
 
