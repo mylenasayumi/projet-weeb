@@ -7,7 +7,6 @@ import SectionAvis from "../components/contact/SectionAvis";
 function Contact() {
     return (
         <div>
-            {/* Section */}
             <SectionAvis />
         </div>
     );

@@ -3,7 +3,13 @@ import apiService from "./ApiService";
 
 // Specific services for blog articles
 const articleService = {
-    getAll: () => apiService.get('/api/articles/'),
+    getAll: (params = {}) => {
+        const cleanParams = Object.fromEntries(Object.entries(params).filter(([_, v]) => v != null && v !== ""));
+        const query = new URLSearchParams(cleanParams).toString();
+        const url = query ? `/api/articles/?${query}` : '/api/articles/';
+        return apiService.get(url);
+    },
+    getFromUrl: (url) => apiService.get(url),
     getById: (id) => apiService.get(`/api/articles/${id}/`),
     create: (data) => apiService.post('/api/articles/', data),
     update: (id, data) => apiService.put(`/api/articles/${id}/`, data),
