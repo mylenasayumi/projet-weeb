@@ -4,7 +4,7 @@ import apiService from "./ApiService";
 // Specific services for users
 // TODO : review urls and endpoints
 const authService = {
-    register: (userData) => apiService.post('/api/auth/register/', userData),
+    register: (userData) => apiService.post('/api/users/', userData),
     getCurrentUser: () => apiService.get('/api/users/me/'),
     getAll: () => apiService.get('/api/users/'),
     getById: (id) => apiService.get(`/api/users/${id}/`),
