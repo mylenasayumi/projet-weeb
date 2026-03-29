@@ -30,7 +30,7 @@ function SectionAvis() {
             
             // Redirige vers la page de connexion après 2 secondes
             setTimeout(() => {
-                navigate("/se-connecter");
+                navigate("/login");
             }, 2000);
         }
     }, [navigate]);

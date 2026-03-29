@@ -1,10 +1,11 @@
-// SectionSeConnecter.jsx
+// LoginSection.jsx
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import authTokenService from "../../services/AuthTokenService";
+import authService from "../../services/AuthService";
 
-function SectionSeConnecter() {
+function LoginSection() {
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -28,11 +29,20 @@ function SectionSeConnecter() {
         setLoading(true);
 
         try {
+            // Login and token retrieval
             await authTokenService.login(formData.email, formData.password);
-            // Redirection après connexion réussie
+
+            // Fetch current user
+            const user = await authService.getCurrentUser();
+
+            // Store user info
+            localStorage.setItem("user", JSON.stringify(user));
+
+            // Redirect to home and refresh to update UI
             navigate("/");
+            window.location.reload();
         } catch (err) {
-            setError(err.message || "Une erreur s'est produite lors de la connexion");
+            setError(err.message || "An error occurred during the connection.");
         } finally {
             setLoading(false);
         }
@@ -102,4 +112,4 @@ function SectionSeConnecter() {
     );
 }
 
-export default SectionSeConnecter;
+export default LoginSection;

@@ -8,7 +8,7 @@ import './index.css'
 import '@fontsource/roboto';
 import AProposDeNous from './pages/AProposDeNous.jsx';
 import Contact from './pages/Contact.jsx';
-import SeConnecter from './pages/SeConnecter.jsx';
+import Login from './pages/Login.jsx';
 import SignIn from './pages/SignIn.jsx';
 import PageErreur from './components/PageErreur.jsx';
 import App from './App.jsx';
@@ -31,8 +31,8 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "se-connecter",
-        element: <SeConnecter />,
+        path: "login",
+        element: <Login />,
       },
       {
         path: "sign-in",
