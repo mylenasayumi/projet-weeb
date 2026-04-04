@@ -16,11 +16,14 @@ const authTokenService = {
 
             return response.data;
         } catch (error) {
-            console.log(error.response?.data);
+            console.log("LOGIN ERROR:", error);
+            console.log("LOGIN ERROR RESPONSE:", error.response);
+
             const message =
                 error.response?.data?.detail ||
                 error.response?.data?.error ||
-                "Invalid credentials";
+                "Invalid credentials"
+
             throw new Error(message);
         }
     },

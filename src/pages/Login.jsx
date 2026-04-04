@@ -1,11 +1,10 @@
 // Login.jsx
 
-import LoginSection from "../components/users/LogInSection";
+import LoginSection from "../components/users/login/LoginSection";
 
 function Login() {
     return (
         <div>
-            {/* Section */}
             <LoginSection />
         </div>
     );

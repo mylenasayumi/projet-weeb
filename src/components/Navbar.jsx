@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import authTokenService from "../services/AuthTokenService";
-import UserDropdown from "./users/UserDropdown";
+import UserDropdown from "./ui/UserDropdown";
 import AnimatedDropdownDiv from "./ui/AnimatedDropdownDiv";
 
 function Navbar() {
@@ -13,6 +13,7 @@ function Navbar() {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
     const menuDropdownRef = useRef(null);
+    const menuButtonRef = useRef(null);
     const MotionLink = motion(Link);
 
     useEffect(() => {
@@ -24,7 +25,12 @@ function Navbar() {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (menuDropdownRef.current && !menuDropdownRef.current.contains(event.target)) {
+            if (
+                menuDropdownRef.current &&
+                !menuDropdownRef.current.contains(event.target) &&
+                menuButtonRef.current &&
+                !menuButtonRef.current.contains(event.target)
+            ) {
                 setIsOpen(false);
             }
         };
@@ -59,6 +65,7 @@ function Navbar() {
                                 {/* Button Mobile */}
                                 {/* Le bouton est masqué pour les écrans moyens et grands */}
                                 <motion.button
+                                    ref={menuButtonRef}
                                     transition={{ duration: 0.5, ease: "easeOut" }}
                                     whileHover={{ scale: 1.1 }}
                                     onClick={() => setIsOpen(!isOpen)}
@@ -109,7 +116,7 @@ function Navbar() {
                                             Se Connecter
                                         </MotionLink>
                                         <MotionLink
-                                            to="/sign-in"
+                                            to="/sign-up"
                                             transition={{ duration: 0.5 }}
                                             whileHover={{ scale: 1.1 }}
                                             onClick={() => setIsOpen(!isOpen)}
@@ -142,7 +149,7 @@ function Navbar() {
                                                 <Link to="/login" className="block hover:text-purple" onClick={() => setIsOpen(false)}>Se Connecter</Link>
                                             </li>
                                             <li>
-                                                <Link to="/sign-in" className="block text-light-purple font-bold hover:text-purple" onClick={() => setIsOpen(false)}>S'inscrire</Link>
+                                                <Link to="/sign-up" className="block text-light-purple font-bold hover:text-purple" onClick={() => setIsOpen(false)}>S'inscrire</Link>
                                             </li>
                                         </>
                                     )}

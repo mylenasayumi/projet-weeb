@@ -1,13 +1,14 @@
-// LoginSection.jsx
+// SignUpForm.jsx
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import authTokenService from "../../services/AuthTokenService";
-import authService from "../../services/AuthService";
+import authService from "../../../services/AuthService";
 
-function LoginSection() {
+function SignUpForm() {
     const [formData, setFormData] = useState({
         email: "",
+        first_name: "",
+        last_name: "",
         password: ""
     });
     const [error, setError] = useState("");
@@ -29,20 +30,16 @@ function LoginSection() {
         setLoading(true);
 
         try {
-            // Login and token retrieval
-            await authTokenService.login(formData.email, formData.password);
-
-            // Fetch current user
-            const user = await authService.getCurrentUser();
-
-            // Store user info
-            localStorage.setItem("user", JSON.stringify(user));
-
-            // Redirect to home and refresh to update UI
-            navigate("/");
-            window.location.reload();
+            await authService.register({
+                email: formData.email,
+                first_name: formData.first_name,
+                last_name: formData.last_name,
+                password: formData.password
+            });
+            // It does NOT log in automatically
+            navigate("/login?success=account_created");
         } catch (err) {
-            setError(err.message || "An error occurred during the connection.");
+            setError(err.message || "Une erreur s'est produite lors de l'inscription.");
         } finally {
             setLoading(false);
         }
@@ -50,10 +47,10 @@ function LoginSection() {
 
     return (
         <section className="flex flex-col items-center my-10">
-            <h1 className="md:text-7xl text-5xl font-extrabold">Se connecter</h1>
+            <h1 className="md:text-7xl text-5xl font-extrabold">S'inscrire</h1>
 
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
-                {/* Affichage d'erreur de connexion */}
+                {/* Connection error displayed */}
                 {error && (
                     <div className="bg-red-500/20 border border-red-500 text-red-500 px-4 py-3 rounded">
                         {error}
@@ -69,6 +66,34 @@ function LoginSection() {
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
                         placeholder="Email"
+                        required
+                        disabled={loading}
+                    />
+                </div>
+
+                <div>
+                    <input
+                        type="first_name"
+                        id="first_name"
+                        name="first_name"
+                        value={formData.first_name}
+                        onChange={handleChange}
+                        className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+                        placeholder="Prénom"
+                        required
+                        disabled={loading}
+                    />
+                </div>
+
+                <div>
+                    <input
+                        type="last_name"
+                        id="last_name"
+                        name="last_name"
+                        value={formData.last_name}
+                        onChange={handleChange}
+                        className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+                        placeholder="Nom"
                         required
                         disabled={loading}
                     />
@@ -96,20 +121,13 @@ function LoginSection() {
                         transition={{ duration: 0.5 }}
                         disabled={loading}
                     >
-                        {loading ? "Connexion..." : "Se connecter"}
+                        {loading ? "Inscription..." : "S'inscrire"}
 
                     </motion.button>
                 </div>
             </form>
-
-            <a href="#mot-de-passe-oublie" className="hover:text-light-purple">Mot de passe oublié ?</a>
-
-            <p className="text-light-gray my-10 mx-10 text-center">
-                Vous n’avez pas de compte ? Vous pouvez en
-                <a href="/sign-in" className="text-white hover:text-light-purple"> créer un</a>
-            </p>
         </section>
     );
 }
 
-export default LoginSection;
+export default SignUpForm;

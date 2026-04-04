@@ -9,7 +9,7 @@ import '@fontsource/roboto';
 import AProposDeNous from './pages/AProposDeNous.jsx';
 import Contact from './pages/Contact.jsx';
 import Login from './pages/Login.jsx';
-import SignIn from './pages/SignIn.jsx';
+import SignUp from './pages/SignUp.jsx';
 import PageErreur from './components/PageErreur.jsx';
 import App from './App.jsx';
 import Articles from './pages/Articles.jsx';
@@ -35,8 +35,8 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "sign-in",
-        element: <SignIn />,
+        path: "sign-up",
+        element: <SignUp />,
       },
       {
         path: "articles",
