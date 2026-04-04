@@ -1,12 +1,16 @@
-// SignInForm.jsx
+// SignUpForm.jsx
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import authTokenService from "../../services/AuthTokenService";
+import authService from "../../../services/AuthService";
 
-function SignInForm() {
+function SignUpForm() {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
     const [formData, setFormData] = useState({
         email: "",
+        first_name: "",
+        last_name: "",
         password: ""
     });
     const [error, setError] = useState("");
@@ -28,11 +32,16 @@ function SignInForm() {
         setLoading(true);
 
         try {
-            await authTokenService.login(formData.email, formData.password);
-            // Redirection after successful connection
-            navigate("/");
+            await authService.register({
+                email: formData.email,
+                first_name: formData.first_name,
+                last_name: formData.last_name,
+                password: formData.password
+            });
+            // It does NOT log in automatically
+            navigate("/login?success=account_created");
         } catch (err) {
-            setError(err.message || "Une erreur s'est produite lors de la connexion");
+            setError(err.message || "Une erreur s'est produite lors de l'inscription.");
         } finally {
             setLoading(false);
         }
@@ -111,7 +120,7 @@ function SignInForm() {
                         type="submit"
                         className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] hover:bg-light-purple cursor-pointer transition duration-100 disabled:opacity-50 disabled:cursor-not-allowed"
                         whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ duration: 0.4 }}
                         disabled={loading}
                     >
                         {loading ? "Inscription..." : "S'inscrire"}
@@ -119,8 +128,30 @@ function SignInForm() {
                     </motion.button>
                 </div>
             </form>
+
+            {/* Divider */}
+            <div className="flex items-center my-10 w-full max-w-md">
+                <hr className="flex-grow border-t border-gray-500" />
+                <span className="mx-4 text-gray-500">or</span>
+                <hr className="flex-grow border-t border-gray-500" />
+            </div>
+
+            {/* Github OAuth */}
+            <div className="flex justify-center">
+                <motion.button
+                        type="button"
+                        onClick={() => {
+                            window.location.href = `${API_BASE_URL}/api/auth/github/`;
+                        }}
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.4 }}
+                        className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
+                    >
+                        Continuer avec GitHub
+                </motion.button>
+            </div>
         </section>
     );
 }
 
-export default SignInForm;
+export default SignUpForm;

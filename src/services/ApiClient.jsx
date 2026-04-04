@@ -9,7 +9,6 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
-    withCredentials: true, // Include session cookies
 });
 
 // Request Interceptor
@@ -62,7 +61,7 @@ api.interceptors.response.use(
             error.message ||
             `HTTP error! status: ${error.response?.status}`;
 
-        return Promise.reject(new Error(message));
+        return Promise.reject(error);
     }
 );
 

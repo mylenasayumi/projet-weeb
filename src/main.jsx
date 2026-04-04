@@ -8,11 +8,12 @@ import './index.css'
 import '@fontsource/roboto';
 import AProposDeNous from './pages/AProposDeNous.jsx';
 import Contact from './pages/Contact.jsx';
-import SeConnecter from './pages/SeConnecter.jsx';
-import SignIn from './pages/SignIn.jsx';
+import Login from './pages/Login.jsx';
+import SignUp from './pages/SignUp.jsx';
 import PageErreur from './components/PageErreur.jsx';
 import App from './App.jsx';
 import Articles from './pages/Articles.jsx';
+import AuthCallback from './pages/AuthCallback.jsx';
 
 // Configuration des routes avec createBrowserRouter
 const router = createBrowserRouter([
@@ -31,16 +32,20 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "se-connecter",
-        element: <SeConnecter />,
+        path: "login",
+        element: <Login />,
       },
       {
-        path: "sign-in",
-        element: <SignIn />,
+        path: "sign-up",
+        element: <SignUp />,
       },
       {
         path: "articles",
         element: <Articles />,
+      },
+      {
+        path: "auth/callback",
+        element: <AuthCallback />,
       },
     ],
   },

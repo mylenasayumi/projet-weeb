@@ -1,10 +1,13 @@
-// SectionSeConnecter.jsx
+// LoginSection.jsx
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import authTokenService from "../../services/AuthTokenService";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import authTokenService from "../../../services/AuthTokenService";
+import authService from "../../../services/AuthService";
 
-function SectionSeConnecter() {
+function LoginSection() {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -12,6 +15,9 @@ function SectionSeConnecter() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const success = params.get("success");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,19 +34,43 @@ function SectionSeConnecter() {
         setLoading(true);
 
         try {
+            // Login and token retrieval
             await authTokenService.login(formData.email, formData.password);
-            // Redirection après connexion réussie
+
+            // Fetch current user
+            const user = await authService.getCurrentUser();
+
+            // Store user info
+            localStorage.setItem("user", JSON.stringify(user));
+
+            // Redirect to home and refresh to update UI
             navigate("/");
+            window.location.reload();
         } catch (err) {
-            setError(err.message || "Une erreur s'est produite lors de la connexion");
+            setError(err.message || "An error occurred during the connection.");
         } finally {
             setLoading(false);
         }
     };
 
+    useEffect(() => {
+        if (success) {
+            const url = new URL(window.location);
+            url.searchParams.delete("success");
+            window.history.replaceState({}, "", url);
+        }
+    }, [success]);
+
     return (
         <section className="flex flex-col items-center my-10">
             <h1 className="md:text-7xl text-5xl font-extrabold">Se connecter</h1>
+
+            {/* After creating an account, the user is redirected to the login page and a success message is displayed. */}
+            {success === "account_created" && (
+                <div className="bg-green-500/20 border border-green-500 text-green-500 px-4 py-3 rounded mt-4">
+                    Votre compte a été créé avec succès. Il doit être activé par un administrateur.
+                </div>
+            )}
 
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
                 {/* Affichage d'erreur de connexion */}
@@ -96,10 +126,32 @@ function SectionSeConnecter() {
 
             <p className="text-light-gray my-10 mx-10 text-center">
                 Vous n’avez pas de compte ? Vous pouvez en
-                <a href="/sign-in" className="text-white hover:text-light-purple"> créer un</a>
+                <a href="/sign-up" className="text-white hover:text-light-purple"> créer un</a>
             </p>
+
+            {/* Divider */}
+            <div className="flex items-center my-10 w-full max-w-md">
+                <hr className="flex-grow border-t border-gray-500" />
+                <span className="mx-4 text-gray-500">or</span>
+                <hr className="flex-grow border-t border-gray-500" />
+            </div>
+
+            {/* Github OAuth */}
+            <div className="flex justify-center">
+                <motion.button
+                        type="button"
+                        onClick={() => {
+                            window.location.href = `${API_BASE_URL}/api/auth/github/`;
+                        }}
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.4 }}
+                        className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
+                    >
+                        Continuer avec GitHub
+                </motion.button>
+            </div>
         </section>
     );
 }
 
-export default SectionSeConnecter;
+export default LoginSection;
