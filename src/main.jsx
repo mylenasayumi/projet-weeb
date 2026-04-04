@@ -13,6 +13,7 @@ import SignUp from './pages/SignUp.jsx';
 import PageErreur from './components/PageErreur.jsx';
 import App from './App.jsx';
 import Articles from './pages/Articles.jsx';
+import AuthCallback from './pages/AuthCallback.jsx';
 
 // Configuration des routes avec createBrowserRouter
 const router = createBrowserRouter([
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "articles",
         element: <Articles />,
+      },
+      {
+        path: "auth/callback",
+        element: <AuthCallback />,
       },
     ],
   },

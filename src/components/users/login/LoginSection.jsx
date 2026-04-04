@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import authTokenService from "../../../services/AuthTokenService";
-import authService from "../../../services/authService";
+import authService from "../../../services/AuthService";
 
 function LoginSection() {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -126,6 +128,28 @@ function LoginSection() {
                 Vous n’avez pas de compte ? Vous pouvez en
                 <a href="/sign-up" className="text-white hover:text-light-purple"> créer un</a>
             </p>
+
+            {/* Divider */}
+            <div className="flex items-center my-10 w-full max-w-md">
+                <hr className="flex-grow border-t border-gray-500" />
+                <span className="mx-4 text-gray-500">or</span>
+                <hr className="flex-grow border-t border-gray-500" />
+            </div>
+
+            {/* Github OAuth */}
+            <div className="flex justify-center">
+                <motion.button
+                        type="button"
+                        onClick={() => {
+                            window.location.href = `${API_BASE_URL}/api/auth/github/`;
+                        }}
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.4 }}
+                        className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
+                    >
+                        Continuer avec GitHub
+                </motion.button>
+            </div>
         </section>
     );
 }
