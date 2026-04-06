@@ -1,13 +1,11 @@
 // Contact.jsx
 
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import SectionAvis from "../components/contact/SectionAvis";
+import SatisfactionSection from "../components/contact/SatisfactionSection";
 
 function Contact() {
     return (
         <div>
-            <SectionAvis />
+            <SatisfactionSection />
         </div>
     );
 }
