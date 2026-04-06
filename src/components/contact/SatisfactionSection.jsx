@@ -1,11 +1,11 @@
-// SectionAvis.jsx
+// SatisfactionSection.jsx
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import satisfactionService from "../../services/ApiService";
 import authTokenService from "../../services/AuthTokenService";
 import { useNavigate } from "react-router-dom";
+import satisfactionService from "../../services/SatisfactionService";
 
-function SectionAvis() {
+function SatisfactionSection() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         last_name: "",
@@ -14,26 +14,39 @@ function SectionAvis() {
         description: ""
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [avis, setAvis] = useState({ type: "", text: "" });
+    const [satisfaction, setSatisfaction] = useState({ type: "", text: "" });
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Vérifie l'authentification au chargement du composant
+    // Checks authentication when component is loaded
     useEffect(() => {
         const checkAuth = authTokenService.isAuthenticated();
         setIsAuthenticated(checkAuth);
         
         if (!checkAuth) {
-            setAvis({
+            setSatisfaction({
                 type: "error",
-                text: "Vous devez être connecté pour soumettre un avis. Redirection..."
+                text: "You must be logged in to submit a review. Redirecting..."
             });
             
-            // Redirige vers la page de connexion après 2 secondes
+            // Redirects to the login page after 2 seconds
             setTimeout(() => {
                 navigate("/login");
             }, 2000);
         }
     }, [navigate]);
+
+    // Pre-fills the form with user data if available
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+            setFormData(prev => ({
+                ...prev,
+                email: user.email || "",
+                first_name: user.first_name || "",
+                last_name: user.last_name || ""
+            }));
+        }
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -46,38 +59,49 @@ function SectionAvis() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        setAvis({ type: "", text: "" });
+        setSatisfaction({ type: "", text: "" });
 
         try {
-            // Vérifie si l'utilisateur est authentifié
+            // Checks if the user is authenticated
             const token = localStorage.getItem('access_token');
             if (!token) {
-                setAvis({
+                setSatisfaction({
                     type: "error",
-                    text: "Vous devez être connecté pour soumettre un avis."
+                    text: "You must be logged in to submit a review."
                 });
                 setIsSubmitting(false);
                 return;
             }
 
-            // Envoie les données au backend
-            await satisfactionService.create(formData);
+            // Sends the form data to the backend 
+            const response = await satisfactionService.create(formData);
 
-            // Réinitialise le formulaire et affiche un message de succès
+            // Resets the form after successful submission
             setFormData({
                 last_name: "",
                 first_name: "",
                 email: "",
                 description: ""
             });
-            setAvis({
-                type: "success",
-                text: "Merci pour votre avis ! Votre retour a été enregistré avec succès."
-            });
+
+            // Display message based on the ML model
+            if (response.polarity) {
+                setSatisfaction({
+                    type: "success",
+                    text: "We are pleased to hear that you had a positive experience! Thank you for sharing your thoughts with us!"
+                });
+            } else {
+                setSatisfaction({
+                    type: "error",
+                    text: "We are sorry to hear that you had a negative experience. Your feedback will help us improve our services."
+                });
+            }
 
         } catch (error) {
-            console.error("Erreur lors de l'envoi du formulaire:", error);
-            setAvis({
+            console.error("Error submitting form:", error);
+            console.log("ERROR RESPONSE:", error.response?.data);
+
+            setSatisfaction({
                 type: "error",
                 text: error.message || "Une erreur s'est produite. Veuillez réessayer."
             });
@@ -91,25 +115,25 @@ function SectionAvis() {
             <h1 className="md:text-7xl text-5xl font-extrabold m-10">Votre avis compte !</h1>
             <p className="text-lg font-normal m-2 text-center 2xl:mx-100 xl:mx-50 mx-20">Votre retour est essentiel pour nous améliorer ! Partagez votre expérience, dites-nous ce que vous aimez et ce que nous pourrions améliorer. Vos suggestions nous aident à faire de ce blog une ressource toujours plus utile et enrichissante. </p>
 
-            {/* Avis */}
-            {avis.text && (
+            {/* Satisfaction */}
+            {satisfaction.text && (
                 <div className={`mt-4 p-4 rounded-lg ${
-                    avis.type === "success"
+                    satisfaction.type === "success"
                         ? "bg-green-100 text-green-800 border-2 border-green-500"
                         : "bg-red-100 text-red-800 border-2 border-red-500"
                     }`}>
-                    {avis.text}
+                    {satisfaction.text}
                 </div>
             )}
 
-            {/* Formulaire Avis */}
+            {/* Satisfaction Form */}
             <form
                 onSubmit={handleSubmit}
                 className="bg-light-purple/10 border-2 border-purple p-8 rounded-2xl shadow-md w-full max-w-md space-y-10 m-16"
             >
 
                 <div className="flex flex-col sm:flex-row gap-6">
-                    {/* Nom */}
+                    {/* Last Name */}
                     <div className="lg:w-1/2 md:w-1/2 sm:w-full">
                         <input
                             type="text"
@@ -118,12 +142,12 @@ function SectionAvis() {
                             value={formData.last_name}
                             onChange={handleChange}
                             className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                            placeholder="Nom"
+                            placeholder="Last Name"
                             disabled={isSubmitting}
                             required
                         />
                     </div>
-                    {/* Prénom */}
+                    {/* First Name */}
                     <div className="lg:w-1/2 md:w-1/2 sm:w-full">
                         <input
                             type="text"
@@ -132,7 +156,7 @@ function SectionAvis() {
                             value={formData.first_name}
                             onChange={handleChange}
                             className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                            placeholder="Prénom"
+                            placeholder="First Name"
                             disabled={isSubmitting}
                             required
                         />
@@ -178,7 +202,7 @@ function SectionAvis() {
                         transition={{ duration: 0.5 }}
                         disabled={isSubmitting}
                     >
-                        {isSubmitting ? "Envoi en cours..." : "Envoyer"}
+                        {isSubmitting ? "Sending..." : "Submit"}
                     </motion.button>
                 </div>
 
@@ -187,6 +211,6 @@ function SectionAvis() {
     );
 }
 
-export default SectionAvis;
+export default SatisfactionSection;
 
 
