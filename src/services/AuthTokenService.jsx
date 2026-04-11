@@ -1,6 +1,7 @@
 // AuthTokenService.jsx
 import api from "./ApiClient";
 
+// Service to manage authentication tokens
 const authTokenService = {
     // Login and JWT token retrieval
     async login(email, password) {

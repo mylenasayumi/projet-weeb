@@ -112,7 +112,7 @@ function SatisfactionSection() {
 
     return (
         <section className="flex flex-col items-center text-center">
-            <h1 className="md:text-7xl text-5xl font-extrabold m-10">Votre avis compte !</h1>
+            <h1 className="md:text-6xl text-5xl font-extrabold m-10">Votre avis compte !</h1>
             <p className="text-lg font-normal m-2 text-center 2xl:mx-100 xl:mx-50 mx-20">Votre retour est essentiel pour nous améliorer ! Partagez votre expérience, dites-nous ce que vous aimez et ce que nous pourrions améliorer. Vos suggestions nous aident à faire de ce blog une ressource toujours plus utile et enrichissante. </p>
 
             {/* Satisfaction */}

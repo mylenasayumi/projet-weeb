@@ -49,12 +49,12 @@ function SignUpForm() {
 
     return (
         <section className="flex flex-col items-center my-10">
-            <h1 className="md:text-7xl text-5xl font-extrabold">S'inscrire</h1>
+            <h1 className="md:text-6xl text-5xl font-extrabold">S'inscrire</h1>
 
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
                 {/* Connection error displayed */}
                 {error && (
-                    <div className="bg-red-500/20 border border-red-500 text-red-500 px-4 py-3 rounded">
+                    <div className="bg-red-100 border border-red-500 text-red-500 px-4 py-3 rounded">
                         {error}
                     </div>
                 )}

@@ -1,7 +1,7 @@
 // LoginSection.jsx
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import authTokenService from "../../../services/AuthTokenService";
 import authService from "../../../services/AuthService";
 
@@ -63,19 +63,26 @@ function LoginSection() {
 
     return (
         <section className="flex flex-col items-center my-10">
-            <h1 className="md:text-7xl text-5xl font-extrabold">Se connecter</h1>
+            <h1 className="md:text-6xl text-5xl font-extrabold">Se connecter</h1>
 
             {/* After creating an account, the user is redirected to the login page and a success message is displayed. */}
             {success === "account_created" && (
-                <div className="bg-green-500/20 border border-green-500 text-green-500 px-4 py-3 rounded mt-4">
+                <div className="bg-green-100 border border-green-500 text-green-500 px-4 py-3 rounded mt-4">
                     Votre compte a été créé avec succès. Il doit être activé par un administrateur.
+                </div>
+            )}
+
+            {/* After resetting the password, the user is redirected to the login page and a success message is displayed. */}
+            {success === "password_reset" && (
+                <div className="bg-green-100 border border-green-500 text-green-500 px-4 py-3 rounded mt-4">
+                    Votre mot de passe a été réinitialisé avec succès.
                 </div>
             )}
 
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
                 {/* Affichage d'erreur de connexion */}
                 {error && (
-                    <div className="bg-red-500/20 border border-red-500 text-red-500 px-4 py-3 rounded">
+                    <div className="bg-red-100 border border-red-500 text-red-500 px-4 py-3 rounded">
                         {error}
                     </div>
                 )}
@@ -122,11 +129,15 @@ function LoginSection() {
                 </div>
             </form>
 
-            <a href="#mot-de-passe-oublie" className="hover:text-light-purple">Mot de passe oublié ?</a>
+            <Link to="/forgot-password" className="hover:text-light-purple">
+                Mot de passe oublié ?
+            </Link>
 
             <p className="text-light-gray my-10 mx-10 text-center">
-                Vous n’avez pas de compte ? Vous pouvez en
-                <a href="/sign-up" className="text-white hover:text-light-purple"> créer un</a>
+                Vous n’avez pas de compte ? Vous pouvez en&nbsp;
+                <Link to="/sign-up" className="text-white hover:text-light-purple">
+                    créer un
+                </Link>
             </p>
 
             {/* Divider */}
