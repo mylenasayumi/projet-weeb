@@ -14,6 +14,8 @@ import PageErreur from './components/PageErreur.jsx';
 import App from './App.jsx';
 import Articles from './pages/Articles.jsx';
 import AuthCallback from './pages/AuthCallback.jsx';
+import CreateArticle from './pages/CreateArticle.jsx';
+import UpdateArticle from './pages/UpdateArticle.jsx';
 
 // Configuration des routes avec createBrowserRouter
 const router = createBrowserRouter([
@@ -42,6 +44,14 @@ const router = createBrowserRouter([
       {
         path: "articles",
         element: <Articles />,
+      },
+      {
+        path: "articles/create",
+        element: <CreateArticle />,
+      },
+      {
+        path: "articles/update/:id",
+        element: <UpdateArticle />,
       },
       {
         path: "auth/callback",

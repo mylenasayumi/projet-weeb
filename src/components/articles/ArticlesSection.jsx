@@ -3,34 +3,42 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import articleService from "../../services/ArticlesService";
-import { TfiArrowCircleLeft, TfiArrowCircleRight  } from "react-icons/tfi";
-import { PiMagnifyingGlass } from "react-icons/pi";
-import { BsSortAlphaDown, BsSortAlphaDownAlt } from "react-icons/bs";
+import { TfiArrowCircleLeft, TfiArrowCircleRight } from "react-icons/tfi";
+import { PiMagnifyingGlass, PiWarningFill } from "react-icons/pi";
+import { BsSortAlphaDown, BsSortAlphaDownAlt, BsFillPlusCircleFill, BsArrowRight } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import { IoClose } from "react-icons/io5";
+import authService from "../../services/AuthService";
+import authTokenService from "../../services/AuthTokenService";
 
 
 function ArticlesSection() {
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [newArticle, setNewArticle] = useState("");
     const [page, setPage] = useState(1);
     const [ordering, setOrdering] = useState("title");
     const [search, setSearch] = useState("");
     const [totalPages, setTotalPages] = useState(1);
+    const [selectedArticle, setSelectedArticle] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [message, setMessage] = useState("");
+    const [currentUser, setCurrentUser] = useState(null);
+    const navigate = useNavigate();
 
     const loadArticles = async () => {
         try {
             setLoading(true);
             setError(null);
-            
+
             const data = await articleService.getAll({
                 page,
                 ordering,
                 search
             });
 
-            setArticles(data.results);
-            setTotalPages(Math.ceil(data.count / 5)); // PAGE_SIZE = 5
+            setArticles(data.results || []);
+            setTotalPages(Math.max(1, Math.ceil((data.count || 0) / 5))); // PAGE_SIZE = 5
 
         } catch (err) {
             console.error(err);
@@ -38,38 +46,120 @@ function ArticlesSection() {
         } finally {
             setLoading(false);
         }
-    }
+    };
+
+    // Checks authentication
+    useEffect(() => {
+        const authenticated = authTokenService.isAuthenticated();
+        setIsAuthenticated(authenticated);
+        const storedUser = localStorage.getItem("user");
+
+        if (storedUser) {
+            try {
+                setCurrentUser(JSON.parse(storedUser));
+            } catch (err) {
+                console.error("Error parsing stored user:", err);
+                localStorage.removeItem("user");
+            }
+        }
+    }, []);
+
+    // Clears messages after 3 seconds
+    useEffect(() => {
+        if (!message) return;
+
+        const timer = setTimeout(() => setMessage(""), 3000);
+        return () => clearTimeout(timer);
+        
+    }, [message]);
     
+    // Loads articles when page, ordering or search changes
     useEffect(() => {
         const delay = setTimeout(() => {
             loadArticles();
-        }, 500);
+        }, 300);
         return () => clearTimeout(delay);
-    }, [page, ordering]);
+    }, [page, ordering, search]);
 
-    useEffect(() => {
-        if (search === "" || search.trim() === "") {
-            setPage(1);
-            loadArticles();
-        }
-    }, [search]);
+    // Handles search action
+    const handleSearch = () => {
+        setPage(1); // Reset to first page when searching
+    };
 
-    const handleAddArticle = async () => {
+    // Handles opening article details
+    const handleOpenArticle = async (id) => {
         try {
-            const createdArticle = await articleService.create({ 
-                title: newArticle,
-            });
-            setArticles((prev) => [...prev, createdArticle]);
-            setNewArticle("");
+            const fullArticle = await articleService.getById(id);
+            let author = null;
+
+            if (fullArticle?.user) {
+                try {
+                    author = await authService.getById(fullArticle.user);
+                } catch (authorErr) {
+                    console.error("Error loading article author:", authorErr);
+                }
+            }
+
+            setSelectedArticle({ ...fullArticle, author });
+            
         } catch (err) {
-            console.error(err);
-            setError("Error adding article");
+            console.error("Error loading article details", err);
+            setError("Error loading article details");
         }
     };
 
-    const handleSearch = () => {
-        setPage(1); // Reset to first page when searching
-        loadArticles();
+    const isOwner = !!currentUser?.email && !!selectedArticle?.author?.email && currentUser.email === selectedArticle.author.email;
+
+    // Handles navigation to update article page
+    const handleUpdateArticle = (article) => {
+        if (!article?.id) return;
+
+        navigate(`/articles/update/${article.id}`, { 
+            state: { 
+                id: article.id, 
+                title: article.title, 
+                description: article.description,
+                ownerEmail: article?.author?.email || null
+            }
+        });
+    };
+
+
+    // Handles article deletion
+    const handleDeleteArticle = async (id) => {
+        if (!isAuthenticated) {
+            setMessage("You must be logged in to delete an article.");
+            return;
+        }
+
+        if (!isOwner) {
+            setMessage("You are not authorized to delete this article.");
+            return;
+        }
+
+        if (!window.confirm("Are you sure you want to delete this article?")) {
+            return;
+        }
+
+        try {
+            await articleService.delete(id);
+            setSelectedArticle(null);
+            setArticles((prev) => prev.filter((article) => article.id !== id));
+            setMessage("Article deleted successfully.");
+        } catch (err) {
+            console.error("Error deleting article:", err);
+            console.error("Delete article error response:", err.response?.data);
+
+            if (err.response?.status === 403) {
+                setMessage("You are not authorized to delete this article.");
+            } else if (err.response?.status === 401) {
+                setMessage("You must be logged in to delete an article.");
+            } else if (err.response?.status === 500) {
+                setMessage("Server error occurred while deleting article.");
+            } else {
+                setMessage("Error deleting article.");
+            }
+        }
     };
 
     if (loading) return <p className="bg-dark-blue text-white md:text-5xl text-xl font-extrabold text-center pt-10 md:pt-20 pb-200 md:pb-300">Loading articles...</p>;
@@ -79,6 +169,20 @@ function ArticlesSection() {
         <section className="p-8">
             <h2 className="flex items-center justify-center font-bold text-light-white text-[40px]">Découvir les articles</h2>
             
+            {/* Warning message if user is not authenticated */}
+            {message && (
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                    className="fixed top-10 left-1/2 -translate-x-1/2 z-50 bg-red-100 text-red-700 text-xl border-2 border-red-400 rounded-[8px] px-6 py-3 text-center flex items-center gap-3"
+                >
+                    <span><PiWarningFill size={22} /></span>
+                    <p>{message}</p>
+                </motion.div>
+            )}
+
             {/* Search field (filter) */}
             <div className="flex items-center justify-center w-full mt-4">
                 <div className="relative w-[300px] mt-6">
@@ -122,44 +226,76 @@ function ArticlesSection() {
                     </button>
                 </div>
             </div>
-
-            {/* Add Article Form */}
-            <div className="flex items-center justify-center w-full">
-                <input
-                    type="text"
-                    value={newArticle}
-                    onChange={(e) => setNewArticle(e.target.value)}
-                    placeholder="Titre de l'article"
-                    className="border-2 border-gray-300 rounded-[8px] px-4 py-2 m-8 w-[300px]"
-                />
-                <motion.button
-                    className="bg-purple m-8 px-4 py-4 rounded-[8px] hover:bg-light-purple cursor-pointer"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.5 }}
-                    onClick={handleAddArticle}
-                >
-                    Ajouter un article
-                </motion.button>
-            </div>
             
+            {/* Articles grid */}
             <AnimatePresence>
-                <div className="flex items-center justify-center w-full mx-16">
-                    <div className="flex flex-wrap max-w-[1440px] w-full">
-                        {articles.map((article) => (
-                            <motion.div
-                                key={article.id}
-                                layout
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: 20 }}
-                                transition={{ duration: 0.5 }}
-                                whileHover={{ scale: 1.1 }}
-                                className="w-[400px] h-[262px] bg-light-purple/6 border-2 border-purple p-2 rounded-2xl mx-4 mt-2 mb-8 shadow-lg" //m-4 fica torto, pq?
-                            >
-                                <h3 className="font-semibold text-xl text-light-purple p-6">{article.title}</h3>
-                                <p className="font-normal text-gray text-base px-6">{article.body || "No content"}</p>
-                            </motion.div>
-                        ))}
+                <div className="flex items-center justify-center w-full">
+                    <div className="flex flex-wrap max-w-[1440px] w-full gap-10 justify-center mt-10">
+
+                        {/* Add new article (if user is authenticated) */}
+                        {[...articles, { id: "add-card" }].map((article) => {
+                            if (article.id === "add-card") {
+                                return (
+                                    <motion.div
+                                        key="add-card"
+                                        layout
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: 20 }}
+                                        transition={{ duration: 0.5 }}
+                                        whileHover={{ scale: 1.1 }}
+                                        onClick={() => {
+                                            if (!isAuthenticated) {
+                                                setMessage("You must be logged in to create an article.");
+                                            } else {
+                                                navigate("/articles/create");
+                                            }
+                                        }}
+                                        className={`w-[400px] h-[262px] border-2 p-2 rounded-2xl shadow-lg
+                                            ${isAuthenticated
+                                                ? "bg-light-purple/6 border-purple hover:cursor-pointer"
+                                                : "bg-gray-300/6 border-gray-400 cursor-not-allowed"
+                                            }`}
+                                    >
+                                        <div className="flex items-center justify-center text-center h-full">
+                                            <p className="text-gray-300 text-xl font-bold">
+                                                <BsFillPlusCircleFill size={24} className="inline-block mr-2" />
+                                            </p>
+                                            <span className="text-gray-300 text-xl font-bold">Ajouter un article</span>
+                                        </div>
+                                    </motion.div>
+                                );
+                            }
+
+                            // Display existing articles
+                            return (
+                                <motion.div
+                                    key={article.id}
+                                    layout
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: 20 }}
+                                    transition={{ duration: 0.5 }}
+                                    whileHover={{ scale: 1.1 }}
+                                    className="w-[400px] h-[262px] bg-light-purple/6 border-2 border-purple p-2 rounded-2xl shadow-lg flex flex-col"
+                                >
+                                    <h3 className="font-semibold text-xl text-light-purple p-6">{article.title}</h3>
+                                    {/* <p className="font-normal text-gray text-base px-6 flex-grow overflow-hidden leading-relaxed max-h-[100px] relative text-justify"> */}
+                                    <p className="font-normal text-gray text-base px-6 flex-grow line-clamp-3 text-justify break-words leading-relaxed">
+                                        {article.description || "No content"}
+                                    </p>
+                                    <div className="px-6 py-4 flex justify-end">
+                                        <button
+                                            onClick={() => handleOpenArticle(article.id)}
+                                            className="text-white hover:underline hover:cursor-pointer"
+                                        >
+                                            <BsArrowRight className="inline-block mr-2" />
+                                            Read more
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
                     </div>
                 </div>
             </AnimatePresence>
@@ -167,6 +303,7 @@ function ArticlesSection() {
             {/* Pagination */}
             <div className="flex justify-center gap-4 mt-6">
                 <button
+                    className="hover:cursor-pointer"
                     onClick={() => setPage((p) => p - 1)}
                     disabled={page === 1}
                 >
@@ -174,12 +311,72 @@ function ArticlesSection() {
                 </button>
                 <span className="mx-6">Page {page} / {totalPages}</span>
                 <button
+                    className="hover:cursor-pointer"
                     onClick={() => setPage((p) => p + 1)}
                     disabled={page === totalPages}
                 >
                     <TfiArrowCircleRight size={25}/>
                 </button>
             </div>
+
+            {/* Modal for article details */}
+            <AnimatePresence>
+                {selectedArticle && (
+                    <motion.div
+                        className="bg-black/50 fixed inset-0 flex items-center justify-center z-50"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedArticle(null)} // Close modal on background click
+                    >
+                        <motion.div
+                            className="bg-white rounded-[8px] p-6 max-w-lg w-full relative shadow-xl max-h-[80vh] overflow-y-auto"
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.8, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+                        >
+                            <h2 className="text-2xl text-purple font-bold mb-4">{selectedArticle.title}</h2>
+                            <div className="text-gray-500 mb-10">
+                                <p>
+                                    <strong>Author:</strong>{" "}
+                                    {selectedArticle.author
+                                        ? `${selectedArticle.author.first_name} ${selectedArticle.author.last_name}`.trim()
+                                        : `User #${selectedArticle.user}`}
+                                </p>
+                            </div>
+                            <p className="text-gray-700 whitespace-pre-line text-justify break-words">
+                                {selectedArticle.description || "No content"}
+                            </p>
+                            <button
+                                onClick={() => setSelectedArticle(null)}
+                                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                            >
+                                <IoClose size={20} />
+                            </button>
+
+                            {/* Edit and Delete buttons for article owner */}
+                            {isOwner && (
+                                <div className="mt-6 flex gap-4">
+                                    <button
+                                        onClick={() => handleUpdateArticle(selectedArticle)}
+                                        className="bg-purple text-white px-6 py-2 rounded-[8px] hover:bg-light-purple cursor-pointer transition-colors duration-300"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => handleDeleteArticle(selectedArticle.id)}
+                                        className="bg-red-500 text-white px-6 py-2 rounded-[8px] hover:bg-red-600 cursor-pointer transition-colors duration-300"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            )}
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
         </section>
     );
 }
