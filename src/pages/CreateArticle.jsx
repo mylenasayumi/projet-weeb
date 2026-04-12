@@ -24,9 +24,7 @@ function CreateArticle() {
             setError("You must be logged in to create an article.");
             
             // Redirects to the login page after 2 seconds
-            setTimeout(() => {
-                navigate("/login");
-            }, 2000);
+            setTimeout(() => navigate("/login"), 2000);
         }
     }, [navigate]);
 
@@ -54,7 +52,7 @@ function CreateArticle() {
 
     return (
         <section className="bg-dark-blue text-white max-w-3xl mx-auto p-6 rounded-lg shadow-md">
-            <h1 className="text-2xl font-bold mb-4 text-white text-center text-[40px]">Créer un nouvel article</h1>       
+            <h1 className="text-2xl font-bold mb-4 text-white text-center text-[40px]">Create a new article</h1>       
             <form onSubmit={handleSubmit} className="space-y-4">
                 {message && (
                     <div className="bg-green-100 border border-green-500 text-green-500 px-4 py-3 rounded">
@@ -68,7 +66,7 @@ function CreateArticle() {
                 )}
                 
                 <div>
-                    <label className="block font-semibold mb-2">Titre</label>
+                    <label className="block font-semibold mb-2">Title</label>
                     <input
                         type="text"
                         placeholder="Title"
@@ -79,7 +77,7 @@ function CreateArticle() {
                     />
                 </div>
                 <div>
-                    <label className="block font-semibold mb-2">Contenu</label>
+                    <label className="block font-semibold mb-2">Description</label>
                     <textarea
                         value={formData.description}
                         placeholder="Description"
@@ -95,7 +93,7 @@ function CreateArticle() {
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.2 }}
                 >
-                    Créer
+                    Create
                 </motion.button>
             </form>
         </section>

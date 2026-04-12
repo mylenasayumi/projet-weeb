@@ -28,7 +28,7 @@ function ForgotPassword() {
 
     return (
         <section className="flex flex-col items-center my-10">
-            <h1 className="md:text-6xl text-5xl font-extrabold">Mot de passe oublié</h1>
+            <h1 className="md:text-6xl text-5xl font-extrabold">Forgot your password?</h1>
 
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
                 {message && (
@@ -63,7 +63,7 @@ function ForgotPassword() {
                         transition={{ duration: 0.3 }}
                         disabled={loading}
                     >
-                        {loading ? "Envoi en cours..." : "Envoyer le lien"}
+                        {loading ? "Sending..." : "Send Link"}
                     </motion.button>
                 </div>
             </form>

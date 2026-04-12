@@ -1,6 +1,4 @@
-/* Fichier de styles global pour l'ensemble de l'application. 
-Vous pouvez y définir des styles généraux, comme les styles de 
-base pour le body ou d'autres éléments HTML communs. */
+/* Global style file for the entire application. */
 @import "tailwindcss";
 
 @theme {

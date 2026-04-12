@@ -75,9 +75,7 @@ function ArticlesSection() {
     
     // Loads articles when page, ordering or search changes
     useEffect(() => {
-        const delay = setTimeout(() => {
-            loadArticles();
-        }, 300);
+        const delay = setTimeout(() => loadArticles(), 300);
         return () => clearTimeout(delay);
     }, [page, ordering, search]);
 
@@ -167,7 +165,7 @@ function ArticlesSection() {
 
     return (
         <section className="p-8">
-            <h2 className="flex items-center justify-center font-bold text-light-white text-[40px]">Découvir les articles</h2>
+            <h2 className="flex items-center justify-center font-bold text-light-white text-[40px]">Discover the articles</h2>
             
             {/* Warning message if user is not authenticated */}
             {message && (
@@ -190,13 +188,12 @@ function ArticlesSection() {
                         type="text"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Rechercher par titre"
+                        placeholder="Search by title"
                         className="border border-gray-300 px-4 py-2 pr-10 rounded-lg w-[300px] shadow-sm"
                         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     />
                     <motion.button
-                        // className="border-2 border-gray-300 px-4 py-2 rounded-r-[8px] hover: cursor-pointer"
-                        className="absolute right-2 top-1/2 -translate-y-1/2"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 hover: cursor-pointer"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2 }}
@@ -210,16 +207,16 @@ function ArticlesSection() {
 
             {/* Ordering */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-center sm:justify-end gap-2 sm:gap-4 mt-8 px-4 sm:px-16 max-w-[1440px] mx-auto">
-                <span className="text-gray font-medium mb-2 sm:mb-0 sm:mr-2 text-center sm:text-left">Trier par :</span>
+                <span className="text-gray font-medium mb-2 sm:mb-0 sm:mr-2 text-center sm:text-left">Order by:</span>
                 <div className="flex gap-2">
                     <button
-                        className="flex items-center justify-center p-2 hover:bg-light-purple/20 rounded"
+                        className="flex items-center justify-center p-2 hover:bg-light-purple/20 rounded cursor-pointer"
                         onClick={() => setOrdering("title")}
                     >
                         <BsSortAlphaDown size={25} />
                     </button>
                     <button
-                        className="flex items-center justify-center p-2 hover:bg-light-purple/20 rounded"
+                        className="flex items-center justify-center p-2 hover:bg-light-purple/20 rounded cursor-pointer"
                         onClick={() => setOrdering("-title")}
                     >
                         <BsSortAlphaDownAlt size={25} />
@@ -261,7 +258,7 @@ function ArticlesSection() {
                                             <p className="text-gray-300 text-xl font-bold">
                                                 <BsFillPlusCircleFill size={24} className="inline-block mr-2" />
                                             </p>
-                                            <span className="text-gray-300 text-xl font-bold">Ajouter un article</span>
+                                            <span className="text-gray-300 text-xl font-bold">Add Article</span>
                                         </div>
                                     </motion.div>
                                 );

@@ -23,7 +23,7 @@ function AuthCallback() {
 
     return (
         <div className="flex items-center justify-center h-screen">
-            <h1 className="text-2xl font-bold">Authentification en cours...</h1>
+            <h1 className="text-2xl font-bold">Authentication in progress...</h1>
         </div>
     );
 }

@@ -41,7 +41,7 @@ function SignUpForm() {
             // It does NOT log in automatically
             navigate("/login?success=account_created");
         } catch (err) {
-            setError(err.message || "Une erreur s'est produite lors de l'inscription.");
+            setError(err.message || "An error occurred during registration.");
         } finally {
             setLoading(false);
         }
@@ -49,7 +49,7 @@ function SignUpForm() {
 
     return (
         <section className="flex flex-col items-center my-10">
-            <h1 className="md:text-6xl text-5xl font-extrabold">S'inscrire</h1>
+            <h1 className="md:text-6xl text-5xl font-extrabold">Sign Up</h1>
 
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
                 {/* Connection error displayed */}
@@ -67,7 +67,7 @@ function SignUpForm() {
                         value={formData.email}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="Email"
+                        placeholder="E-mail"
                         required
                         disabled={loading}
                     />
@@ -81,7 +81,7 @@ function SignUpForm() {
                         value={formData.first_name}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="Prénom"
+                        placeholder="First Name"
                         required
                         disabled={loading}
                     />
@@ -95,7 +95,7 @@ function SignUpForm() {
                         value={formData.last_name}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="Nom"
+                        placeholder="Last Name"
                         required
                         disabled={loading}
                     />
@@ -123,7 +123,7 @@ function SignUpForm() {
                         transition={{ duration: 0.4 }}
                         disabled={loading}
                     >
-                        {loading ? "Inscription..." : "S'inscrire"}
+                        {loading ? "Registration..." : "Sign Up"}
 
                     </motion.button>
                 </div>
@@ -147,7 +147,7 @@ function SignUpForm() {
                         transition={{ duration: 0.4 }}
                         className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
                     >
-                        Continuer avec GitHub
+                        Continue with GitHub
                 </motion.button>
             </div>
         </section>

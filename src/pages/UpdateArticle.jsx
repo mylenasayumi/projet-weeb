@@ -75,11 +75,11 @@ function UpdateArticle() {
 
     return (
         <section className="bg-dark-blue text-white max-w-3xl mx-auto p-6 rounded-lg shadow-md">
-            <h1 className="text-2xl font-bold mb-4 text-white text-center text-[40px]">Mettre à jour l'article</h1>
+            <h1 className="text-2xl font-bold mb-4 text-white text-center text-[40px]">Update article</h1>
             {error && <p className="text-red-500 mb-4">{error}</p>}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block font-semibold mb-2">Titre</label>
+                    <label className="block font-semibold mb-2">Title</label>
                     <input
                         name="title"
                         type="text"
@@ -90,7 +90,7 @@ function UpdateArticle() {
                     />
                 </div>
                 <div>
-                    <label className="block font-semibold mb-2">Contenu</label>
+                    <label className="block font-semibold mb-2">Description</label>
                     <textarea
                         name="description"
                         value={formData.description}

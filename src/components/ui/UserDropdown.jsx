@@ -33,7 +33,7 @@ function UserDropdown({ user, onLogout }) {
                             onClick={onLogout}
                             className="w-full text-center px-4 py-2 rounded"
                         >
-                            Se déconnecter
+                            Logout
                         </button>
                     </AnimatedDropdownDiv>
                 )}
