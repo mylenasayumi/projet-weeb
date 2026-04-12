@@ -13,6 +13,7 @@ function CreateArticle() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [message, setMessage] = useState("");
     
     // Checks authentication when component is loaded
     useEffect(() => {
@@ -39,18 +40,33 @@ function CreateArticle() {
                 return;
             }
             await articleService.create(formData);
-            navigate("/articles");
+
+            setMessage("Article created successfully! Redirecting...");
+            setError("");
+            setTimeout(() => navigate("/articles"), 3000);
+
         } catch (err) {
             console.error(err);
             setError("Error creating article");
+            setMessage("");
         }
     };
 
     return (
         <section className="bg-dark-blue text-white max-w-3xl mx-auto p-6 rounded-lg shadow-md">
-            <h1 className="text-2xl font-bold mb-4 text-white text-center text-[40px]">Créer un nouvel article</h1>
-            {error && <p className="text-red-500 mb-4">{error}</p>}
+            <h1 className="text-2xl font-bold mb-4 text-white text-center text-[40px]">Créer un nouvel article</h1>       
             <form onSubmit={handleSubmit} className="space-y-4">
+                {message && (
+                    <div className="bg-green-100 border border-green-500 text-green-500 px-4 py-3 rounded">
+                        {message}
+                    </div>
+                )}
+                {error && (
+                    <div className="bg-red-100 border border-red-500 text-red-500 px-4 py-3 rounded">
+                        {error}
+                    </div>
+                )}
+                
                 <div>
                     <label className="block font-semibold mb-2">Titre</label>
                     <input

@@ -2,6 +2,7 @@
 import authService from "./AuthService";
 import authTokenService from "./AuthTokenService";
 
+// Service to manage authentication callbacks
 const authCallbackService = {
     async handleAuthCallback() {
         const params = new URLSearchParams(window.location.search);

@@ -16,34 +16,34 @@ function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-x-6 gap-y-10 w-full max-w-screen-lg mx-auto px-10">
                     <div className="flex flex-col gap-4">
                             <p className="font-medium text-gray">PRODUIT</p>
-                            <a href="#tarifs" className="hover:text-purple">Tarifs</a>
-                            <a href="#apercu" className="hover:text-purple">Aperçu</a>
-                            <a href="#parcourir" className="hover:text-purple">Parcourir</a>
-                            <a href="#accessibilite" className="hover:text-purple">Accessibilité</a>
-                            <a href="#five" className="hover:text-purple">Five</a>
+                            <a href="/tarifs" className="hover:text-purple">Tarifs</a>
+                            <a href="/apercu" className="hover:text-purple">Aperçu</a>
+                            <a href="/parcourir" className="hover:text-purple">Parcourir</a>
+                            <a href="/accessibilite" className="hover:text-purple">Accessibilité</a>
+                            <a href="/five" className="hover:text-purple">Five</a>
                     </div>
 
                     <div className="flex flex-col gap-4">
                             <p className="font-medium text-gray">SOLUTIONS</p>
-                            <a href="#brainstorming" className="hover:text-purple">Brainstorming</a>
-                            <a href="#generation-idees" className="hover:text-purple">Génération d'idées</a>
-                            <a href="#maquettage" className="hover:text-purple">Maquettage</a>
-                            <a href="#recherche" className="hover:text-purple">Recherche</a>
+                            <a href="/brainstorming" className="hover:text-purple">Brainstorming</a>
+                            <a href="/generation-idees" className="hover:text-purple">Génération d'idées</a>
+                            <a href="/maquettage" className="hover:text-purple">Maquettage</a>
+                            <a href="/recherche" className="hover:text-purple">Recherche</a>
                     </div>
 
                     <div className="flex flex-col gap-4">
                             <p className="font-medium text-gray">RESSOURCES</p>
-                            <a href="#centre-aide" className="hover:text-purple">Centre d’aide</a>
-                            <a href="#blog" className="hover:text-purple">Blog</a>
-                            <a href="#tutoriels" className="hover:text-purple">Tutoriels</a>
+                            <a href="/centre-aide" className="hover:text-purple">Centre d’aide</a>
+                            <a href="/blog" className="hover:text-purple">Blog</a>
+                            <a href="/tutoriels" className="hover:text-purple">Tutoriels</a>
                     </div>
 
                     <div className="flex flex-col gap-4">
                             <p className="font-medium text-gray">ENTREPRISE</p>
                             <Link to="/" className="hover:text-purple">À propos</Link>
-                            <a href="#presse" className="hover:text-purple">Presse</a>
-                            <a href="#evenements" className="hover:text-purple">Événements</a>
-                            <a href="#carrieres" className="hover:text-purple">Carrières</a>
+                            <a href="/presse" className="hover:text-purple">Presse</a>
+                            <a href="/evenements" className="hover:text-purple">Événements</a>
+                            <a href="/carrieres" className="hover:text-purple">Carrières</a>
                     </div>
                 </div>
                 

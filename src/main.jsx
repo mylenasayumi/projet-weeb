@@ -16,6 +16,8 @@ import Articles from './pages/Articles.jsx';
 import AuthCallback from './pages/AuthCallback.jsx';
 import CreateArticle from './pages/CreateArticle.jsx';
 import UpdateArticle from './pages/UpdateArticle.jsx';
+import ForgotPassword from './pages/ForgotPassword.jsx';
+import ResetPassword from './pages/ResetPassword.jsx';
 
 // Configuration des routes avec createBrowserRouter
 const router = createBrowserRouter([
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
       {
         path: "auth/callback",
         element: <AuthCallback />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPassword />,
       },
     ],
   },
