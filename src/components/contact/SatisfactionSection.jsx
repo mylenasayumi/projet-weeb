@@ -29,9 +29,7 @@ function SatisfactionSection() {
             });
             
             // Redirects to the login page after 2 seconds
-            setTimeout(() => {
-                navigate("/login");
-            }, 2000);
+            setTimeout(() => navigate("/login"), 2000);
         }
     }, [navigate]);
 
@@ -103,7 +101,7 @@ function SatisfactionSection() {
 
             setSatisfaction({
                 type: "error",
-                text: error.message || "Une erreur s'est produite. Veuillez réessayer."
+                text: error.message || "An error has occurred. Please try again."
             });
         } finally {
             setIsSubmitting(false);
@@ -112,8 +110,8 @@ function SatisfactionSection() {
 
     return (
         <section className="flex flex-col items-center text-center">
-            <h1 className="md:text-6xl text-5xl font-extrabold m-10">Votre avis compte !</h1>
-            <p className="text-lg font-normal m-2 text-center 2xl:mx-100 xl:mx-50 mx-20">Votre retour est essentiel pour nous améliorer ! Partagez votre expérience, dites-nous ce que vous aimez et ce que nous pourrions améliorer. Vos suggestions nous aident à faire de ce blog une ressource toujours plus utile et enrichissante. </p>
+            <h1 className="md:text-6xl text-5xl font-extrabold m-10">Your opinion matters!</h1>
+            <p className="text-lg font-normal m-2 text-center 2xl:mx-100 xl:mx-50 mx-20">Your feedback is essential for us to improve! Share your experience, tell us what you like and what we could improve. Your suggestions help us make this blog a more useful and enriching resource. </p>
 
             {/* Satisfaction */}
             {satisfaction.text && (
@@ -172,7 +170,7 @@ function SatisfactionSection() {
                         value={formData.email}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="Email"
+                        placeholder="E-mail"
                         disabled={isSubmitting}
                         required
                     />

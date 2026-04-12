@@ -63,24 +63,24 @@ function LoginSection() {
 
     return (
         <section className="flex flex-col items-center my-10">
-            <h1 className="md:text-6xl text-5xl font-extrabold">Se connecter</h1>
+            <h1 className="md:text-6xl text-5xl font-extrabold">Login</h1>
 
             {/* After creating an account, the user is redirected to the login page and a success message is displayed. */}
             {success === "account_created" && (
                 <div className="bg-green-100 border border-green-500 text-green-500 px-4 py-3 rounded mt-4">
-                    Votre compte a été créé avec succès. Il doit être activé par un administrateur.
+                    Your account has been successfully created. It must be activated by an administrator.
                 </div>
             )}
 
             {/* After resetting the password, the user is redirected to the login page and a success message is displayed. */}
             {success === "password_reset" && (
                 <div className="bg-green-100 border border-green-500 text-green-500 px-4 py-3 rounded mt-4">
-                    Votre mot de passe a été réinitialisé avec succès.
+                    Your password has been successfully reset.
                 </div>
             )}
 
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
-                {/* Affichage d'erreur de connexion */}
+                {/* Connection error displayed */}
                 {error && (
                     <div className="bg-red-100 border border-red-500 text-red-500 px-4 py-3 rounded">
                         {error}
@@ -95,7 +95,7 @@ function LoginSection() {
                         value={formData.email}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="Email"
+                        placeholder="E-mail"
                         required
                         disabled={loading}
                     />
@@ -123,20 +123,20 @@ function LoginSection() {
                         transition={{ duration: 0.5 }}
                         disabled={loading}
                     >
-                        {loading ? "Connexion..." : "Se connecter"}
+                        {loading ? "Logging in..." : "Login"}
 
                     </motion.button>
                 </div>
             </form>
 
             <Link to="/forgot-password" className="hover:text-light-purple">
-                Mot de passe oublié ?
+                Forgot Password?
             </Link>
 
             <p className="text-light-gray my-10 mx-10 text-center">
-                Vous n’avez pas de compte ? Vous pouvez en&nbsp;
+                You don't have an account? You can&nbsp;
                 <Link to="/sign-up" className="text-white hover:text-light-purple">
-                    créer un
+                    create one
                 </Link>
             </p>
 
@@ -158,7 +158,7 @@ function LoginSection() {
                         transition={{ duration: 0.4 }}
                         className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
                     >
-                        Continuer avec GitHub
+                        Continue with GitHub
                 </motion.button>
             </div>
         </section>

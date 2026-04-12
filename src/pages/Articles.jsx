@@ -1,12 +1,12 @@
 // Articles.jsx
 
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import ArticlesSection from "../components/articles/ArticlesSection";
+import ScrollToTop from "../components/ui/ScrollToTop";
 
 function Articles() {
     return (
         <div>
+             <ScrollToTop />
             <ArticlesSection />
         </div>
     );

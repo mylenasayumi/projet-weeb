@@ -2,7 +2,6 @@
 import apiService from "./ApiService";
 
 // Specific services for users
-// TODO : review urls and endpoints
 const authService = {
     register: async (userData) => {
         try {
@@ -12,7 +11,7 @@ const authService = {
                 error.response?.data?.email?.[0] ||
                 error.response?.data?.password?.[0] ||
                 error.response?.data?.detail ||
-                "Erreur lors de l'inscription";
+                "Error while registering.";
             throw new Error(message);
         }
     },

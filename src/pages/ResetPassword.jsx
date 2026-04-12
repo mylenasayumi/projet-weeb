@@ -37,9 +37,7 @@ function ResetPassword() {
         try {
             const response = await passwordResetService.confirmResetPassword(uidb64, token, password);
             setMessage("Password reset successfully");
-            setTimeout(() => {
-                navigate("/login?success=password_reset");
-            }, 2000);
+            setTimeout(() => navigate("/login?success=password_reset"), 2000);
 
         } catch (err) {
             setError(err.message || "Failed to reset password");

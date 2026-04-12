@@ -1,14 +1,16 @@
-// Il s’agit du composant principal de l’application. C’est à partir de ce fichier que vous allez 
-// construire et organiser vos composants.
+// This is the main component of the application. From this file the components are built and organized.
 
 import './App.css'
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ui/ScrollToTop';
 
 function App() {
   return (
     <div className="font-roboto bg-dark-blue text-white">
+        {/* Scroll to top */}
+        <ScrollToTop />
         {/* Header */}
         <Navbar />
         {/* Sections */}
