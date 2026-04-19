@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import authService from "../../services/AuthService";
 import authTokenService from "../../services/AuthTokenService";
-
+import { useLanguage } from "../../languages/LanguageContext";
 
 function ArticlesSection() {
     const [articles, setArticles] = useState([]);
@@ -25,6 +25,7 @@ function ArticlesSection() {
     const [message, setMessage] = useState("");
     const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
+    const { t } = useLanguage();
 
     const loadArticles = async () => {
         try {
@@ -126,16 +127,16 @@ function ArticlesSection() {
     // Handles article deletion
     const handleDeleteArticle = async (id) => {
         if (!isAuthenticated) {
-            setMessage("You must be logged in to delete an article.");
+            setMessage(t("articles.loggedInDeleteArticleError"));
             return;
         }
 
         if (!isOwner) {
-            setMessage("You are not authorized to delete this article.");
+            setMessage(t("articles.notOwnerDeleteArticleError"));
             return;
         }
 
-        if (!window.confirm("Are you sure you want to delete this article?")) {
+        if (!window.confirm(t("articles.confirmDelete"))) {
             return;
         }
 
@@ -143,29 +144,29 @@ function ArticlesSection() {
             await articleService.delete(id);
             setSelectedArticle(null);
             setArticles((prev) => prev.filter((article) => article.id !== id));
-            setMessage("Article deleted successfully.");
+            setMessage(t("articles.deleteSuccess"));
         } catch (err) {
             console.error("Error deleting article:", err);
             console.error("Delete article error response:", err.response?.data);
 
             if (err.response?.status === 403) {
-                setMessage("You are not authorized to delete this article.");
+                setMessage(t("articles.notOwnerDeleteArticleError"));
             } else if (err.response?.status === 401) {
-                setMessage("You must be logged in to delete an article.");
+                setMessage(t("articles.loggedInDeleteArticleError"));
             } else if (err.response?.status === 500) {
-                setMessage("Server error occurred while deleting article.");
+                setMessage(t("articles.deleteArticleServerError"));
             } else {
-                setMessage("Error deleting article.");
+                setMessage(t("articles.deleteError"));
             }
         }
     };
 
-    if (loading) return <p className="bg-dark-blue text-white md:text-5xl text-xl font-extrabold text-center pt-10 md:pt-20 pb-200 md:pb-300">Loading articles...</p>;
+    if (loading) return <p className="bg-dark-blue text-white md:text-5xl text-xl font-extrabold text-center pt-10 md:pt-20 pb-200 md:pb-300">{t("articles.loadingArticles")}</p>;
     if (error) return <p className="bg-dark-blue text-white md:text-5xl text-xl font-extrabold text-center pt-10 md:pt-20 pb-200 md:pb-300">{error}</p>;
 
     return (
         <section className="p-8">
-            <h2 className="flex items-center justify-center font-bold text-light-white text-[40px]">Discover the articles</h2>
+            <h2 className="flex items-center justify-center font-bold text-light-white text-[40px]">{t("articles.articlesPage")}</h2>
             
             {/* Warning message if user is not authenticated */}
             {message && (
@@ -188,7 +189,7 @@ function ArticlesSection() {
                         type="text"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Search by title"
+                        placeholder={t("articles.searchByTitle")}
                         className="border border-gray-300 px-4 py-2 pr-10 rounded-lg w-[300px] shadow-sm"
                         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                     />
@@ -207,7 +208,7 @@ function ArticlesSection() {
 
             {/* Ordering */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-center sm:justify-end gap-2 sm:gap-4 mt-8 px-4 sm:px-16 max-w-[1440px] mx-auto">
-                <span className="text-gray font-medium mb-2 sm:mb-0 sm:mr-2 text-center sm:text-left">Order by:</span>
+                <span className="text-gray font-medium mb-2 sm:mb-0 sm:mr-2 text-center sm:text-left">{t("articles.orderby")}</span>
                 <div className="flex gap-2">
                     <button
                         className="flex items-center justify-center p-2 hover:bg-light-purple/20 rounded cursor-pointer"
@@ -243,7 +244,7 @@ function ArticlesSection() {
                                         whileHover={{ scale: 1.1 }}
                                         onClick={() => {
                                             if (!isAuthenticated) {
-                                                setMessage("You must be logged in to create an article.");
+                                                setMessage(t("articles.loggedInCreateArticleError"));
                                             } else {
                                                 navigate("/articles/create");
                                             }
@@ -258,7 +259,7 @@ function ArticlesSection() {
                                             <p className="text-gray-300 text-xl font-bold">
                                                 <BsFillPlusCircleFill size={24} className="inline-block mr-2" />
                                             </p>
-                                            <span className="text-gray-300 text-xl font-bold">Add Article</span>
+                                            <span className="text-gray-300 text-xl font-bold">{t("articles.addArticle")}</span>
                                         </div>
                                     </motion.div>
                                 );
@@ -287,7 +288,7 @@ function ArticlesSection() {
                                             className="text-white hover:underline hover:cursor-pointer"
                                         >
                                             <BsArrowRight className="inline-block mr-2" />
-                                            Read more
+                                            {t("articles.readMore")}
                                         </button>
                                     </div>
                                 </motion.div>
@@ -306,7 +307,7 @@ function ArticlesSection() {
                 >
                     <TfiArrowCircleLeft size={25} />
                 </button>
-                <span className="mx-6">Page {page} / {totalPages}</span>
+                <span className="mx-6">{t("articles.pagination")} {page} / {totalPages}</span>
                 <button
                     className="hover:cursor-pointer"
                     onClick={() => setPage((p) => p + 1)}
@@ -336,7 +337,7 @@ function ArticlesSection() {
                             <h2 className="text-2xl text-purple font-bold mb-4">{selectedArticle.title}</h2>
                             <div className="text-gray-500 mb-10">
                                 <p>
-                                    <strong>Author:</strong>{" "}
+                                    <strong>{t("articles.author")}</strong>{" "}
                                     {selectedArticle.author
                                         ? `${selectedArticle.author.first_name} ${selectedArticle.author.last_name}`.trim()
                                         : `User #${selectedArticle.user}`}
@@ -359,13 +360,13 @@ function ArticlesSection() {
                                         onClick={() => handleUpdateArticle(selectedArticle)}
                                         className="bg-purple text-white px-6 py-2 rounded-[8px] hover:bg-light-purple cursor-pointer transition-colors duration-300"
                                     >
-                                        Edit
+                                        {t("articles.edit")}
                                     </button>
                                     <button
                                         onClick={() => handleDeleteArticle(selectedArticle.id)}
                                         className="bg-red-500 text-white px-6 py-2 rounded-[8px] hover:bg-red-600 cursor-pointer transition-colors duration-300"
                                     >
-                                        Delete
+                                        {t("articles.delete")}
                                     </button>
                                 </div>
                             )}

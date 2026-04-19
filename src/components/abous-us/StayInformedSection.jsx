@@ -1,9 +1,11 @@
 // StayInformedSection.jsx
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../../languages/LanguageContext";
 
 function StayInformedSection() {
     const MotionLink = motion(Link);
+    const { t } = useLanguage();
 
     return (
         <section className="my-14 p-4">
@@ -20,9 +22,9 @@ function StayInformedSection() {
                     ></motion.img>
                 </div>
                 <div className="flex-1 space-y-6 mt-30 xl:mt-0">
-                    <p className="text-xl font-bold">THE WEB, A CONSTANTLY EVOLVING ECOSYSTEM</p>
-                    <h1 className="md:text-7xl text-5xl font-extrabold">Stay informed about the latest <span className="text-light-purple">trends</span></h1>
-                    <p className="text-lg font-normal">Every week, we analyze the latest web trends: emerging frameworks, SEO best practices, accessibility, and much more. Don't miss any digital news!</p>
+                    <p className="text-xl font-bold">{t("aboutUs.evolvingEcosystem")}</p>
+                    <h1 className="md:text-7xl text-5xl font-extrabold">{t("aboutUs.stayInformed")}<span className="text-light-purple">{t("aboutUs.trends")}</span></h1>
+                    <p className="text-lg font-normal">{t("aboutUs.stayInformedText")}</p>
                     <div className="flex items-center space-x-8">
                         <MotionLink
                             to="/articles"
@@ -30,7 +32,7 @@ function StayInformedSection() {
                             whileHover={{ scale: 1.05 }}
                             className="text-xl font-medium py-2 hover:text-light-purple cursor-pointer"
                         >
-                            Read the latest articles →
+                            {t("aboutUs.articlesButton")}
                         </MotionLink>
                     </div>
                 </div>

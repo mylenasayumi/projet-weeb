@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import authTokenService from "../../../services/AuthTokenService";
 import authService from "../../../services/AuthService";
+import { useLanguage } from "../../../languages/LanguageContext";
 
 function LoginSection() {
     const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
@@ -18,6 +19,7 @@ function LoginSection() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const success = params.get("success");
+    const { t } = useLanguage();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -47,7 +49,7 @@ function LoginSection() {
             navigate("/");
             window.location.reload();
         } catch (err) {
-            setError(err.message || "An error occurred during the connection.");
+            setError(err.message || t("login.errorMessage"));
         } finally {
             setLoading(false);
         }
@@ -63,19 +65,19 @@ function LoginSection() {
 
     return (
         <section className="flex flex-col items-center my-10">
-            <h1 className="md:text-6xl text-5xl font-extrabold">Login</h1>
+            <h1 className="md:text-6xl text-5xl font-extrabold">{t("login.title")}</h1>
 
             {/* After creating an account, the user is redirected to the login page and a success message is displayed. */}
             {success === "account_created" && (
                 <div className="bg-green-100 border border-green-500 text-green-500 px-4 py-3 rounded mt-4">
-                    Your account has been successfully created. It must be activated by an administrator.
+                    {t("login.accountCreatedMessage")}
                 </div>
             )}
 
             {/* After resetting the password, the user is redirected to the login page and a success message is displayed. */}
             {success === "password_reset" && (
                 <div className="bg-green-100 border border-green-500 text-green-500 px-4 py-3 rounded mt-4">
-                    Your password has been successfully reset.
+                    {t("login.passwordResetMessage")}
                 </div>
             )}
 
@@ -95,7 +97,7 @@ function LoginSection() {
                         value={formData.email}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="E-mail"
+                        placeholder={t("login.email")}
                         required
                         disabled={loading}
                     />
@@ -109,7 +111,7 @@ function LoginSection() {
                         value={formData.password}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="Password"
+                        placeholder={t("login.password")}
                         required
                         disabled={loading}
                     />
@@ -123,27 +125,27 @@ function LoginSection() {
                         transition={{ duration: 0.5 }}
                         disabled={loading}
                     >
-                        {loading ? "Logging in..." : "Login"}
+                        {loading ? t("login.loggingIn") : t("login.loginButton")}
 
                     </motion.button>
                 </div>
             </form>
 
             <Link to="/forgot-password" className="hover:text-light-purple">
-                Forgot Password?
+                {t("login.ForgotPasswordButton")}
             </Link>
 
             <p className="text-light-gray my-10 mx-10 text-center">
-                You don't have an account? You can&nbsp;
+                {t("login.createAccountText")}
                 <Link to="/sign-up" className="text-white hover:text-light-purple">
-                    create one
+                    {t("login.createAccountButton")}
                 </Link>
             </p>
 
             {/* Divider */}
             <div className="flex items-center my-10 w-full max-w-md">
                 <hr className="flex-grow border-t border-gray-500" />
-                <span className="mx-4 text-gray-500">or</span>
+                <span className="mx-4 text-gray-500">{t("login.orDivider")}</span>
                 <hr className="flex-grow border-t border-gray-500" />
             </div>
 
@@ -158,7 +160,7 @@ function LoginSection() {
                         transition={{ duration: 0.4 }}
                         className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
                     >
-                        Continue with GitHub
+                        {t("login.githubButton")}
                 </motion.button>
             </div>
         </section>

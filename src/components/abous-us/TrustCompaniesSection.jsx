@@ -1,10 +1,13 @@
 // TrustCompaniesSection.jsx
 import { motion } from "framer-motion";
+import { useLanguage } from "../../languages/LanguageContext";
 
 function TrustCompaniesSection() {
+    const { t } = useLanguage();
+
     return (
         <section className="flex flex-col justify-between items-center my-10">
-            <h2 className="text-6xl font-extrabold my-12 mb-20 text-center">They trust us</h2>
+            <h2 className="text-6xl font-extrabold my-12 mb-20 text-center">{t("aboutUs.trustCompanies")}</h2>
             <div className="grid lg:grid-cols-5 md:grid-cols-5 sm:grid-cols-1 place-items-center gap-9 mx-14 mb-20">
                 <motion.img 
                     src="src/assets/Logo-SmartFinder.png"

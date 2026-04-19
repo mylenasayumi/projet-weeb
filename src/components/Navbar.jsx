@@ -1,5 +1,4 @@
 // Navbar.jsx
-
 import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import authTokenService from "../services/AuthTokenService";
 import UserDropdown from "./ui/UserDropdown";
 import AnimatedDropdownDiv from "./ui/AnimatedDropdownDiv";
+import LanguageSwitcher from "../languages/LanguageSwitcher";
+import { useLanguage } from "../languages/LanguageContext";
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false); // State to open/close the menu, the default value is false.
@@ -15,6 +16,7 @@ function Navbar() {
     const menuDropdownRef = useRef(null);
     const menuButtonRef = useRef(null);
     const MotionLink = motion(Link);
+    const { t } = useLanguage();
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -85,7 +87,7 @@ function Navbar() {
                                         whileHover={{ scale: 1.1 }}
                                         className="transition-colors duration-150 hover:text-purple"
                                     >        
-                                        About Us
+                                        {t("navbar.aboutUs")}
                                     </MotionLink>
                                 </li>
                                 <li>
@@ -94,13 +96,17 @@ function Navbar() {
                                         whileHover={{ scale: 1.1 }}
                                         className="transition-colors duration-150 hover:text-purple"
                                     >        
-                                        Contact
+                                        {t("navbar.contact")}
                                     </MotionLink>
                                 </li>
                             </ul>
 
                             {/* Login / Sign up */}
                             <div className="text-base font-normal flex items-center space-x-8 relative">
+                                
+                                {/* Language Switcher dropdown menu */}
+                                <LanguageSwitcher></LanguageSwitcher>
+                                
                                 {/* Desktop Avatar */}
                                 {user ? (
                                     <div className="hidden md:block">
@@ -113,7 +119,7 @@ function Navbar() {
                                             whileHover={{ scale: 1.1 }}
                                             className="transition-colors duration-150 hover:text-purple"
                                         >        
-                                            Login
+                                            {t("navbar.login")}
                                         </MotionLink>
                                         <MotionLink
                                             to="/sign-up"
@@ -122,7 +128,7 @@ function Navbar() {
                                             onClick={() => setIsOpen(!isOpen)}
                                             className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] transition-colors duration-150 hover:bg-light-purple cursor-pointer"
                                         >        
-                                            Sign Up
+                                            {t("navbar.signUp")}
                                         </MotionLink>
                                     </>
                                 )}
@@ -138,18 +144,18 @@ function Navbar() {
                             >
                                 <ul className="text-base font-medium space-y-4">           
                                     <li>                            
-                                        <Link to="/" className="block hover:text-purple" onClick={() => setIsOpen(false)}>About Us</Link>
+                                        <Link to="/" className="block hover:text-purple" onClick={() => setIsOpen(false)}>{t("navbar.aboutUs")}</Link>
                                     </li>
                                     <li>
-                                        <Link to="/contact" className="block hover:text-purple" onClick={() => setIsOpen(false)}>Contact</Link>
+                                        <Link to="/contact" className="block hover:text-purple" onClick={() => setIsOpen(false)}>{t("navbar.contact")}</Link>
                                     </li>
                                     {!user && (
                                         <>
                                             <li>
-                                                <Link to="/login" className="block hover:text-purple" onClick={() => setIsOpen(false)}>Login</Link>
+                                                <Link to="/login" className="block hover:text-purple" onClick={() => setIsOpen(false)}>{t("navbar.login")}</Link>
                                             </li>
                                             <li>
-                                                <Link to="/sign-up" className="block text-light-purple font-bold hover:text-purple" onClick={() => setIsOpen(false)}>Sign Up</Link>
+                                                <Link to="/sign-up" className="block text-light-purple font-bold hover:text-purple" onClick={() => setIsOpen(false)}>{t("navbar.signUp")}</Link>
                                             </li>
                                         </>
                                     )}
