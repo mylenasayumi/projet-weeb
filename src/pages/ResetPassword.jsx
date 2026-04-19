@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import passwordResetService from "../services/PasswordResetService";
 import { motion } from "framer-motion";
+import { useLanguage } from "../languages/LanguageContext";
 
 function ResetPassword() {
     const [password, setPassword] = useState("");
@@ -14,6 +15,7 @@ function ResetPassword() {
     const params = useMemo(() => new URLSearchParams(location.search), [location.search]);
     const uidb64 = params.get("uidb64");
     const token = params.get("token");
+    const { t } = useLanguage();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,26 +23,26 @@ function ResetPassword() {
         setError("");
 
         if (!uidb64 || !token) {
-            setError("Invalid password reset link");
+            setError(t("password.invalidLinkMessage"));
             return;
         }
         if (password.length < 8) {
-            setError("Password must contain at least 8 characters");
+            setError(t("password.passwordTooShortMessage"));
             return;
         }
         if (password !== confirmPassword) {
-            setError("Passwords do not match");
+            setError(t("password.passwordsDoNotMatchMessage"));
             return;
         }
         setLoading(true);
 
         try {
             const response = await passwordResetService.confirmResetPassword(uidb64, token, password);
-            setMessage("Password reset successfully");
+            setMessage(t("password.successResetMessage"));
             setTimeout(() => navigate("/login?success=password_reset"), 2000);
 
         } catch (err) {
-            setError(err.message || "Failed to reset password");
+            setError(t("password.resetErrorMessage") || err.message);
         } finally {
             setLoading(false);
         }   
@@ -48,7 +50,7 @@ function ResetPassword() {
 
     return (
         <section className="flex flex-col items-center my-10">
-            <h2 className="md:text-6xl text-5xl font-extrabold">Reset Password</h2>
+            <h2 className="md:text-6xl text-5xl font-extrabold">{t("password.titleResetPassword")}</h2>
 
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
                 {message && (
@@ -70,7 +72,7 @@ function ResetPassword() {
                         className="text-light-purple text-center mt-1 block w-full px-4 py-2 border-2 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        placeholder="New password"
+                        placeholder={t("password.newPasswordPlaceholder")}
                         disabled={loading}
                     />
                 </div>
@@ -82,7 +84,7 @@ function ResetPassword() {
                         className="text-light-purple text-center mt-1 block w-full px-4 py-2 border-2 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
-                        placeholder="Confirm new password"
+                        placeholder={t("password.confirmPasswordPlaceholder")}
                         disabled={loading}
                     />
                 </div>
@@ -95,7 +97,7 @@ function ResetPassword() {
                         transition={{ duration: 0.3 }}
                         disabled={loading}
                     >
-                        {loading ? "Resetting..." : "Reset Password"}
+                        {loading ? t("password.resetting") : t("password.resetButton")}
                     </motion.button>
                 </div>
             </form>

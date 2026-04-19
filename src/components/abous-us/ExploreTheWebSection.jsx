@@ -1,14 +1,16 @@
 // ExploreTheWebSection.jsx
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useLanguage } from "../../languages/LanguageContext";
 
 function ExploreTheWebSection() {
     const MotionLink = motion(Link);
+    const { t } = useLanguage();
 
     return (
         <section className="flex flex-col items-center">
-            <h1 className="md:text-7xl text-5xl font-extrabold text-center my-18 mx-10 md:mx-20 lg:mx-30">Explore the <span className="text-light-purple font-light">Web</span> in all its <span className="underline underline-offset-16 decoration-light-purple decoration-[5px]">facets</span></h1>
-            <p className="text-lg font-normal text-center 2xl:mx-100 xl:mx-50 lg:mx-30 mx-15">The web is constantly evolving, and we're here to guide you through its trends, technologies, and best practices. Whether you're a developer, designer, or simply passionate about digital technology, our blog offers quality content to keep you ahead of the curve.</p>
+            <h1 className="md:text-7xl text-5xl font-extrabold text-center my-18 mx-10 md:mx-20 lg:mx-30">{t("aboutUs.exploreThe")}<span className="text-light-purple font-light">{t("aboutUs.Web")}</span>{t("aboutUs.inAllIts")}<span className="underline underline-offset-16 decoration-light-purple decoration-[5px]">{t("aboutUs.facets")}</span></h1>
+            <p className="text-lg font-normal text-center 2xl:mx-100 xl:mx-50 lg:mx-30 mx-15">{t("aboutUs.exploreTheWebText")}</p>
             <div className="text-lg md:text-xl font-medium flex items-center m-6 my-10 space-x-8">
                 <MotionLink
                     to="/articles"
@@ -16,7 +18,7 @@ function ExploreTheWebSection() {
                     whileHover={{ scale: 1.1 }}
                     className="bg-purple px-4 py-4 rounded-[8px] hover:bg-light-purple cursor-pointer"
                 >        
-                    Discover the articles
+                    {t("aboutUs.discoverArticles")}
                 </MotionLink>
                 <MotionLink
                     to="/newsletter"
@@ -24,7 +26,7 @@ function ExploreTheWebSection() {
                     whileHover={{ scale: 1.1 }}
                     className="px-4 py-3 rounded-[8px] border-2 hover:bg-light-purple cursor-pointer"
                 >
-                    Subscribe to the newsletter
+                    {t("aboutUs.subscribeNewsletter")}
                 </MotionLink>
             </div>
             <motion.img
