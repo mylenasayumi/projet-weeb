@@ -103,7 +103,7 @@ function SatisfactionSection() {
 
             setSatisfaction({
                 type: "error",
-                text: error.message || "An error has occurred. Please try again."
+                text: error.message || t("satisfactions.satisfationError")
             });
         } finally {
             setIsSubmitting(false);

@@ -10,7 +10,8 @@ const satisfactions = {
     sending: "Envoi en cours...",
     redirectingMessage: "Pour soumettre un avis, veuillez vous connecter. Vous êtes redirigé(e) vers la page de connexion...",
     positiveDisplayMessage: "Nous sommes ravis que votre expérience ait été positive ! Merci beaucoup pour votre retour !",
-    negativeDisplayMessage: "Nous sommes désolés que votre expérience n'ait pas été à la hauteur de vos attentes. Vos retours sont essentiels pour nous aider à nous améliorer."
+    negativeDisplayMessage: "Nous sommes désolés que votre expérience n'ait pas été à la hauteur de vos attentes. Vos retours sont essentiels pour nous aider à nous améliorer.",
+    satisfationError: "Une erreur s'est produite. Veuillez réessayer."
 };
 
 export default satisfactions;

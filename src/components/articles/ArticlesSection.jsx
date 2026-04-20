@@ -43,7 +43,7 @@ function ArticlesSection() {
 
         } catch (err) {
             console.error(err);
-            setError("Error loading articles");
+            setError(t("articles.loadingArticlesError"));
         } finally {
             setLoading(false);
         }
@@ -95,15 +95,15 @@ function ArticlesSection() {
                 try {
                     author = await authService.getById(fullArticle.user);
                 } catch (authorErr) {
-                    console.error("Error loading article author:", authorErr);
+                    console.error(t("articles.loadingArticlesAuthorError"), authorErr);
                 }
             }
 
             setSelectedArticle({ ...fullArticle, author });
             
         } catch (err) {
-            console.error("Error loading article details", err);
-            setError("Error loading article details");
+            console.error(t("articles.loadingArticlesDetailsError"), err);
+            setError(t("articles.loadingArticlesDetailsError"));
         }
     };
 
@@ -136,7 +136,7 @@ function ArticlesSection() {
             return;
         }
 
-        if (!window.confirm(t("articles.confirmDelete"))) {
+        if (!window.confirm(t("articles.confirmDeleteArticle"))) {
             return;
         }
 
@@ -144,10 +144,10 @@ function ArticlesSection() {
             await articleService.delete(id);
             setSelectedArticle(null);
             setArticles((prev) => prev.filter((article) => article.id !== id));
-            setMessage(t("articles.deleteSuccess"));
+            setMessage(t("articles.deleteArticleSuccess"));
         } catch (err) {
-            console.error("Error deleting article:", err);
-            console.error("Delete article error response:", err.response?.data);
+            console.error(t("articles.deleteArticleError"), err);
+            console.error(t("articles.deleteArticleErrorResponse"), err.response?.data);
 
             if (err.response?.status === 403) {
                 setMessage(t("articles.notOwnerDeleteArticleError"));
@@ -156,7 +156,7 @@ function ArticlesSection() {
             } else if (err.response?.status === 500) {
                 setMessage(t("articles.deleteArticleServerError"));
             } else {
-                setMessage(t("articles.deleteError"));
+                setMessage(t("articles.deleteArticleError"));
             }
         }
     };
