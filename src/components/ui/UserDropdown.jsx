@@ -2,10 +2,12 @@
 // User dropdown component for the user menu in the navbar.
 import { useEffect, useState, useRef } from "react";
 import AnimatedDropdownDiv from "./AnimatedDropdownDiv";
+import { useLanguage } from "../../languages/LanguageContext";
 
 function UserDropdown({ user, onLogout }) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const { t } = useLanguage();
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -33,7 +35,7 @@ function UserDropdown({ user, onLogout }) {
                             onClick={onLogout}
                             className="w-full text-center px-4 py-2 rounded"
                         >
-                            Logout
+                            {t("navbar.logout")}
                         </button>
                     </AnimatedDropdownDiv>
                 )}

@@ -2,9 +2,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import authCallbackService from "../services/AuthCallbackService";
+import { useLanguage } from "../languages/LanguageContext";
 
 function AuthCallback() {
     const navigate = useNavigate();
+    const { t } = useLanguage();
 
     useEffect(() => {
         const handleAuth = async () => {
@@ -23,7 +25,7 @@ function AuthCallback() {
 
     return (
         <div className="flex items-center justify-center h-screen">
-            <h1 className="text-2xl font-bold">Authentication in progress...</h1>
+            <h1 className="text-2xl font-bold">{t("auth.authentification")}</h1>
         </div>
     );
 }

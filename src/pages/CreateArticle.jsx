@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import articleService from "../services/ArticlesService";
 import { motion } from "framer-motion";
 import authTokenService from "../services/AuthTokenService";
+import { useLanguage } from "../languages/LanguageContext";
 
 function CreateArticle() {
     const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ function CreateArticle() {
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [message, setMessage] = useState("");
+    const { t } = useLanguage();
     
     // Checks authentication when component is loaded
     useEffect(() => {
@@ -21,7 +23,7 @@ function CreateArticle() {
         setIsAuthenticated(checkAuth);
         
         if (!checkAuth) {
-            setError("You must be logged in to create an article.");
+            setError(t("articles.loggedInCreateArticleError"));
             
             // Redirects to the login page after 2 seconds
             setTimeout(() => navigate("/login"), 2000);
@@ -34,25 +36,25 @@ function CreateArticle() {
             // Checks if the user is authenticated
             const token = localStorage.getItem('access_token');
             if (!token) {
-                setError("You must be logged in to create an article.");
+                setError(t("articles.loggedInCreateArticleError"));
                 return;
             }
             await articleService.create(formData);
 
-            setMessage("Article created successfully! Redirecting...");
+            setMessage(t("articles.createArticleSuccess"));
             setError("");
             setTimeout(() => navigate("/articles"), 3000);
 
         } catch (err) {
             console.error(err);
-            setError("Error creating article");
+            setError(t("articles.createArticleError"));
             setMessage("");
         }
     };
 
     return (
         <section className="bg-dark-blue text-white max-w-3xl mx-auto p-6 rounded-lg shadow-md">
-            <h1 className="text-2xl font-bold mb-4 text-white text-center text-[40px]">Create a new article</h1>       
+            <h1 className="text-2xl font-bold mb-4 text-white text-center text-[40px]">{t("articles.createArticlePage")}</h1>       
             <form onSubmit={handleSubmit} className="space-y-4">
                 {message && (
                     <div className="bg-green-100 border border-green-500 text-green-500 px-4 py-3 rounded">
@@ -66,10 +68,10 @@ function CreateArticle() {
                 )}
                 
                 <div>
-                    <label className="block font-semibold mb-2">Title</label>
+                    <label className="block font-semibold mb-2">{t("articles.title")}</label>
                     <input
                         type="text"
-                        placeholder="Title"
+                        placeholder={t("articles.title")}
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                         className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -77,10 +79,10 @@ function CreateArticle() {
                     />
                 </div>
                 <div>
-                    <label className="block font-semibold mb-2">Description</label>
+                    <label className="block font-semibold mb-2">{t("articles.description")}</label>
                     <textarea
                         value={formData.description}
-                        placeholder="Description"
+                        placeholder={t("articles.description")}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
                         rows={6}
@@ -93,7 +95,7 @@ function CreateArticle() {
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.2 }}
                 >
-                    Create
+                    {t("articles.createArticleSaveButton")}
                 </motion.button>
             </form>
         </section>

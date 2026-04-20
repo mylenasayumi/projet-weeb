@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import authTokenService from "../../services/AuthTokenService";
 import { useNavigate } from "react-router-dom";
 import satisfactionService from "../../services/SatisfactionService";
+import { useLanguage } from "../../languages/LanguageContext";
 
 function SatisfactionSection() {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ function SatisfactionSection() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [satisfaction, setSatisfaction] = useState({ type: "", text: "" });
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { t } = useLanguage();
 
     // Checks authentication when component is loaded
     useEffect(() => {
@@ -25,7 +27,7 @@ function SatisfactionSection() {
         if (!checkAuth) {
             setSatisfaction({
                 type: "error",
-                text: "You must be logged in to submit a review. Redirecting..."
+                text: t("satisfactions.redirectingMessage")
             });
             
             // Redirects to the login page after 2 seconds
@@ -65,7 +67,7 @@ function SatisfactionSection() {
             if (!token) {
                 setSatisfaction({
                     type: "error",
-                    text: "You must be logged in to submit a review."
+                    text: t("satisfactions.redirectingMessage")
                 });
                 setIsSubmitting(false);
                 return;
@@ -86,12 +88,12 @@ function SatisfactionSection() {
             if (response.polarity) {
                 setSatisfaction({
                     type: "success",
-                    text: "We are pleased to hear that you had a positive experience! Thank you for sharing your thoughts with us!"
+                    text: t("satisfactions.positiveDisplayMessage")
                 });
             } else {
                 setSatisfaction({
                     type: "error",
-                    text: "We are sorry to hear that you had a negative experience. Your feedback will help us improve our services."
+                    text: t("satisfactions.negativeDisplayMessage")
                 });
             }
 
@@ -110,8 +112,8 @@ function SatisfactionSection() {
 
     return (
         <section className="flex flex-col items-center text-center">
-            <h1 className="md:text-6xl text-5xl font-extrabold m-10">Your opinion matters!</h1>
-            <p className="text-lg font-normal m-2 text-center 2xl:mx-100 xl:mx-50 mx-20">Your feedback is essential for us to improve! Share your experience, tell us what you like and what we could improve. Your suggestions help us make this blog a more useful and enriching resource. </p>
+            <h1 className="md:text-6xl text-5xl font-extrabold m-10">{t("satisfactions.title")}</h1>
+            <p className="text-lg font-normal m-2 text-center 2xl:mx-100 xl:mx-50 mx-20">{t("satisfactions.text")}</p>
 
             {/* Satisfaction */}
             {satisfaction.text && (
@@ -140,7 +142,7 @@ function SatisfactionSection() {
                             value={formData.last_name}
                             onChange={handleChange}
                             className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                            placeholder="Last Name"
+                            placeholder={t("satisfactions.lastNamePlaceholder")}
                             disabled={isSubmitting}
                             required
                         />
@@ -154,7 +156,7 @@ function SatisfactionSection() {
                             value={formData.first_name}
                             onChange={handleChange}
                             className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                            placeholder="First Name"
+                            placeholder={t("satisfactions.firstNamePlaceholder")}
                             disabled={isSubmitting}
                             required
                         />
@@ -170,7 +172,7 @@ function SatisfactionSection() {
                         value={formData.email}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="E-mail"
+                        placeholder={t("satisfactions.emailPlaceholder")}
                         disabled={isSubmitting}
                         required
                     />
@@ -186,7 +188,7 @@ function SatisfactionSection() {
                         value={formData.description}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="Message"
+                        placeholder={t("satisfactions.messagePlaceholder")}
                         disabled={isSubmitting}
                         required
                     />
@@ -200,7 +202,7 @@ function SatisfactionSection() {
                         transition={{ duration: 0.5 }}
                         disabled={isSubmitting}
                     >
-                        {isSubmitting ? "Sending..." : "Submit"}
+                        {isSubmitting ? t("satisfactions.sending") : t("satisfactions.submitButton")}
                     </motion.button>
                 </div>
 

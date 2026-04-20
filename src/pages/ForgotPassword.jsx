@@ -2,12 +2,14 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import passwordResetService from "../services/PasswordResetService";
+import { useLanguage } from "../languages/LanguageContext";
 
 function ForgotPassword() {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const { t } = useLanguage();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,10 +19,10 @@ function ForgotPassword() {
 
         try {
             const response = await passwordResetService.requestResetPassword(email);
-            setMessage(response.message || "If an account is associated with this email, you will receive instructions to reset your password.");
+            setMessage(t("password.forgotPasswordMessage") || response.message);
             setEmail("");
         } catch (err) {
-            setError(err.message || "An error occurred while requesting password reset.");
+            setError(t("password.errorMessage") || err.message);
         } finally {
             setLoading(false);
         }
@@ -28,7 +30,7 @@ function ForgotPassword() {
 
     return (
         <section className="flex flex-col items-center my-10">
-            <h1 className="md:text-6xl text-5xl font-extrabold">Forgot your password?</h1>
+            <h1 className="md:text-6xl text-5xl font-extrabold">{t("password.titleForgotPassword")}</h1>
 
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
                 {message && (
@@ -49,7 +51,7 @@ function ForgotPassword() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        placeholder="E-mail"
+                        placeholder={t("password.email")}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
                         disabled={loading}
                     />
@@ -63,7 +65,7 @@ function ForgotPassword() {
                         transition={{ duration: 0.3 }}
                         disabled={loading}
                     >
-                        {loading ? "Sending..." : "Send Link"}
+                        {loading ? t("password.sending") : t("password.sendButton")}
                     </motion.button>
                 </div>
             </form>

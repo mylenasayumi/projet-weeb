@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import authService from "../../../services/AuthService";
+import { useLanguage } from "../../../languages/LanguageContext";
 
 function SignUpForm() {
     const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    const { t } = useLanguage();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -41,7 +43,7 @@ function SignUpForm() {
             // It does NOT log in automatically
             navigate("/login?success=account_created");
         } catch (err) {
-            setError(err.message || "An error occurred during registration.");
+            setError(err.message || t("signUp.errorMessage"));
         } finally {
             setLoading(false);
         }
@@ -49,7 +51,7 @@ function SignUpForm() {
 
     return (
         <section className="flex flex-col items-center my-10">
-            <h1 className="md:text-6xl text-5xl font-extrabold">Sign Up</h1>
+            <h1 className="md:text-6xl text-5xl font-extrabold">{t("signUp.title")}</h1>
 
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
                 {/* Connection error displayed */}
@@ -67,7 +69,7 @@ function SignUpForm() {
                         value={formData.email}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="E-mail"
+                        placeholder={t("signUp.email")}
                         required
                         disabled={loading}
                     />
@@ -81,7 +83,7 @@ function SignUpForm() {
                         value={formData.first_name}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="First Name"
+                        placeholder={t("signUp.firstName")}
                         required
                         disabled={loading}
                     />
@@ -95,7 +97,7 @@ function SignUpForm() {
                         value={formData.last_name}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="Last Name"
+                        placeholder={t("signUp.lastName")}
                         required
                         disabled={loading}
                     />
@@ -109,7 +111,7 @@ function SignUpForm() {
                         value={formData.password}
                         onChange={handleChange}
                         className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
-                        placeholder="Password"
+                        placeholder={t("signUp.password")}
                         required
                         disabled={loading}
                     />
@@ -123,7 +125,7 @@ function SignUpForm() {
                         transition={{ duration: 0.4 }}
                         disabled={loading}
                     >
-                        {loading ? "Registration..." : "Sign Up"}
+                        {loading ? t("signUp.registrationButton") : t("signUp.signUpButton")}
 
                     </motion.button>
                 </div>
@@ -132,7 +134,7 @@ function SignUpForm() {
             {/* Divider */}
             <div className="flex items-center my-10 w-full max-w-md">
                 <hr className="flex-grow border-t border-gray-500" />
-                <span className="mx-4 text-gray-500">or</span>
+                <span className="mx-4 text-gray-500">{t("signUp.orDivider")}</span>
                 <hr className="flex-grow border-t border-gray-500" />
             </div>
 
@@ -147,7 +149,7 @@ function SignUpForm() {
                         transition={{ duration: 0.4 }}
                         className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
                     >
-                        Continue with GitHub
+                        {t("signUp.githubButton")}
                 </motion.button>
             </div>
         </section>
