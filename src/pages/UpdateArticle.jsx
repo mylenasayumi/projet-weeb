@@ -27,7 +27,7 @@ function UpdateArticle() {
     
     useEffect(() => {
         if (!state?.id) {
-            setError("Article data is missing.");
+            setError(t("articles.articleDataMissingError"));
             setTimeout(() => navigate("/articles"), 2000);
             return;
         }
@@ -54,7 +54,7 @@ function UpdateArticle() {
 
         if (error) return;
 
-        if (!window.confirm(t("articles.confirmUpdate"))) {
+        if (!window.confirm(t("articles.confirmUpdateArticle"))) {
             return;
         }
 

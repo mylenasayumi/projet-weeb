@@ -2,6 +2,9 @@
 const articles = {
     // Articles Section
     loadingArticles: "Loading articles...",
+    loadingArticlesError: "Error loading articles.",
+    loadingArticlesAuthorError: "Error loading article author:",
+    loadingArticlesDetailsError: "Error loading articles details.",
     articlesPage: "Discover the article",
     orderby: "Order by",
     addArticle: "Add Article",
@@ -13,12 +16,14 @@ const articles = {
     searchByTitle: "Search by title",
     loggedInDeleteArticleError: "You must be logged in to delete an article.",
     notOwnerDeleteArticleError: "You are not authorized to delete this article.",
-    confirmDelete: "Are you sure you want to delete this article?",
-    deleteSuccess: "Article deleted successfully.",
+    confirmDeleteArticle: "Are you sure you want to delete this article?",
+    deleteArticleSuccess: "Article deleted successfully.",
     deleteArticleServerError: "Server error occurred while deleting article.",
-    deleteError: "Error deleting article.",
+    deleteArticleError: "Error deleting article.",
+    deleteArticleErrorResponse: "Delete article error response:",
 
     // Create Article Page
+    articleDataMissingError: "Article data is missing.",
     loggedInCreateArticleError: "You must be logged in to create an article.",
     createArticlePage: "Create a new article",
     title: "Title",
@@ -32,7 +37,7 @@ const articles = {
     title: "Title",
     description: "Description",
     updateArticleSaveButton: "Save",
-    confirmUpdate: "Are you sure you want to edit this article?",
+    confirmUpdateArticle: "Are you sure you want to edit this article?",
     loggedInUpdateArticleError: "You must be logged in to edit an article.",
     notOwnerUpdateArticleError: "You are not authorized to edit this article.",
     updateArticleError: "Error updating article."
