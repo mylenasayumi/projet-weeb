@@ -21,7 +21,12 @@ function Navbar() {
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
-            setUser(JSON.parse(storedUser));
+            try {
+                setUser(JSON.parse(storedUser));
+            } catch (error) {
+                console.error("Error parsing stored user:", error);
+                localStorage.removeItem("user");
+            }
         }
     }, []);
 
@@ -42,8 +47,8 @@ function Navbar() {
         };
     }, []);
 
-    const handleLogout = () => {
-        authTokenService.logout();
+    const handleLogout = async () => {
+        await authTokenService.logout();
         localStorage.removeItem("user");
         setUser(null);
         setIsOpen(false);
@@ -128,7 +133,6 @@ function Navbar() {
                                             to="/sign-up"
                                             transition={{ duration: 0.5 }}
                                             whileHover={{ scale: 1.1 }}
-                                            onClick={() => setIsOpen(!isOpen)}
                                             className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] transition-colors duration-150 hover:bg-light-purple cursor-pointer"
                                         >        
                                             {t("navbar.signUp")}

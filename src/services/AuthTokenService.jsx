@@ -11,9 +11,8 @@ const authTokenService = {
                 password
             });
 
-            const { access, refresh } = response.data;
+            const { access } = response.data;
             localStorage.setItem("access_token", access);
-            localStorage.setItem("refresh_token", refresh);
 
             return response.data;
         } catch (error) {
@@ -23,15 +22,21 @@ const authTokenService = {
             const message =
                 error.response?.data?.detail ||
                 error.response?.data?.error ||
-                "Invalid credentials"
+                "Invalid credentials";
 
             throw new Error(message);
         }
     },
 
-    logout() {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
+    async logout() {
+        try {
+            await api.post("/api/auth/logout/");
+        } catch (error) {
+            console.error("Logout error:", error);
+        } finally {
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("user");
+        }
     },
 
     isAuthenticated() {

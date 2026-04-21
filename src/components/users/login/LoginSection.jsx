@@ -1,13 +1,13 @@
 // LoginSection.jsx
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import authTokenService from "../../../services/AuthTokenService";
 import authService from "../../../services/AuthService";
 import { useLanguage } from "../../../languages/LanguageContext";
 
 function LoginSection() {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
     const [formData, setFormData] = useState({
         email: "",
@@ -15,15 +15,36 @@ function LoginSection() {
     });
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
     const location = useLocation();
-    const params = new URLSearchParams(location.search);
-    const success = params.get("success");
     const { t } = useLanguage();
 
+    const params = useMemo(() => new URLSearchParams(location.search), [location.search]);
+    const success = params.get("success");
+    const errorParam = params.get("error");
+
+    const getAuthErrorMessage = (errorCode) => {
+        switch (errorCode) {
+            case "github_access_denied":
+                return "github_access_denied";
+            case "github_no_code":
+                return "github_no_code";
+            case "github_token_failed":
+                return "github_token_failed";
+            case "github_no_email":
+                return "github_no_email";
+            case "github_auth_failed":
+                return "github_auth_failed";
+            case "user_fetch_failed":
+                return "user_fetch_failed";
+            default:
+                return errorCode || t("login.errorMessage");
+        }
+    };
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
             [name]: value
         }));
@@ -56,12 +77,13 @@ function LoginSection() {
     };
 
     useEffect(() => {
-        if (success) {
+        if (success || errorParam) {
             const url = new URL(window.location);
             url.searchParams.delete("success");
+            url.searchParams.delete("error");
             window.history.replaceState({}, "", url);
         }
-    }, [success]);
+    }, [success, errorParam]);
 
     return (
         <section className="flex flex-col items-center my-10">
@@ -81,10 +103,16 @@ function LoginSection() {
                 </div>
             )}
 
+            {errorParam && (
+                <div className="bg-red-100 border border-red-500 text-red-500 px-4 py-3 rounded mt-4">
+                    {getAuthErrorMessage(errorParam)}
+                </div>
+            )}
+
             <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
                 {/* Connection error displayed */}
                 {error && (
-                    <div className="bg-red-100 border border-red-500 text-red-500 px-4 py-3 rounded">
+                    <div className="bg-red-100 border border-red-500 text-red-500 px-4 py-3 rounded mt-4">
                         {error}
                     </div>
                 )}
@@ -152,15 +180,15 @@ function LoginSection() {
             {/* Github OAuth */}
             <div className="flex justify-center">
                 <motion.button
-                        type="button"
-                        onClick={() => {
-                            window.location.href = `${API_BASE_URL}/api/auth/github/`;
-                        }}
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.4 }}
-                        className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
-                    >
-                        {t("login.githubButton")}
+                    type="button"
+                    onClick={() => {
+                        window.location.href = `${API_BASE_URL}/api/auth/github/`;
+                    }}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.4 }}
+                    className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
+                >
+                    {t("login.githubButton")}
                 </motion.button>
             </div>
         </section>

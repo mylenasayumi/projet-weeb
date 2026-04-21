@@ -107,7 +107,7 @@ function ArticlesSection() {
         }
     };
 
-    const isOwner = !!currentUser?.email && !!selectedArticle?.author?.email && currentUser.email === selectedArticle.author.email;
+    const isOwner = !!currentUser?.id && !!selectedArticle?.user && currentUser.id === selectedArticle.user;
 
     // Handles navigation to update article page
     const handleUpdateArticle = (article) => {
@@ -118,7 +118,7 @@ function ArticlesSection() {
                 id: article.id, 
                 title: article.title, 
                 description: article.description,
-                ownerEmail: article?.author?.email || null
+                ownerId: article.user
             }
         });
     };
