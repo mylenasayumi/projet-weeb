@@ -1,5 +1,5 @@
 // UpdateArticle.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import articleService from "../services/ArticlesService";
 import { motion } from "framer-motion";
@@ -9,22 +9,25 @@ import { useLanguage } from "../languages/LanguageContext";
 function UpdateArticle() {
     const { state } = useLocation();
     const navigate = useNavigate();
+    const { t } = useLanguage();
+
     const [formData, setFormData] = useState({
         title: state?.title || "",
         description: state?.description || "",
     });
     const [error, setError] = useState("");
-    const { t } = useLanguage();
 
-    const storedUser = localStorage.getItem("user");
-    let currentUser = null;
+    const currentUser = useMemo(() => {
+        const storedUser = localStorage.getItem("user");
 
-    try {
-        currentUser = storedUser ? JSON.parse(storedUser) : null;
-    } catch (err) {
-        console.error("Error parsing stored user:", err);
-    }
-    
+        try {
+            return storedUser ? JSON.parse(storedUser) : null;
+        } catch (err) {
+            console.error("Error parsing stored user:", err);
+            return null;
+        }
+    }, []);
+
     useEffect(() => {
         if (!state?.id) {
             setError(t("articles.articleDataMissingError"));
@@ -38,11 +41,11 @@ function UpdateArticle() {
             return;
         }
 
-        if (state?.ownerEmail && currentUser?.email !== state.ownerEmail) {
+        if (state?.ownerId && currentUser?.id !== state.ownerId) {
             setError(t("articles.notOwnerUpdateArticleError"));
             setTimeout(() => navigate("/articles"), 2000);
         }
-    }, [navigate, state, currentUser]);
+    }, [navigate, state, currentUser, t]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -67,7 +70,7 @@ function UpdateArticle() {
                 setError(t("articles.notOwnerUpdateArticleError"));
             } else if (err.response?.status === 401) {
                 setError(t("articles.loggedInUpdateArticleError"));
-                authTokenService.logout();
+                await authTokenService.logout();
                 navigate("/login");
             } else {
                 setError(t("articles.updateArticleError"));
