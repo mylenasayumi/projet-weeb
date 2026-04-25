@@ -1,15 +1,24 @@
 // PasswordResetService.jsx
-import apiService from "./ApiService";
-
 // Service to handle password reset requests
 // IMPORTANT: Any user can request a password reset, even if user is_active = false
-const passwordResetService = {  
+import axios from "axios";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+const passwordResetService = {
     async requestResetPassword(email) {
         try {
-            return await apiService.post("/api/users/password-reset/request/", {
-                email,
-                frontend_url: window.location.origin,
-            });
+            const response = await axios.post(
+                `${API_BASE_URL}/api/users/password-reset/request/`,
+                { email },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    withCredentials: false,
+                }
+            );
+            return response.data;
         } catch (error) {
             const message =
                 error.response?.data?.email?.[0] ||
@@ -22,13 +31,17 @@ const passwordResetService = {
 
     async confirmResetPassword(uidb64, token, password) {
         try {
-            return await apiService.post(
-                `/api/users/password-reset/confirm/?uidb64=${encodeURIComponent(uidb64)}`,
+            const response = await axios.post(
+                `${API_BASE_URL}/api/users/password-reset/confirm/?uidb64=${encodeURIComponent(uidb64)}`,
+                { token, password },
                 {
-                    token,
-                    password
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    withCredentials: false,
                 }
             );
+            return response.data;
         } catch (error) {
             const message =
                 error.response?.data?.token?.[0] ||

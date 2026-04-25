@@ -5,42 +5,42 @@ import api from "./ApiClient";
 const authTokenService = {
     // Login and JWT token retrieval
     async login(email, password) {
-        try {
-            const response = await api.post("/api/auth/token/", {
-                email,
-                password
-            });
+        sessionStorage.removeItem("force_logout");
 
-            const { access } = response.data;
-            localStorage.setItem("access_token", access);
+        const response = await api.post("/api/auth/token/", { email, password });
 
-            return response.data;
-        } catch (error) {
-            console.log("LOGIN ERROR:", error);
-            console.log("LOGIN ERROR RESPONSE:", error.response);
+        const { access } = response.data;
+        localStorage.setItem("access_token", access);
 
-            const message =
-                error.response?.data?.detail ||
-                error.response?.data?.error ||
-                "Invalid credentials";
+        return response.data;
+    },
 
-            throw new Error(message);
+    clearSession({ notify = true } = {}) {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("user");
+        localStorage.setItem("logout_event", Date.now().toString());
+
+        if (notify) {
+            window.dispatchEvent(new Event("auth_changed"));
         }
     },
 
     async logout() {
         try {
             await api.post("/api/auth/logout/");
-        } catch (error) {
-            console.error("Logout error:", error);
+        } catch {
+            console.warn("Backend logout failed, clearing frontend session anyway.");
         } finally {
-            localStorage.removeItem("access_token");
-            localStorage.removeItem("user");
+            this.clearSession();
         }
     },
 
     isAuthenticated() {
         return !!localStorage.getItem("access_token");
+    },
+
+    clearSessionSilently() {
+        this.clearSession({ notify: false });
     }
 };
 

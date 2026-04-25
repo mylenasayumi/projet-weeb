@@ -32,8 +32,13 @@ api.interceptors.response.use(
         const originalRequest = error.config;
         const requestUrl = originalRequest?.url || "";
         const isRefreshRequest = requestUrl.includes("/api/auth/token/refresh/");
-        const isLoginRequest = requestUrl === "/api/auth/token/" || requestUrl.endsWith("/api/auth/token/");
+        const isLoginRequest = requestUrl.includes("/api/auth/token/");
         const isLogoutRequest = requestUrl.includes("/api/auth/logout/");
+        const forceLogout = sessionStorage.getItem("force_logout") === "true";
+
+        if (forceLogout) {
+            return Promise.reject(error);
+        }
 
         if (
             error.response?.status === 401 &&

@@ -1,8 +1,10 @@
 // ForgotPassword.jsx
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import passwordResetService from "../services/PasswordResetService";
 import { useLanguage } from "../languages/LanguageContext";
+import { useNavigate } from "react-router-dom";
+import authTokenService from "../services/AuthTokenService";
 
 function ForgotPassword() {
     const [email, setEmail] = useState("");
@@ -10,6 +12,24 @@ function ForgotPassword() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const { t } = useLanguage();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const redirectIfAuthenticated = () => {
+            if (authTokenService.isAuthenticated()) {
+                navigate("/", { replace: true });
+            }
+        };
+        redirectIfAuthenticated();
+
+        window.addEventListener("storage", redirectIfAuthenticated);
+        window.addEventListener("auth_changed", redirectIfAuthenticated);
+
+        return () => {
+            window.removeEventListener("storage", redirectIfAuthenticated);
+            window.removeEventListener("auth_changed", redirectIfAuthenticated);
+        };
+    }, [navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
