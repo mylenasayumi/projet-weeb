@@ -19,15 +19,32 @@ function Navbar() {
     const { t } = useLanguage();
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
+        const syncUser = () => {
+            const storedUser = localStorage.getItem("user");
+
+            if (!storedUser) {
+                setUser(null);
+                return;
+            }
+
             try {
                 setUser(JSON.parse(storedUser));
             } catch (error) {
                 console.error("Error parsing stored user:", error);
                 localStorage.removeItem("user");
+                setUser(null);
             }
-        }
+        };
+
+        syncUser();
+
+        window.addEventListener("auth_changed", syncUser);
+        window.addEventListener("storage", syncUser);
+
+        return () => {
+            window.removeEventListener("auth_changed", syncUser);
+            window.removeEventListener("storage", syncUser);
+        };
     }, []);
 
     useEffect(() => {
@@ -52,7 +69,7 @@ function Navbar() {
         localStorage.removeItem("user");
         setUser(null);
         setIsOpen(false);
-        navigate("/login");
+        navigate("/login", { replace: true });
     };
     
     return (

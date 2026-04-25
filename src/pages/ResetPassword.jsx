@@ -1,8 +1,10 @@
-import { useMemo, useState } from "react";
+// ResetPassword.jsx
+import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import passwordResetService from "../services/PasswordResetService";
 import { motion } from "framer-motion";
 import { useLanguage } from "../languages/LanguageContext";
+import authTokenService from "../services/AuthTokenService";
 
 function ResetPassword() {
     const [password, setPassword] = useState("");
@@ -16,6 +18,12 @@ function ResetPassword() {
     const uidb64 = params.get("uidb64");
     const token = params.get("token");
     const { t } = useLanguage();
+
+    useEffect(() => {
+        if (authTokenService.isAuthenticated()) {
+            authTokenService.clearSession();
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,15 +45,20 @@ function ResetPassword() {
         setLoading(true);
 
         try {
-            const response = await passwordResetService.confirmResetPassword(uidb64, token, password);
+            await passwordResetService.confirmResetPassword(uidb64, token, password);
+
+            authTokenService.clearSessionSilently();
+
             setMessage(t("password.successResetMessage"));
-            setTimeout(() => navigate("/login?success=password_reset"), 2000);
+            setTimeout(() => {
+                navigate("/login?success=password_reset", { replace: true });
+            }, 2000);
 
         } catch (err) {
             setError(t("password.resetErrorMessage") || err.message);
         } finally {
             setLoading(false);
-        }   
+        }
     };
 
     return (

@@ -53,6 +53,12 @@ function LoginSection() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (authTokenService.isAuthenticated()) {
+            navigate("/", { replace: true });
+            return;
+        }
+
         setError("");
         setLoading(true);
 
@@ -65,10 +71,11 @@ function LoginSection() {
 
             // Store user info
             localStorage.setItem("user", JSON.stringify(user));
+            window.dispatchEvent(new Event("auth_changed"));
+            localStorage.setItem("login_event", Date.now().toString());
 
             // Redirect to home and refresh to update UI
-            navigate("/");
-            window.location.reload();
+            navigate("/", { replace: true });
         } catch (err) {
             setError(err.message || t("login.errorMessage"));
         } finally {
@@ -84,6 +91,12 @@ function LoginSection() {
             window.history.replaceState({}, "", url);
         }
     }, [success, errorParam]);
+
+    useEffect(() => {
+        if (authTokenService.isAuthenticated()) {
+            navigate("/", { replace: true });
+        }
+    }, [navigate]);
 
     return (
         <section className="flex flex-col items-center my-10">
