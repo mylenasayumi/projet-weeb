@@ -17,6 +17,10 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
+    "coverage": "vitest run --coverage",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
     "coverage": "vitest run --coverage"
   },
   "lint-staged": {
