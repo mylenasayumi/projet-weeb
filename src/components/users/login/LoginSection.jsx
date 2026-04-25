@@ -85,7 +85,7 @@ function LoginSection() {
 
     useEffect(() => {
         if (success || errorParam) {
-            const url = new URL(window.location);
+            const url = new URL(window.location.href);
             url.searchParams.delete("success");
             url.searchParams.delete("error");
             window.history.replaceState({}, "", url);
@@ -116,7 +116,7 @@ function LoginSection() {
                 </div>
             )}
 
-            {errorParam && (
+            {errorParam !== null && (
                 <div className="bg-red-100 border border-red-500 text-red-500 px-4 py-3 rounded mt-4">
                     {getAuthErrorMessage(errorParam)}
                 </div>
@@ -195,7 +195,7 @@ function LoginSection() {
                 <motion.button
                     type="button"
                     onClick={() => {
-                        window.location.href = `${API_BASE_URL}/api/auth/github/`;
+                        window.location.assign(`${API_BASE_URL}/api/auth/github/`);
                     }}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.4 }}
