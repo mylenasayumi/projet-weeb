@@ -1,8 +1,10 @@
 // LearnAndProgressSection.jsx
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useLanguage } from "../../languages/LanguageContext";
 
 function LearnAndProgressSection() {
+    const MotionLink = motion(Link);
     const { t } = useLanguage();
 
     return (
@@ -13,13 +15,14 @@ function LearnAndProgressSection() {
                     <h1 className="text-light-purple md:text-7xl text-5xl font-extrabold">{t("aboutUs.learn")}<span className="text-white">{t("aboutUs.and")}</span>{t("aboutUs.progress")}</h1>
                     <p className="text-lg font-normal">{t("aboutUs.learnAndProgressText")}</p>
                     <div className="flex items-center space-x-8">
-                        <motion.button
+                        <MotionLink
+                            to="/resources"
                             transition={{ duration: 0.5 }}
                             whileHover={{ scale: 1.05 }}
                             className="text-xl font-medium py-2 hover:text-light-purple cursor-pointer"
                         >
                             {t("aboutUs.exploreResourcesButton")}
-                        </motion.button>
+                        </MotionLink>
                     </div>
                 </div>
                 <div className="flex-1 flex justify-center">
