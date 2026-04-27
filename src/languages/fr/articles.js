@@ -40,8 +40,6 @@ const articles = {
 
   // Update Article Page
   updateArticlePage: "Mettre à jour l'article",
-  title: "Titre",
-  description: "Description",
   updateArticleSaveButton: "Enregistrer",
   updateArticleSavingButton: "En cours...",
   confirmUpdateArticle: "Êtes-vous sûr de vouloir modifier cet article?",

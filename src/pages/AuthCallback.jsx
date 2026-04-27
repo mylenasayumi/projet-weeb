@@ -1,8 +1,9 @@
 // AuthCallback.jsx
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import authCallbackService from "../services/AuthCallbackService";
+
 import { useLanguage } from "../languages/LanguageContext";
+import authCallbackService from "../services/AuthCallbackService";
 
 function AuthCallback() {
   const navigate = useNavigate();

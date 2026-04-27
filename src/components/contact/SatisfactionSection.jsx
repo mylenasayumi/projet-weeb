@@ -1,13 +1,12 @@
 // SatisfactionSection.jsx
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import satisfactionService from "../../services/SatisfactionService";
-import { useLanguage } from "../../languages/LanguageContext";
+
 import { useAuth } from "../../contexts/AuthContext";
+import { useLanguage } from "../../languages/LanguageContext";
+import satisfactionService from "../../services/SatisfactionService";
 
 function SatisfactionSection() {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     last_name: "",
     first_name: "",
@@ -17,7 +16,7 @@ function SatisfactionSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [satisfaction, setSatisfaction] = useState({ type: "", text: "" });
   const { t } = useLanguage();
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
 
   // Pre-fills the form with user data if available
   useEffect(() => {

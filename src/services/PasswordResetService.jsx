@@ -2,6 +2,7 @@
 // Service to handle password reset requests
 // IMPORTANT: Any user can request a password reset, even if user is_active = false
 import axios from "axios";
+
 import { API_BASE_URL } from "../constants/api";
 import { getApiErrorMessage } from "../utils/getApiErrorMessage";
 

@@ -35,8 +35,6 @@ const articles = {
 
   // Update Article Page
   updateArticlePage: "Update article",
-  title: "Title",
-  description: "Description",
   updateArticleSaveButton: "Save",
   updateArticleSavingButton: "Saving...",
   confirmUpdateArticle: "Are you sure you want to edit this article?",

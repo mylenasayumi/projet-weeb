@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { useLanguage } from "./LanguageContext";
 import Flag from "react-world-flags";
+
 import AnimatedDropdownDiv from "../components/ui/AnimatedDropdownDiv";
+
+import { useLanguage } from "./LanguageContext";
 
 const languages = [
   { code: "en", label: "EN", flag: "GB", text: "English" },

@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { BsSortAlphaDown, BsSortAlphaDownAlt } from "react-icons/bs";
 import { PiMagnifyingGlass } from "react-icons/pi";
+
 import { useLanguage } from "../../languages/LanguageContext";
 
 function ArticleFilters({

@@ -1,9 +1,10 @@
 // CreateArticle.jsx
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import articleService from "../services/ArticlesService";
-import { motion } from "framer-motion";
+
 import { useLanguage } from "../languages/LanguageContext";
+import articleService from "../services/ArticlesService";
 
 function CreateArticle() {
   const [formData, setFormData] = useState({

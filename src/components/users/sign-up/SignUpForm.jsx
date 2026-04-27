@@ -2,9 +2,10 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import authService from "../../../services/AuthService";
-import { useLanguage } from "../../../languages/LanguageContext";
+
 import { API_BASE_URL } from "../../../constants/api";
+import { useLanguage } from "../../../languages/LanguageContext";
+import authService from "../../../services/AuthService";
 
 function SignUpForm() {
   const { t } = useLanguage();

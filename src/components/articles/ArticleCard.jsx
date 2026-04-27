@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { BsArrowRight, BsFillPlusCircleFill } from "react-icons/bs";
+
 import { useLanguage } from "../../languages/LanguageContext";
 
 function ArticleCard({

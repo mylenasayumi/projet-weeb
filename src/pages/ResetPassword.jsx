@@ -1,10 +1,11 @@
 // ResetPassword.jsx
+import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import passwordResetService from "../services/PasswordResetService";
-import { motion } from "framer-motion";
-import { useLanguage } from "../languages/LanguageContext";
+
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../languages/LanguageContext";
+import passwordResetService from "../services/PasswordResetService";
 
 function ResetPassword() {
   const [password, setPassword] = useState("");

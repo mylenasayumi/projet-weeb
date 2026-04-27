@@ -1,10 +1,11 @@
 // ForgotPassword.jsx
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import passwordResetService from "../services/PasswordResetService";
-import { useLanguage } from "../languages/LanguageContext";
 import { useNavigate } from "react-router-dom";
+
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../languages/LanguageContext";
+import passwordResetService from "../services/PasswordResetService";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");

@@ -1,5 +1,6 @@
 // TrustCompaniesSection.jsx
 import { motion } from "framer-motion";
+
 import { useLanguage } from "../../languages/LanguageContext";
 
 function TrustCompaniesSection() {
