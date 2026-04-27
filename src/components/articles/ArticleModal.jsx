@@ -2,6 +2,7 @@
 // Modal for article details
 import { motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
+
 import { useLanguage } from "../../languages/LanguageContext";
 
 function ArticleModal({ article, currentUser, onClose, onUpdate, onDelete }) {

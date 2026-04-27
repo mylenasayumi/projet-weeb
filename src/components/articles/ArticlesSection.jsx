@@ -1,17 +1,19 @@
 // ArticlesSection.jsx
 // Section to display articles.
-import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import articleService from "../../services/ArticlesService";
+import { useState, useEffect } from "react";
 import { PiWarningFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
-import authService from "../../services/AuthService";
-import { useLanguage } from "../../languages/LanguageContext";
-import ArticleCard from "./ArticleCard";
-import ArticleModal from "./ArticleModal";
-import ArticleFilters from "./ArticleFilters";
-import Pagination from "./Pagination";
+
 import { useAuth } from "../../contexts/AuthContext";
+import { useLanguage } from "../../languages/LanguageContext";
+import articleService from "../../services/ArticlesService";
+import authService from "../../services/AuthService";
+
+import ArticleCard from "./ArticleCard";
+import ArticleFilters from "./ArticleFilters";
+import ArticleModal from "./ArticleModal";
+import Pagination from "./Pagination";
 
 function ArticlesSection() {
   const [articles, setArticles] = useState([]);

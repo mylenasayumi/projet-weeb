@@ -3,11 +3,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
+
 import "./index.css";
 import "@fontsource/roboto";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
 import { LanguageProvider } from "./languages/LanguageContext.jsx";
 import router from "./router.jsx";
-import { AuthProvider } from "./contexts/AuthContext.jsx";
 
 // Integrating RouterProvider into the application
 const root = ReactDOM.createRoot(document.getElementById("root"));

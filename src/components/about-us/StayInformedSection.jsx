@@ -1,6 +1,7 @@
 // StayInformedSection.jsx
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+
 import { useLanguage } from "../../languages/LanguageContext";
 
 function StayInformedSection() {

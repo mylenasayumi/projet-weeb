@@ -1,6 +1,7 @@
 // src/components/articles/Pagination.jsx
 // Component responsible for articles pagination
 import { TfiArrowCircleLeft, TfiArrowCircleRight } from "react-icons/tfi";
+
 import { useLanguage } from "../../languages/LanguageContext";
 
 function Pagination({ page, totalPages, onPrevious, onNext }) {

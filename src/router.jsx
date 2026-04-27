@@ -1,19 +1,20 @@
 // src/router.jsx
 // The router is configured here.
 import { createBrowserRouter } from "react-router-dom";
-import AboutUs from "./pages/AboutUs.jsx";
-import Contact from "./pages/Contact.jsx";
-import Login from "./pages/Login.jsx";
-import SignUp from "./pages/SignUp.jsx";
+
 import App from "./App.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import AboutUs from "./pages/AboutUs.jsx";
 import Articles from "./pages/Articles.jsx";
 import AuthCallback from "./pages/AuthCallback.jsx";
+import Contact from "./pages/Contact.jsx";
 import CreateArticle from "./pages/CreateArticle.jsx";
-import UpdateArticle from "./pages/UpdateArticle.jsx";
-import ForgotPassword from "./pages/ForgotPassword.jsx";
-import ResetPassword from "./pages/ResetPassword.jsx";
 import ErrorLayout from "./pages/ErrorLayout.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import Login from "./pages/Login.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
+import SignUp from "./pages/SignUp.jsx";
+import UpdateArticle from "./pages/UpdateArticle.jsx";
 
 // Configuring routes with createBrowserRouter
 const router = createBrowserRouter([

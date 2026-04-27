@@ -1,8 +1,10 @@
 // UserDropdown.jsx
 // User dropdown component for the user menu in the navbar.
 import { useEffect, useState, useRef } from "react";
-import AnimatedDropdownDiv from "./AnimatedDropdownDiv";
+
 import { useLanguage } from "../../languages/LanguageContext";
+
+import AnimatedDropdownDiv from "./AnimatedDropdownDiv";
 
 function UserDropdown({ user, onLogout }) {
   const [isOpen, setIsOpen] = useState(false);
