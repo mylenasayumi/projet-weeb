@@ -29,7 +29,7 @@ function SatisfactionSection() {
         last_name: user.last_name || "",
       }));
     }
-  }, []);
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

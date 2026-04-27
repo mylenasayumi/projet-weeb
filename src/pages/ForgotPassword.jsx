@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import passwordResetService from "../services/PasswordResetService";
 import { useLanguage } from "../languages/LanguageContext";
 import { useNavigate } from "react-router-dom";
-import authTokenService from "../services/AuthTokenService";
+import { useAuth } from "../contexts/AuthContext";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -12,11 +12,12 @@ function ForgotPassword() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { t } = useLanguage();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     const redirectIfAuthenticated = () => {
-      if (authTokenService.isAuthenticated()) {
+      if (isAuthenticated) {
         navigate("/", { replace: true });
       }
     };

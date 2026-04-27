@@ -1,5 +1,5 @@
 // CreateArticle.jsx
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import articleService from "../services/ArticlesService";
 import { motion } from "framer-motion";

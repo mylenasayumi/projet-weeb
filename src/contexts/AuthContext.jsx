@@ -39,9 +39,8 @@ export function AuthProvider({ children }) {
     return currentUser;
   };
 
-  const logout = () => {
+  const logout = async () => {
     authTokenService.logout();
-    localStorage.removeItem("user");
     setUser(null);
   };
 
@@ -56,6 +55,11 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const clearAuth = () => {
+    authTokenService.clearSession();
+    setUser(null);
+  };
+
   const value = {
     user,
     isAuthenticated: !!user,
@@ -63,6 +67,7 @@ export function AuthProvider({ children }) {
     login,
     logout,
     refreshUser,
+    clearAuth,
   };
 
   return (

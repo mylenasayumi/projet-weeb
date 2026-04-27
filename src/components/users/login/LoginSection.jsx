@@ -87,7 +87,7 @@ function LoginSection() {
     if (isAuthenticated) {
       navigate("/", { replace: true });
     }
-  }, [navigate]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <section className="flex flex-col items-center my-10">
