@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import passwordResetService from "../services/PasswordResetService";
 import { motion } from "framer-motion";
 import { useLanguage } from "../languages/LanguageContext";
-import authTokenService from "../services/AuthTokenService";
+import { useAuth } from "../contexts/AuthContext";
 
 function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -21,10 +21,11 @@ function ResetPassword() {
   const uidb64 = params.get("uidb64");
   const token = params.get("token");
   const { t } = useLanguage();
+  const { isAuthenticated, clearAuth } = useAuth();
 
   useEffect(() => {
-    if (authTokenService.isAuthenticated()) {
-      authTokenService.clearSession();
+    if (isAuthenticated) {
+      clearAuth();
     }
   }, []);
 
@@ -50,7 +51,7 @@ function ResetPassword() {
     try {
       await passwordResetService.confirmResetPassword(uidb64, token, password);
 
-      authTokenService.clearSessionSilently();
+      clearAuth();
 
       setMessage(t("password.successResetMessage"));
       setTimeout(() => {

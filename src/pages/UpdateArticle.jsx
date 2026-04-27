@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import articleService from "../services/ArticlesService";
 import { motion } from "framer-motion";
-import authTokenService from "../services/AuthTokenService";
 import { useLanguage } from "../languages/LanguageContext";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -87,8 +86,7 @@ function UpdateArticle() {
         setError(t("articles.notOwnerUpdateArticleError"));
       } else if (err.response?.status === 401) {
         setError(t("articles.loggedInUpdateArticleError"));
-        await logout?.();
-        await authTokenService.logout();
+        await logout();
         navigate("/login");
       } else {
         setError(t("articles.updateArticleError"));
