@@ -1,0 +1,74 @@
+// src/router.jsx
+// The router is configured here.
+import { createBrowserRouter } from "react-router-dom";
+import AboutUs from "./pages/AboutUs.jsx";
+import Contact from "./pages/Contact.jsx";
+import Login from "./pages/Login.jsx";
+import SignUp from "./pages/SignUp.jsx";
+import App from "./App.jsx";
+import Articles from "./pages/Articles.jsx";
+import AuthCallback from "./pages/AuthCallback.jsx";
+import CreateArticle from "./pages/CreateArticle.jsx";
+import UpdateArticle from "./pages/UpdateArticle.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
+import ErrorLayout from "./pages/ErrorLayout.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+
+// Configuring routes with createBrowserRouter
+const router = createBrowserRouter([
+  {
+    path: "/", // Root route
+    element: <App />, // Root component
+    errorElement: <ErrorLayout />,
+    children: [
+      {
+        index: true, // Default route
+        element: <AboutUs />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "sign-up",
+        element: <SignUp />,
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "articles/create",
+            element: <CreateArticle />,
+          },
+          {
+            path: "articles/update/:id",
+            element: <UpdateArticle />,
+          },
+          {
+            path: "contact",
+            element: <Contact />,
+          },
+        ],
+      },
+      {
+        path: "articles",
+        element: <Articles />,
+      },
+      {
+        path: "auth/callback",
+        element: <AuthCallback />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPassword />,
+      },
+    ],
+  },
+]);
+
+export default router;

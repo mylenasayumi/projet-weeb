@@ -9,15 +9,15 @@ import signUp from "./signUp";
 import aboutUs from "./aboutUs";
 
 const en = {
-    navbar,
-    errorPage,
-    footer,
-    articles,
-    satisfactions,
-    password,
-    login,
-    signUp,
-    aboutUs
+  navbar,
+  errorPage,
+  footer,
+  articles,
+  satisfactions,
+  password,
+  login,
+  signUp,
+  aboutUs,
 };
 
 export default en;

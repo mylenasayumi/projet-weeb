@@ -5,29 +5,28 @@ import authCallbackService from "../services/AuthCallbackService";
 import { useLanguage } from "../languages/LanguageContext";
 
 function AuthCallback() {
-    const navigate = useNavigate();
-    const { t } = useLanguage();
+  const navigate = useNavigate();
+  const { t } = useLanguage();
 
-    useEffect(() => {
-        const handleAuth = async () => {
+  useEffect(() => {
+    const handleAuth = async () => {
+      try {
+        await authCallbackService.handleAuthCallback();
+        navigate("/", { replace: true });
+      } catch (error) {
+        console.error("Error handling auth callback:", error);
+        navigate(`/login?error=${error.message}`, { replace: true });
+      }
+    };
 
-            try {
-                await authCallbackService.handleAuthCallback();
-                navigate("/", { replace: true });
-            } catch (error) {
-                console.error("Error handling auth callback:", error);
-                navigate(`/login?error=${error.message}`, { replace: true });
-            }
-        };
+    handleAuth();
+  }, [navigate]);
 
-        handleAuth();
-    }, [navigate]);
-
-    return (
-        <div className="flex items-center justify-center h-screen">
-            <h1 className="text-2xl font-bold">{t("auth.authentification")}</h1>
-        </div>
-    );
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <h1 className="text-2xl font-bold">{t("auth.authentification")}</h1>
+    </div>
+  );
 }
 
 export default AuthCallback;
