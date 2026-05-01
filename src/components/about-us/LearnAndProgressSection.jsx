@@ -31,7 +31,7 @@ function LearnAndProgressSection() {
         </div>
         <div className="flex-1 flex justify-center">
           <motion.img
-            src="src/assets/Desktop-App.png"
+            src="/images/Desktop-App.png"
             alt="Desktop Screen Image"
             className="w-full max-w-[632px] h-[480px] h-auto drop-shadow-2xl"
             initial={{ opacity: 0 }}

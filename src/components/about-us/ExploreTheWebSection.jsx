@@ -40,7 +40,7 @@ function ExploreTheWebSection() {
         </MotionLink>
       </div>
       <motion.img
-        src="src/assets/Desktop-App.png"
+        src="/images/Desktop-App.png"
         alt="Desktop Screen Image"
         className="w-full max-w-[1100px] h-auto drop-shadow-2xl mt-8 px-10 md:px-15"
         initial={{ opacity: 0 }}

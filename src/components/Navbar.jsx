@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import mobileMenuButton from "../assets/Mobile-Menu-Button.png";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../languages/LanguageContext";
 import LanguageSwitcher from "../languages/LanguageSwitcher";
@@ -71,7 +70,7 @@ function Navbar() {
                   onClick={() => setIsOpen((prev) => !prev)}
                 >
                   <img
-                    src={mobileMenuButton}
+                    src="/images/Mobile-Menu-Button.png"
                     alt="Hamburger Menu Button"
                     className="h-[44px] w-[48px] cursor-pointer"
                   ></img>

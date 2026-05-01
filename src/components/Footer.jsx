@@ -95,7 +95,7 @@ function Footer() {
             whileHover={{ scale: 1.2 }}
           >
             <img
-              src="src/assets/Youtube-Icon.png"
+              src="/images/Youtube-Icon.png"
               alt="Youtube Icon"
               className="h-auto drop-shadow-2xl hover:cursor-pointer"
             ></img>
@@ -106,7 +106,7 @@ function Footer() {
             whileHover={{ scale: 1.2 }}
           >
             <img
-              src="src/assets/Facebook-Icon.png"
+              src="/images/Facebook-Icon.png"
               alt="Facebook Icon"
               className="h-auto drop-shadow-2xl hover:cursor-pointer"
             ></img>
@@ -117,7 +117,7 @@ function Footer() {
             whileHover={{ scale: 1.2 }}
           >
             <img
-              src="src/assets/Twitter-Icon.png"
+              src="/images/Twitter-Icon.png"
               alt="Twitter Icon"
               className="h-auto drop-shadow-2xl hover:cursor-pointer"
             ></img>
@@ -128,7 +128,7 @@ function Footer() {
             whileHover={{ scale: 1.2 }}
           >
             <img
-              src="src/assets/Instagram-Icon.png"
+              src="/images/Instagram-Icon.png"
               alt="Instagram Icon"
               className="h-auto drop-shadow-2xl hover:cursor-pointer"
             ></img>
@@ -139,7 +139,7 @@ function Footer() {
             whileHover={{ scale: 1.2 }}
           >
             <img
-              src="src/assets/Linkedin-Icon.png"
+              src="/images/Linkedin-Icon.png"
               alt="Linkedin Icon"
               className="h-auto drop-shadow-2xl hover:cursor-pointer"
             ></img>

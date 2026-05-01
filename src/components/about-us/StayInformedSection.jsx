@@ -13,7 +13,7 @@ function StayInformedSection() {
       <div className="container max-w-screen-2xl mx-auto flex flex-col lg:flex-col xl:flex-row justify-between items-center p-10 px-15">
         <div className="flex-1 flex justify-center">
           <motion.img
-            src="src/assets/Shapes.png"
+            src="/images/Shapes.png"
             className="w-[300px] sm:w-[350px] md:w-[415.82px] h-auto drop-shadow-2xl pr-0 xl:pr-10"
             alt="Image of square geometric shapes"
             animate={{ rotate: 360 }}
