@@ -14,7 +14,7 @@ const satisfactions = {
     "Nous sommes ravis que votre expérience ait été positive ! Merci beaucoup pour votre retour !",
   negativeDisplayMessage:
     "Nous sommes désolés que votre expérience n'ait pas été à la hauteur de vos attentes. Vos retours sont essentiels pour nous aider à nous améliorer.",
-  satisfationError: "Une erreur s'est produite. Veuillez réessayer.",
+  satisfactionError: "Une erreur s'est produite. Veuillez réessayer.",
 };
 
 export default satisfactions;

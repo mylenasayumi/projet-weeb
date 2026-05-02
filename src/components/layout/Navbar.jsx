@@ -3,12 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { useAuth } from "../contexts/AuthContext";
-import { useLanguage } from "../languages/LanguageContext";
-import LanguageSwitcher from "../languages/LanguageSwitcher";
-
-import AnimatedDropdownDiv from "./ui/AnimatedDropdownDiv";
-import UserDropdown from "./ui/UserDropdown";
+import { useAuth } from "../../contexts/AuthContext";
+import { useLanguage } from "../../languages/LanguageContext";
+import LanguageSwitcher from "../../languages/LanguageSwitcher";
+import AnimatedDropdownDiv from "../ui/AnimatedDropdownDiv";
+import UserDropdown from "../ui/UserDropdown";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // State to open/close the menu.

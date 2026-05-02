@@ -67,7 +67,6 @@ api.interceptors.response.use(
       } catch (err) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("user");
-        window.dispatchEvent(new Event("auth_changed"));
         return Promise.reject(err);
       }
     }

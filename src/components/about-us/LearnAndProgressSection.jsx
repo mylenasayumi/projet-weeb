@@ -33,7 +33,7 @@ function LearnAndProgressSection() {
           <motion.img
             src="/images/Desktop-App.png"
             alt="Desktop Screen Image"
-            className="w-full max-w-[632px] h-[480px] h-auto drop-shadow-2xl"
+            className="w-full max-w-[632px] h-auto drop-shadow-2xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}

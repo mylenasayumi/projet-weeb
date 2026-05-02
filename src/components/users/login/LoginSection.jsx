@@ -166,7 +166,7 @@ function LoginSection() {
       </form>
 
       <Link to="/forgot-password" className="hover:text-light-purple">
-        {t("login.ForgotPasswordButton")}
+        {t("login.forgotPasswordButton")}
       </Link>
 
       <p className="text-light-gray my-10 mx-10 text-center">

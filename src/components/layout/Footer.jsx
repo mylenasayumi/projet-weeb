@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-import { useLanguage } from "../languages/LanguageContext";
+import { useLanguage } from "../../languages/LanguageContext";
 
 function Footer() {
   const MotionLink = motion(Link);

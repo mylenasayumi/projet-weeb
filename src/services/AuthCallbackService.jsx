@@ -39,11 +39,8 @@ const authCallbackService = {
       // Store token
       localStorage.setItem("access_token", accessToken);
 
-      // Fetch user
-      const user = await authService.getCurrentUser();
-      localStorage.setItem("user", JSON.stringify(user));
-
-      return user;
+      // return fetched user
+      return await authService.getCurrentUser();
     } catch (err) {
       await authTokenService.logout();
 

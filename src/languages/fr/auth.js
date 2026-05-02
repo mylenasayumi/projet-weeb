@@ -1,6 +1,6 @@
 // auth - FR
 const auth = {
-  authentification: "Authentification en cours...",
+  authentication: "Authentication en cours...",
 };
 
 export default auth;

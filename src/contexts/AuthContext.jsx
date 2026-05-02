@@ -4,25 +4,36 @@ import { createContext, useContext, useEffect, useState } from "react";
 import authService from "../services/AuthService";
 import authTokenService from "../services/AuthTokenService";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const saveUser = (currentUser) => {
+    setUser(currentUser);
+    localStorage.setItem("user", JSON.stringify(currentUser));
+  };
+
+  const clearAuth = () => {
+    authTokenService.clearSession();
+    setUser(null);
+  };
+
   // Load user on app start
   useEffect(() => {
     const initAuth = async () => {
       try {
-        if (authTokenService.isAuthenticated()) {
+        if (!authTokenService.isAuthenticated()) {
           // Fetch current user
-          const currentUser = await authService.getCurrentUser();
-          localStorage.setItem("user", JSON.stringify(currentUser));
-          setUser(currentUser);
+          clearAuth();
+          return;
         }
+        const currentUser = await authService.getCurrentUser();
+        saveUser(currentUser);
       } catch (error) {
         console.error("Auth init failed:", error);
-        logout();
+        clearAuth();
       } finally {
         setLoading(false);
       }
@@ -35,8 +46,7 @@ export function AuthProvider({ children }) {
     await authTokenService.login(email, password);
     // Fetch current user
     const currentUser = await authService.getCurrentUser();
-    localStorage.setItem("user", JSON.stringify(currentUser));
-    setUser(currentUser);
+    saveUser(currentUser);
     return currentUser;
   };
 
@@ -49,16 +59,17 @@ export function AuthProvider({ children }) {
   const refreshUser = async () => {
     try {
       const currentUser = await authService.getCurrentUser();
-      setUser(currentUser);
+      saveUser(currentUser);
+      return currentUser;
     } catch (error) {
       console.error("Failed to refresh user:", error);
-      logout();
+      clearAuth();
+      return null;
     }
   };
 
-  const clearAuth = () => {
-    authTokenService.clearSession();
-    setUser(null);
+  const setAuthenticatedUser = (currentUser) => {
+    saveUser(currentUser);
   };
 
   const value = {
@@ -69,6 +80,7 @@ export function AuthProvider({ children }) {
     logout,
     refreshUser,
     clearAuth,
+    setAuthenticatedUser,
   };
 
   return (

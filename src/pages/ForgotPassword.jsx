@@ -17,21 +17,10 @@ function ForgotPassword() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const redirectIfAuthenticated = () => {
-      if (isAuthenticated) {
-        navigate("/", { replace: true });
-      }
-    };
-    redirectIfAuthenticated();
-
-    window.addEventListener("storage", redirectIfAuthenticated);
-    window.addEventListener("auth_changed", redirectIfAuthenticated);
-
-    return () => {
-      window.removeEventListener("storage", redirectIfAuthenticated);
-      window.removeEventListener("auth_changed", redirectIfAuthenticated);
-    };
-  }, [navigate]);
+    if (isAuthenticated) {
+      navigate("/", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
