@@ -1,6 +1,6 @@
 // ErrorPage.jsx
 // A 404 error page that appears when the user accesses an undefined URL.
-import { useLanguage } from "../languages/LanguageContext";
+import { useLanguage } from "../../languages/LanguageContext";
 
 function ErrorPage() {
   const { t } = useLanguage();

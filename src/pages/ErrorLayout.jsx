@@ -1,6 +1,6 @@
 // ErrorLayout.jsx
 
-import ErrorPage from "../components/ErrorPage";
+import ErrorPage from "../components/layout/ErrorPage";
 import ScrollToTop from "../components/ui/ScrollToTop";
 
 function ErrorLayout() {

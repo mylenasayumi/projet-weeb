@@ -80,7 +80,7 @@ function SignUpForm() {
 
         <div>
           <input
-            type="first_name"
+            type="text"
             id="first_name"
             name="first_name"
             value={formData.first_name}
@@ -94,7 +94,7 @@ function SignUpForm() {
 
         <div>
           <input
-            type="last_name"
+            type="text"
             id="last_name"
             name="last_name"
             value={formData.last_name}

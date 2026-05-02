@@ -1,5 +1,6 @@
 import aboutUs from "./aboutUs";
 import articles from "./articles";
+import auth from "./auth";
 import errorPage from "./errorPage";
 import footer from "./footer";
 import login from "./login";
@@ -18,6 +19,7 @@ const en = {
   login,
   signUp,
   aboutUs,
+  auth,
 };
 
 export default en;

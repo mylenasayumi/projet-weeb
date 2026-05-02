@@ -5,7 +5,7 @@ const login = {
   password: "Mot de passe",
   loginButton: "Se connecter",
   loggingIn: "Connexion...",
-  ForgotPasswordButton: "Mot de passe oublié ?",
+  forgotPasswordButton: "Mot de passe oublié ?",
   createAccountText: "Vous n’avez pas de compte ? Vous pouvez en ",
   createAccountButton: "créer un",
   orDivider: "ou",

@@ -73,7 +73,7 @@ function SatisfactionSection() {
 
       setSatisfaction({
         type: "error",
-        text: error.message || t("satisfactions.satisfationError"),
+        text: error.message || t("satisfactions.satisfactionError"),
       });
     } finally {
       setIsSubmitting(false);
