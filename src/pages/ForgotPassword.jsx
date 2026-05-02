@@ -45,6 +45,7 @@ function ForgotPassword() {
       setEmail("");
     } catch (err) {
       setError(t("password.errorMessage") || err.message);
+      console.log("Password error message: ", err.message);
     } finally {
       setLoading(false);
     }
