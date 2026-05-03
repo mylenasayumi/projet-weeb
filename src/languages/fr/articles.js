@@ -27,6 +27,7 @@ const articles = {
   deleteArticleError: "Erreur lors de la suppression de l'article.",
   deleteArticleErrorResponse: "Réponse d'erreur de suppression de l'article :",
   noContent: "Aucun contenu",
+  views: "Vues",
 
   // Create Article Page
   articleDataMissingError: "Les données de l'article sont manquantes.",
@@ -34,6 +35,8 @@ const articles = {
   createArticlePage: "Créer un nouvel article",
   title: "Titre",
   description: "Description",
+  image: "Image",
+  imagePlaceholder: "Image URL",
   createArticleSaveButton: "Créer",
   createArticleSuccess: "Article créé avec succès ! Redirection...",
   createArticleError: "Erreur lors de la création de l'article.",

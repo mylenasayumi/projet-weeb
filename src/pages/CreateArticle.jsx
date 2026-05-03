@@ -10,6 +10,7 @@ function CreateArticle() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    image: "",
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ function CreateArticle() {
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
-            className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full border-1 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
             required
           />
         </div>
@@ -73,9 +74,23 @@ function CreateArticle() {
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
-            className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full border-1 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
             rows={6}
             required
+          />
+        </div>
+        <div>
+          <label className="block font-semibold mb-2">
+            {t("articles.image")}
+          </label>
+          <input
+            type="url"
+            value={formData.image}
+            placeholder={t("articles.imagePlaceholder")}
+            onChange={(e) =>
+              setFormData({ ...formData, image: e.target.value })
+            }
+            className="w-full border-1 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
         <motion.button

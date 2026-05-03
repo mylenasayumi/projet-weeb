@@ -1,7 +1,7 @@
 // UpdateArticle.jsx
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../languages/LanguageContext";
@@ -9,6 +9,7 @@ import articleService from "../services/ArticlesService";
 
 function UpdateArticle() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useLanguage();
   const { id } = useParams();
   const { user, logout } = useAuth();
@@ -19,6 +20,7 @@ function UpdateArticle() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    image: "",
   });
 
   useEffect(() => {
@@ -27,11 +29,15 @@ function UpdateArticle() {
       setError("");
 
       try {
-        const article = await articleService.getById(id);
+        // Reuses the loaded article if it comes from the modal
+        const article = location.state?.article
+          ? location.state.article
+          : await articleService.getById(id);
 
         setFormData({
           title: article.title || "",
           description: article.description || "",
+          image: article.image || "",
         });
 
         setArticleOwnerId(article.user);
@@ -80,7 +86,7 @@ function UpdateArticle() {
     setSaving(true);
     try {
       await articleService.update(id, formData);
-      navigate("/articles");
+      navigate("/articles", { state: { fromUpdate: true } });
     } catch (err) {
       console.error(err);
       if (err.response?.status === 403) {
@@ -114,12 +120,12 @@ function UpdateArticle() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block font-semibold mb-2">
-            {t("articles.updateArticleTitle")}
+            {t("articles.title")}
           </label>
           <input
             name="title"
             type="text"
-            placeholder="Title"
+            placeholder={t("articles.title")}
             value={formData.title}
             onChange={handleChange}
             disabled={saving || !!error}
@@ -128,16 +134,30 @@ function UpdateArticle() {
         </div>
         <div>
           <label className="block font-semibold mb-2">
-            {t("articles.updateArticleDescription")}
+            {t("articles.description")}
           </label>
           <textarea
             name="description"
             value={formData.description}
-            placeholder="Description"
+            placeholder={t("articles.description")}
             onChange={handleChange}
             disabled={saving || !!error}
             className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
             rows={6}
+          />
+        </div>
+        <div>
+          <label className="block font-semibold mb-2">
+            {t("articles.image")}
+          </label>
+          <input
+            name="image"
+            type="url"
+            value={formData.image}
+            placeholder={t("articles.image")}
+            onChange={handleChange}
+            disabled={saving || !!error}
+            className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
         <motion.button
