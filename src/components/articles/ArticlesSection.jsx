@@ -1,9 +1,9 @@
 // ArticlesSection.jsx
 // Section to display articles.
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { PiWarningFill } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { useLanguage } from "../../languages/LanguageContext";
@@ -29,6 +29,9 @@ function ArticlesSection() {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const { user, isAuthenticated } = useAuth();
+  const openingRef = useRef(false);
+  const lastUpdatedIdRef = useRef(null);
+  const location = useLocation();
 
   const loadArticles = async () => {
     try {
@@ -81,11 +84,13 @@ function ArticlesSection() {
 
   // Handles opening article details
   const handleOpenArticle = async (id) => {
-    // If the article is already loaded, reuse it without calling the API
-    if (selectedArticle?.id === id) {
-      setSelectedArticle(selectedArticle);
+    if (id === lastUpdatedIdRef.current) {
+      lastUpdatedIdRef.current = null;
       return;
     }
+
+    if (openingRef.current) return;
+    openingRef.current = true;
 
     try {
       const fullArticle = await articleService.getById(id);
@@ -103,6 +108,8 @@ function ArticlesSection() {
     } catch (err) {
       console.error(t("articles.loadingArticlesDetailsError"), err);
       setError(t("articles.loadingArticlesDetailsError"));
+    } finally {
+      openingRef.current = false;
     }
   };
 
@@ -117,8 +124,16 @@ function ArticlesSection() {
 
   // Handles navigation to update article page
   const handleUpdateArticle = (article) => {
-    navigate(`/articles/update/${article.id}`);
+    lastUpdatedIdRef.current = article.id;
+    setSelectedArticle(null);
+    navigate(`/articles/update/${article.id}`, { state: { article } });
   };
+
+  useEffect(() => {
+    if (location.state?.fromUpdate) {
+      lastUpdatedIdRef.current = null;
+    }
+  }, [location.state]);
 
   // Handles article deletion
   const handleDeleteArticle = async (id) => {

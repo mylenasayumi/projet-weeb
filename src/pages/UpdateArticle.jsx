@@ -1,7 +1,7 @@
 // UpdateArticle.jsx
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../languages/LanguageContext";
@@ -9,6 +9,7 @@ import articleService from "../services/ArticlesService";
 
 function UpdateArticle() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useLanguage();
   const { id } = useParams();
   const { user, logout } = useAuth();
@@ -28,7 +29,10 @@ function UpdateArticle() {
       setError("");
 
       try {
-        const article = await articleService.getById(id);
+        // Reuses the loaded article if it comes from the modal
+        const article = location.state?.article
+          ? location.state.article
+          : await articleService.getById(id);
 
         setFormData({
           title: article.title || "",
@@ -82,7 +86,7 @@ function UpdateArticle() {
     setSaving(true);
     try {
       await articleService.update(id, formData);
-      navigate("/articles");
+      navigate("/articles", { state: { fromUpdate: true } });
     } catch (err) {
       console.error(err);
       if (err.response?.status === 403) {
