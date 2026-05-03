@@ -1,230 +1,211 @@
 // UpdateArticle.test.jsx
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import articleService from "../../services/ArticlesService";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+
 import UpdateArticle from "../../pages/UpdateArticle";
-import authTokenService from "../../services/AuthTokenService";
+import articleService from "../../services/ArticlesService";
 
 const mockNavigate = vi.fn();
-const locationState = { current: null };
+const mockLogout = vi.fn();
+const tMock = vi.fn((key) => key);
+let mockUser = { id: 1, email: "mylena@gmail.com" };
+let mockId = "10";
 
 vi.mock("react-router-dom", async () => {
-    const actual = await vi.importActual("react-router-dom");
-    return {
-        ...actual,
-        useNavigate: () => mockNavigate,
-        useLocation: () => ({
-            state: locationState.current,
-        }),
-    };
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+    useParams: () => ({ id: mockId }),
+  };
 });
 
 vi.mock("../../services/ArticlesService", () => ({
-    default: {
-        update: vi.fn(),
-    },
+  default: {
+    getById: vi.fn(),
+    update: vi.fn(),
+  },
 }));
 
-vi.mock("../../services/AuthTokenService", () => ({
-    default: {
-        isAuthenticated: vi.fn(() => true),
-        logout: vi.fn(),
-    },
+vi.mock("../../contexts/AuthContext", () => ({
+  useAuth: () => ({
+    user: mockUser,
+    logout: mockLogout,
+  }),
 }));
 
 vi.mock("../../languages/LanguageContext", () => ({
-    useLanguage: () => ({
-        t: (key) => key,
-        lang: "en",
-        changeLanguage: vi.fn(),
-    }),
+  useLanguage: () => ({
+    t: tMock,
+    lang: "en",
+    changeLanguage: vi.fn(),
+  }),
 }));
 
 describe("UpdateArticle", () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
+  beforeEach(() => {
+    vi.clearAllMocks();
 
-        locationState.current = {
-            id: 10,
-            title: "Old title",
-            description: "Old description",
-            ownerId: 1,
-        };
+    mockId = "10";
+    mockUser = { id: 1, email: "mylena@gmail.com" };
 
-        authTokenService.isAuthenticated.mockReturnValue(true);
-
-        localStorage.setItem(
-            "user",
-            JSON.stringify({ id: 1, email: "mylena@gmail.com" })
-        );
-        vi.stubGlobal("confirm", vi.fn(() => true));
+    articleService.getById.mockResolvedValue({
+      id: 10,
+      title: "Old title",
+      description: "Old description",
+      user: 1,
     });
 
-    it("renders form with article data", () => {
-        render(<UpdateArticle />);
+    vi.stubGlobal(
+      "confirm",
+      vi.fn(() => true)
+    );
+  });
 
-        expect(screen.getByDisplayValue("Old title")).toBeInTheDocument();
-        expect(screen.getByDisplayValue("Old description")).toBeInTheDocument();
+  it("renders form with article data", async () => {
+    render(<UpdateArticle />);
+
+    expect(await screen.findByDisplayValue("Old title")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Old description")).toBeInTheDocument();
+  });
+
+  it("sends update", async () => {
+    articleService.update.mockResolvedValue({});
+
+    render(<UpdateArticle />);
+
+    const titleInput = await screen.findByDisplayValue("Old title");
+
+    fireEvent.change(titleInput, {
+      target: { name: "title", value: "New title" },
     });
 
-    it("sends update", async () => {
-        articleService.update.mockResolvedValue({});
-
-        render(<UpdateArticle />);
-
-        fireEvent.change(screen.getByDisplayValue("Old title"), {
-            target: { name: "title", value: "New title" },
-        });
-
-        fireEvent.click(screen.getByRole("button", { name: "articles.updateArticleSaveButton" }));
-
-        await waitFor(() => {
-            expect(articleService.update).toHaveBeenCalledWith(10, {
-                title: "New title",
-                description: "Old description",
-            });
-        });
-
-        expect(mockNavigate).toHaveBeenCalledWith("/articles");
+    const button = await screen.findByRole("button", {
+      name: "articles.updateArticleSaveButton",
     });
 
-    it("redirects to /articles when article data is missing", async () => {
-        locationState.current = null;
+    fireEvent.click(button);
 
-        render(<UpdateArticle />);
-
-        expect(await screen.findByText("articles.articleDataMissingError")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(articleService.update).toHaveBeenCalledWith("10", {
+        title: "New title",
+        description: "Old description",
+      });
     });
 
+    expect(mockNavigate).toHaveBeenCalledWith("/articles");
+  });
 
-    it("shows error when user is not authenticated", async () => {
-        locationState.current = {
-            id: 10,
-            title: "Old title",
-            description: "Old description",
-            ownerId: 1,
-        };
+  it("redirects to /articles when article id is missing", async () => {
+    mockId = undefined;
 
-        authTokenService.isAuthenticated.mockReturnValue(false);
+    render(<UpdateArticle />);
 
-        render(<UpdateArticle />);
+    expect(
+      await screen.findByText("articles.articleDataMissingError")
+    ).toBeInTheDocument();
+  });
 
-        expect(await screen.findByText("articles.loggedInUpdateArticleError")).toBeInTheDocument();
+  it("shows error when user is not authenticated", async () => {
+    mockUser = null;
+
+    render(<UpdateArticle />);
+
+    await screen.findByDisplayValue("Old title");
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "articles.updateArticleSaveButton",
+      })
+    );
+
+    await waitFor(() => {
+      expect(articleService.update).not.toHaveBeenCalled();
+    });
+  });
+
+  it("shows error when user is not the owner of the article", async () => {
+    mockUser = { id: 999, email: "other@gmail.com" };
+
+    render(<UpdateArticle />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("articles.notOwnerUpdateArticleError")
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("does not update when user cancels confirmation", async () => {
+    vi.stubGlobal(
+      "confirm",
+      vi.fn(() => false)
+    );
+
+    render(<UpdateArticle />);
+
+    fireEvent.click(
+      await screen.findByRole("button", {
+        name: "articles.updateArticleSaveButton",
+      })
+    );
+
+    expect(articleService.update).not.toHaveBeenCalled();
+  });
+
+  it("shows owner error when status 403", async () => {
+    articleService.update.mockRejectedValue({
+      response: { status: 403 },
     });
 
-    it("shows error when user is not the owner of the article", async () => {
-        locationState.current = {
-            id: 10,
-            title: "Old title",
-            description: "Old description",
-            ownerId: 99999,
-        };
+    render(<UpdateArticle />);
 
-        localStorage.setItem(
-            "user",
-            JSON.stringify({ id: 1, email: "mylena@gmail.com" })
-        );
+    fireEvent.click(
+      await screen.findByRole("button", {
+        name: "articles.updateArticleSaveButton",
+      })
+    );
 
-        render(<UpdateArticle />);
+    await waitFor(() => {
+      expect(
+        screen.getByText("articles.notOwnerUpdateArticleError")
+      ).toBeInTheDocument();
+    });
+  });
 
-        expect(await screen.findByText("articles.notOwnerUpdateArticleError")).toBeInTheDocument();
+  it("logs out and redirects when status 401", async () => {
+    articleService.update.mockRejectedValue({
+      response: { status: 401 },
     });
 
-    it("does not update when user cancels confirmation", async () => {
-        locationState.current = {
-            id: 10,
-            title: "Old title",
-            description: "Old description",
-            ownerId: 1,
-        };
+    render(<UpdateArticle />);
 
-        vi.stubGlobal("confirm", vi.fn(() => false));
+    fireEvent.click(
+      await screen.findByRole("button", {
+        name: "articles.updateArticleSaveButton",
+      })
+    );
 
-        render(<UpdateArticle />);
+    expect(
+      await screen.findByText("articles.loggedInUpdateArticleError")
+    ).toBeInTheDocument();
+    expect(mockLogout).toHaveBeenCalled();
+    expect(mockNavigate).toHaveBeenCalledWith("/login");
+  });
 
-        fireEvent.click(screen.getByRole("button", { name: "articles.updateArticleSaveButton" }));
+  it("shows an error on unexpected failure", async () => {
+    articleService.update.mockRejectedValue(new Error("boom"));
 
-        expect(articleService.update).not.toHaveBeenCalled();
-    });
+    render(<UpdateArticle />);
 
-    it("shows owner error when status 403", async () => {
-        locationState.current = {
-            id: 10,
-            title: "Old title",
-            description: "Old description",
-            ownerId: 1,
-        };
+    fireEvent.click(
+      await screen.findByRole("button", {
+        name: "articles.updateArticleSaveButton",
+      })
+    );
 
-        vi.stubGlobal("confirm", vi.fn(() => true));
-
-        articleService.update.mockRejectedValue({
-            response: { status: 403 },
-        });
-
-        render(<UpdateArticle />);
-
-        fireEvent.click(screen.getByRole("button", { name: "articles.updateArticleSaveButton" }));
-
-        expect(await screen.findByText("articles.notOwnerUpdateArticleError")).toBeInTheDocument();
-    });
-
-    it("logs out and redirects when status 401", async () => {
-        locationState.current = {
-            id: 10,
-            title: "Old title",
-            description: "Old description",
-            ownerId: 1,
-        };
-
-        vi.stubGlobal("confirm", vi.fn(() => true));
-
-        articleService.update.mockRejectedValue({
-            response: { status: 401 },
-        });
-
-        authTokenService.logout.mockResolvedValue();
-
-        render(<UpdateArticle />);
-
-        fireEvent.click(screen.getByRole("button", { name: "articles.updateArticleSaveButton" }));
-
-        expect(await screen.findByText("articles.loggedInUpdateArticleError")).toBeInTheDocument();
-        expect(authTokenService.logout).toHaveBeenCalled();
-        expect(mockNavigate).toHaveBeenCalledWith("/login");
-    });
-
-    it("shows an error on unexpected failure", async () => {
-        locationState.current = {
-            id: 10,
-            title: "Old title",
-            description: "Old description",
-            ownerId: 1,
-        };
-
-        vi.stubGlobal("confirm", vi.fn(() => true));
-
-        articleService.update.mockRejectedValue(new Error("boom"));
-
-        render(<UpdateArticle />);
-
-        fireEvent.click(screen.getByRole("button", { name: "articles.updateArticleSaveButton" }));
-
-        expect(await screen.findByText("articles.updateArticleError")).toBeInTheDocument();
-    });
-
-    it("handles invalid user in localStorage", () => {
-        locationState.current = {
-            id: 10,
-            title: "Old title",
-            description: "Old description",
-            ownerId: 1,
-        };
-
-        localStorage.setItem("user", "{invalid-json");
-
-        render(<UpdateArticle />);
-
-        expect(screen.getByDisplayValue("Old title")).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByText("articles.updateArticleError")
+    ).toBeInTheDocument();
+  });
 });
-
