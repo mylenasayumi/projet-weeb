@@ -17,6 +17,7 @@ vi.mock("react-router-dom", async () => {
     ...actual,
     useNavigate: () => mockNavigate,
     useParams: () => ({ id: mockId }),
+    useLocation: () => ({ state: null }),
   };
 });
 
@@ -90,10 +91,13 @@ describe("UpdateArticle", () => {
       expect(articleService.update).toHaveBeenCalledWith("10", {
         title: "New title",
         description: "Old description",
+        image: "",
       });
     });
 
-    expect(mockNavigate).toHaveBeenCalledWith("/articles");
+    expect(mockNavigate).toHaveBeenCalledWith("/articles", {
+      state: { fromUpdate: true },
+    });
   });
 
   it("redirects to /articles when article id is missing", async () => {
