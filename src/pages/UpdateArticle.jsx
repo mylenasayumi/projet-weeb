@@ -83,6 +83,11 @@ function UpdateArticle() {
       return;
     }
 
+    if (!user) {
+      setError(t("articles.loggedInUpdateArticleError"));
+      return;
+    }
+
     setSaving(true);
     try {
       await articleService.update(id, formData);

@@ -110,7 +110,7 @@ function LoginSection() {
         </div>
       )}
 
-      {errorParam && (
+      {errorParam !== null && (
         <div className="bg-red-100 border border-red-500 text-red-500 px-4 py-3 rounded mt-4">
           {getAuthErrorMessage(errorParam)}
         </div>
