@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BsArrowRight, BsFillPlusCircleFill } from "react-icons/bs";
+import { BsArrowRight, BsFillPlusCircleFill, BsEye } from "react-icons/bs";
 
 import { useLanguage } from "../../languages/LanguageContext";
 
@@ -23,7 +23,7 @@ function ArticleCard({
         transition={{ duration: 0.5 }}
         whileHover={{ scale: 1.1 }}
         onClick={onCreate}
-        className={`w-[400px] h-[262px] border-2 p-2 rounded-2xl shadow-lg
+        className={`w-[400px] h-[360px] border-2 p-2 rounded-2xl shadow-lg
                     ${
                       isAuthenticated
                         ? "bg-light-purple/6 border-purple hover:cursor-pointer"
@@ -49,23 +49,54 @@ function ArticleCard({
       exit={{ opacity: 0, x: 20 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.1 }}
-      className="w-[400px] h-[262px] bg-light-purple/6 border-2 border-purple p-2 rounded-2xl shadow-lg flex flex-col"
+      className="w-[400px] h-[360px] bg-light-purple/6 border-2 border-purple rounded-2xl shadow-lg flex flex-col overflow-hidden"
     >
-      <h3 className="font-semibold text-xl text-light-purple p-6">
-        {article.title}
-      </h3>
-      {/* <p className="font-normal text-gray text-base px-6 flex-grow overflow-hidden leading-relaxed max-h-[100px] relative text-justify"> */}
-      <p className="font-normal text-gray text-base px-6 flex-grow line-clamp-3 text-justify break-words leading-relaxed">
-        {article.description || t("articles.noContent")}
-      </p>
-      <div className="px-6 py-4 flex justify-end">
-        <button
-          onClick={() => onOpen(article.id)}
-          className="text-white hover:underline hover:cursor-pointer"
-        >
-          <BsArrowRight className="inline-block mr-2" />
-          {t("articles.readMore")}
-        </button>
+      {/* Image with views badge superimposed */}
+      {article.image && (
+        <div className="relative h-[120px] flex-shrink-0 overflow-hidden">
+          <img
+            src={article.image}
+            alt={article.title}
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient to smooth the image -> background transition */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
+          {/* Views badge on the image */}
+          <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/60 border border-purple/50 rounded-full px-2 py-1 text-xs text-light-purple font-medium">
+            <BsEye size={12} />
+            {article.views ?? 0} {t("articles.views")}
+          </div>
+        </div>
+      )}
+
+      <div
+        className={`px-7 pt-2 flex-grow overflow-hidden flex flex-col ${!article.image ? "mt-5" : ""}`}
+      >
+        <h3 className="mt-4 font-semibold text-base text-light-purple leading-snug line-clamp-2 mb-2">
+          {article.title}
+        </h3>
+        <p className="font-normal text-gray text-sm line-clamp-5 text-justify break-words leading-relaxed flex-grow">
+          {article.description || t("articles.noContent")}
+        </p>
+      </div>
+
+      {/* Footer: views on the left (if there is no image) + button on the right */}
+      <div className="px-7 pb-6 pt-3 flex items-center justify-between">
+        {!article.image && (
+          <div className="flex items-center gap-1 text-xs text-light-purple">
+            <BsEye size={13} />
+            {article.views ?? 0} {t("articles.views")}
+          </div>
+        )}
+        <div className={!article.image ? "" : "ml-auto"}>
+          <button
+            onClick={() => onOpen(article.id)}
+            className="text-white hover:underline hover:cursor-pointer text-sm flex items-center gap-2"
+          >
+            <BsArrowRight className="inline-block" />
+            {t("articles.readMore")}
+          </button>
+        </div>
       </div>
     </motion.div>
   );

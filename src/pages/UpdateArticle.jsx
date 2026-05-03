@@ -19,6 +19,7 @@ function UpdateArticle() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    image: "",
   });
 
   useEffect(() => {
@@ -32,6 +33,7 @@ function UpdateArticle() {
         setFormData({
           title: article.title || "",
           description: article.description || "",
+          image: article.image || "",
         });
 
         setArticleOwnerId(article.user);
@@ -114,12 +116,12 @@ function UpdateArticle() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block font-semibold mb-2">
-            {t("articles.updateArticleTitle")}
+            {t("articles.title")}
           </label>
           <input
             name="title"
             type="text"
-            placeholder="Title"
+            placeholder={t("articles.title")}
             value={formData.title}
             onChange={handleChange}
             disabled={saving || !!error}
@@ -128,16 +130,30 @@ function UpdateArticle() {
         </div>
         <div>
           <label className="block font-semibold mb-2">
-            {t("articles.updateArticleDescription")}
+            {t("articles.description")}
           </label>
           <textarea
             name="description"
             value={formData.description}
-            placeholder="Description"
+            placeholder={t("articles.description")}
             onChange={handleChange}
             disabled={saving || !!error}
             className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
             rows={6}
+          />
+        </div>
+        <div>
+          <label className="block font-semibold mb-2">
+            {t("articles.image")}
+          </label>
+          <input
+            name="image"
+            type="url"
+            value={formData.image}
+            placeholder={t("articles.image")}
+            onChange={handleChange}
+            disabled={saving || !!error}
+            className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
         <motion.button
