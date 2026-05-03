@@ -22,6 +22,7 @@ function ArticlesSection() {
   const [page, setPage] = useState(1);
   const [ordering, setOrdering] = useState("title");
   const [search, setSearch] = useState("");
+  const [submittedSearch, setSubmittedSearch] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [message, setMessage] = useState("");
@@ -37,7 +38,7 @@ function ArticlesSection() {
       const data = await articleService.getAll({
         page,
         ordering,
-        search,
+        search: submittedSearch,
       });
 
       setArticles(data.results || []);
@@ -62,15 +63,30 @@ function ArticlesSection() {
   useEffect(() => {
     const delay = setTimeout(() => loadArticles(), 300);
     return () => clearTimeout(delay);
-  }, [page, ordering, search]);
+  }, [page, ordering, submittedSearch]);
 
   // Handles search action
   const handleSearchSubmit = () => {
     setPage(1); // Reset to first page when searching
+    setSubmittedSearch(search);
   };
+
+  // Resets the search when the search field is empty
+  useEffect(() => {
+    if (search === "") {
+      setPage(1);
+      setSubmittedSearch("");
+    }
+  }, [search]);
 
   // Handles opening article details
   const handleOpenArticle = async (id) => {
+    // If the article is already loaded, reuse it without calling the API
+    if (selectedArticle?.id === id) {
+      setSelectedArticle(selectedArticle);
+      return;
+    }
+
     try {
       const fullArticle = await articleService.getById(id);
       let author = null;

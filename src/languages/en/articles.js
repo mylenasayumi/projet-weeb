@@ -22,6 +22,7 @@ const articles = {
   deleteArticleError: "Error deleting article.",
   deleteArticleErrorResponse: "Delete article error response:",
   noContent: "No content",
+  views: "Views",
 
   // Create Article Page
   articleDataMissingError: "Article data is missing.",
@@ -29,6 +30,8 @@ const articles = {
   createArticlePage: "Create a new article",
   title: "Title",
   description: "Description",
+  image: "Image",
+  imagePlaceholder: "Image URL",
   createArticleSaveButton: "Create",
   createArticleSuccess: "Article created successfully! Redirecting...",
   createArticleError: "Error creating article.",
