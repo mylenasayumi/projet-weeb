@@ -3,6 +3,7 @@ import articles from "./articles";
 import auth from "./auth";
 import errorPage from "./errorPage";
 import footer from "./footer";
+import likes from "./likes";
 import login from "./login";
 import navbar from "./navbar";
 import newsletter from "./newsletter";
@@ -22,6 +23,7 @@ const en = {
   aboutUs,
   auth,
   newsletter,
+  likes,
 };
 
 export default en;
