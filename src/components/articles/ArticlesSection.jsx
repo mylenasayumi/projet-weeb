@@ -1,7 +1,7 @@
 // ArticlesSection.jsx
 // Section to display articles.
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { PiWarningFill } from "react-icons/pi";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useLanguage } from "../../languages/LanguageContext";
 import articleService from "../../services/ArticlesService";
 import authService from "../../services/AuthService";
+import likesService from "../../services/LikesService";
 
 import ArticleCard from "./ArticleCard";
 import ArticleFilters from "./ArticleFilters";
@@ -26,6 +27,7 @@ function ArticlesSection() {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [message, setMessage] = useState("");
+  const [likedArticleIds, setLikedArticleIds] = useState([]);
   const navigate = useNavigate();
   const { t } = useLanguage();
   const { user, isAuthenticated } = useAuth();
@@ -33,7 +35,7 @@ function ArticlesSection() {
   const lastUpdatedIdRef = useRef(null);
   const location = useLocation();
 
-  const loadArticles = async () => {
+  const loadArticles = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -44,6 +46,7 @@ function ArticlesSection() {
         search: submittedSearch,
       });
 
+      // likes_count comes from the backend
       setArticles(data.results || []);
       setTotalPages(Math.max(1, Math.ceil((data.count || 0) / 5))); // PAGE_SIZE = 5
     } catch (err) {
@@ -52,7 +55,22 @@ function ArticlesSection() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, ordering, submittedSearch]);
+
+  // Loads liked article IDs for the current user
+  const loadLikes = useCallback(async () => {
+    if (!user?.id) {
+      setLikedArticleIds([]); // Clear likes when logged out
+      return;
+    }
+    try {
+      const likes = await likesService.getAll();
+      setLikedArticleIds(likes.map((like) => like.article.id));
+    } catch (err) {
+      console.error("Error loading likes:", err);
+      setLikedArticleIds([]);
+    }
+  }, [user?.id]);
 
   // Clears messages after 3 seconds
   useEffect(() => {
@@ -66,7 +84,14 @@ function ArticlesSection() {
   useEffect(() => {
     const delay = setTimeout(() => loadArticles(), 300);
     return () => clearTimeout(delay);
-  }, [page, ordering, submittedSearch]);
+  }, [loadArticles]);
+
+  // Reloads likes whenever the user changes (login/logout/switch account)
+  // setLikedArticleIds([]) runs first to avoid stale red hearts during the async loadLikes call
+  useEffect(() => {
+    setLikedArticleIds([]);
+    loadLikes();
+  }, [loadLikes]);
 
   // Handles search action
   const handleSearchSubmit = () => {
@@ -81,6 +106,37 @@ function ArticlesSection() {
       setSubmittedSearch("");
     }
   }, [search]);
+
+  // Handles like toggle
+  const handleToggleLike = async (articleId) => {
+    if (!isAuthenticated) {
+      setMessage(t("articles.likeLoginRequired"));
+      return;
+    }
+
+    try {
+      const result = await likesService.toggle(articleId);
+      if (result.liked) {
+        setLikedArticleIds((prev) => [...prev, articleId]);
+      } else {
+        setLikedArticleIds((prev) => prev.filter((id) => id !== articleId));
+      }
+      // Update likes_count on the article in the list
+      setArticles((prev) =>
+        prev.map((a) =>
+          a.id === articleId
+            ? {
+                ...a,
+                likes_count:
+                  (Number(a.likes_count) || 0) + (result.liked ? 1 : -1),
+              }
+            : a
+        )
+      );
+    } catch (err) {
+      console.error("Error toggling like:", err);
+    }
+  };
 
   // Handles opening article details
   const handleOpenArticle = async (id) => {
@@ -215,6 +271,9 @@ function ArticlesSection() {
                 key={article.id}
                 article={article}
                 onOpen={handleOpenArticle}
+                isAuthenticated={isAuthenticated}
+                likedArticleIds={likedArticleIds}
+                onToggleLike={handleToggleLike}
               />
             ))}
             {/* Add new article (if user is authenticated) */}

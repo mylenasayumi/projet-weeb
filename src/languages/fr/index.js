@@ -3,6 +3,7 @@ import articles from "./articles";
 import auth from "./auth";
 import errorPage from "./errorPage";
 import footer from "./footer";
+import likes from "./likes";
 import login from "./login";
 import navbar from "./navbar";
 import password from "./password";
@@ -20,6 +21,7 @@ const fr = {
   signUp,
   aboutUs,
   auth,
+  likes,
 };
 
 export default fr;

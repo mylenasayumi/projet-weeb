@@ -1,5 +1,12 @@
-import { motion } from "framer-motion";
-import { BsArrowRight, BsFillPlusCircleFill, BsEye } from "react-icons/bs";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import {
+  BsArrowRight,
+  BsFillPlusCircleFill,
+  BsEye,
+  BsHeart,
+  BsHeartFill,
+} from "react-icons/bs";
 
 import { useLanguage } from "../../languages/LanguageContext";
 
@@ -9,8 +16,26 @@ function ArticleCard({
   isAuthenticated,
   onOpen,
   onCreate,
+  likedArticleIds = [],
+  onToggleLike,
 }) {
   const { t } = useLanguage();
+  const isLiked = likedArticleIds.includes(article?.id);
+  const [floatingHearts, setFloatingHearts] = useState([]);
+
+  // Handles floating herts when user likes the article
+  const handleLikeClick = (e) => {
+    e.stopPropagation();
+    if (!isLiked) {
+      const id = Date.now();
+      setFloatingHearts((prev) => [...prev, id]);
+      setTimeout(
+        () => setFloatingHearts((prev) => prev.filter((h) => h !== id)),
+        700
+      );
+    }
+    onToggleLike(article.id);
+  };
 
   // Add new article (if user is authenticated)
   if (isAddCard) {
@@ -80,7 +105,7 @@ function ArticleCard({
         </p>
       </div>
 
-      {/* Footer: views on the left (if there is no image) + button on the right */}
+      {/* Footer: views with no image + like button + read more button */}
       <div className="px-7 pb-6 pt-3 flex items-center justify-between">
         {!article.image && (
           <div className="flex items-center gap-1 text-xs text-light-purple">
@@ -88,7 +113,54 @@ function ArticleCard({
             {article.views ?? 0} {t("articles.views")}
           </div>
         )}
-        <div className={!article.image ? "" : "ml-auto"}>
+        <div
+          className={`flex items-center gap-4 ${!article.image ? "" : "ml-auto"}`}
+        >
+          {/* Like button */}
+          <div className="relative flex items-center">
+            {/* Floating hearts */}
+            <AnimatePresence>
+              {floatingHearts.map((id) => (
+                <motion.span
+                  key={id}
+                  className="absolute text-red-500 pointer-events-none text-xs"
+                  initial={{ opacity: 1, y: 0, x: "-50%" }}
+                  animate={{ opacity: 0, y: -30 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                  style={{ left: "50%" }}
+                >
+                  <BsHeartFill size={15} />
+                </motion.span>
+              ))}
+            </AnimatePresence>
+
+            <motion.button
+              onClick={handleLikeClick}
+              title={
+                isAuthenticated
+                  ? t("articles.like")
+                  : t("articles.likeLoginRequired")
+              }
+              whileTap={{ scale: 1.6 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className={`flex items-center gap-1 text-sm transition-colors duration-200 hover:cursor-pointer
+                ${isLiked ? "text-red-500" : "text-gray-400 hover:text-red-400"}
+                ${!isAuthenticated ? "opacity-50 cursor-not-allowed" : ""}
+              `}
+            >
+              <motion.span
+                key={isLiked ? "filled" : "empty"}
+                initial={{ scale: 0.6, rotate: -15 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 500, damping: 15 }}
+              >
+                {isLiked ? <BsHeartFill size={15} /> : <BsHeart size={15} />}
+              </motion.span>
+              <span className="text-xs">{article.likes_count ?? 0}</span>
+            </motion.button>
+          </div>
+          {/* Read more button */}
           <button
             onClick={() => onOpen(article.id)}
             className="text-white hover:underline hover:cursor-pointer text-sm flex items-center gap-2"
