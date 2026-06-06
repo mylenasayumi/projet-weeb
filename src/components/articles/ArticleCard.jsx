@@ -138,9 +138,7 @@ function ArticleCard({
             <motion.button
               onClick={handleLikeClick}
               title={
-                isAuthenticated
-                  ? t("articles.like")
-                  : t("articles.likeLoginRequired")
+                isAuthenticated ? t("likes.like") : t("likes.likeLoginRequired")
               }
               whileTap={{ scale: 1.6 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}

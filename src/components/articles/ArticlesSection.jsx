@@ -110,7 +110,7 @@ function ArticlesSection() {
   // Handles like toggle
   const handleToggleLike = async (articleId) => {
     if (!isAuthenticated) {
-      setMessage(t("articles.likeLoginRequired"));
+      setMessage(t("likes.likeLoginRequired"));
       return;
     }
 
