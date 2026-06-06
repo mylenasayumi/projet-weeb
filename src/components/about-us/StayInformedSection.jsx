@@ -24,7 +24,9 @@ function StayInformedSection() {
           <p className="text-xl font-bold">{t("aboutUs.evolvingEcosystem")}</p>
           <h1 className="md:text-7xl text-5xl font-extrabold">
             {t("aboutUs.stayInformed")}
-            <span className="text-light-purple">{t("aboutUs.trends")}</span>
+            <span className="text-purple dark:text-light-purple">
+              {t("aboutUs.trends")}
+            </span>
           </h1>
           <p className="text-lg font-normal">{t("aboutUs.stayInformedText")}</p>
           <div className="flex items-center space-x-8">

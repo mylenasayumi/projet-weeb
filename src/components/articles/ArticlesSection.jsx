@@ -167,13 +167,13 @@ function ArticlesSection() {
 
   if (loading)
     return (
-      <p className="bg-dark-blue text-white md:text-5xl text-xl font-extrabold text-center pt-10 md:pt-20 pb-200 md:pb-300">
+      <p className="md:text-5xl text-xl font-extrabold text-center pt-10 md:pt-20 pb-200 md:pb-300">
         {t("articles.loadingArticles")}
       </p>
     );
   if (error)
     return (
-      <p className="bg-dark-blue text-white md:text-5xl text-xl font-extrabold text-center pt-10 md:pt-20 pb-200 md:pb-300">
+      <p className="md:text-5xl text-xl font-extrabold text-center pt-10 md:pt-20 pb-200 md:pb-300">
         {error}
       </p>
     );

@@ -31,7 +31,7 @@ function LanguageSwitcher() {
     <div className="relative inline-block" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-dark-blue flex items-center gap-2 px-4 py-3 rounded-full shadow-2xl hover:cursor-pointer"
+        className="border-2 dark:border-0 shadow-[0_0_40px_rgba(0,0,0,0.15)] dark:bg-dark-blue flex items-center gap-2 px-4 py-3 rounded-full shadow-2xl hover:cursor-pointer"
       >
         <div className="w-6 h-6 rounded-full overflow-hidden">
           <Flag
@@ -43,14 +43,14 @@ function LanguageSwitcher() {
             }}
           />
         </div>
-        <span className="text-sm font-medium text-white">
+        <span className="text-sm font-medium text-dark-blue dark:text-white">
           {currentLang.label}
         </span>
       </button>
 
       {/* Language options dropdown */}
       {isOpen && (
-        <AnimatedDropdownDiv className="absolute bg-dark-blue left-0 mt-2 py-1 w-28 border-2 rounded-[18px] shadow-2xl z-50">
+        <AnimatedDropdownDiv className="absolute bg-white dark:bg-dark-blue left-0 mt-2 py-1 w-28 border-2 rounded-[18px] shadow-2xl z-50">
           {languages.map((l) => (
             <button
               key={l.code}
@@ -70,7 +70,9 @@ function LanguageSwitcher() {
                   }}
                 />
               </div>
-              <span className="text-sm font-medium text-white">{l.text}</span>
+              <span className="text-sm font-medium text-dark-blue dark:text-white">
+                {l.text}
+              </span>
             </button>
           ))}
         </AnimatedDropdownDiv>

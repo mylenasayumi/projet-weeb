@@ -12,9 +12,11 @@ function ExploreTheWebSection() {
     <section className="flex flex-col items-center">
       <h1 className="md:text-7xl text-5xl font-extrabold text-center my-18 mx-10 md:mx-20 lg:mx-30">
         {t("aboutUs.exploreThe")}
-        <span className="text-light-purple font-light">{t("aboutUs.Web")}</span>
+        <span className="text-purple dark:text-light-purple font-light">
+          {t("aboutUs.Web")}
+        </span>
         {t("aboutUs.inAllIts")}
-        <span className="underline underline-offset-16 decoration-light-purple decoration-[5px]">
+        <span className="underline underline-offset-16 decoration-purple decoration-[5px] dark:decoration-light-purple">
           {t("aboutUs.facets")}
         </span>
       </h1>
@@ -26,15 +28,15 @@ function ExploreTheWebSection() {
           to="/articles"
           transition={{ duration: 0.5 }}
           whileHover={{ scale: 1.1 }}
-          className="bg-purple px-4 py-4 rounded-[8px] hover:bg-light-purple cursor-pointer"
+          className="bg-purple text-white px-4 py-4 rounded-[8px] shadow-2xl hover:bg-light-purple cursor-pointer"
         >
           {t("aboutUs.discoverArticles")}
         </MotionLink>
         <MotionLink
-          to="/newsletter"
+          to="/newsletter-subscription"
           transition={{ duration: 0.5 }}
           whileHover={{ scale: 1.1 }}
-          className="px-4 py-3 rounded-[8px] border-2 hover:bg-light-purple cursor-pointer"
+          className="px-4 py-3 rounded-[8px] border-2 shadow-2xl hover:bg-light-purple cursor-pointer"
         >
           {t("aboutUs.subscribeNewsletter")}
         </MotionLink>

@@ -1,6 +1,7 @@
 // Navbar.jsx
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
+import { IoSunny, IoMoon } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../contexts/AuthContext";
@@ -17,6 +18,29 @@ function Navbar() {
   const MotionLink = motion(Link);
   const { t } = useLanguage();
   const { user, logout } = useAuth();
+
+  // Theme state (light/dark) - persists in localStorage
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "light";
+    }
+    return "light";
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    console.log("Clicou no botão", theme);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -43,9 +67,9 @@ function Navbar() {
 
   return (
     <header>
-      <nav className="w-full py-4">
+      <nav className="w-full py-4 transition-colors duration-300 dark:bg-gray-900 dark:text-gray-100">
         <div className="container max-w-screen-xl mx-auto px-10 md:px-20 mt-2">
-          <div className="bg-white/5 rounded-[20px] py-7 px-6 flex justify-between items-center shadow-lg">
+          <div className="bg-white/5 dark:bg-gray-800 rounded-[20px] py-7 px-6 flex justify-between items-center shadow-[0_0_40px_rgba(0,0,0,0.3)] transition-colors duration-300">
             <div className="flex items-center justify-between w-full md:w-auto">
               {/* Weeb "Logo" */}
               <Link to="/" className="font-bold text-3xl mr-10">
@@ -53,6 +77,19 @@ function Navbar() {
               </Link>
 
               <div className="flex items-center space-x-4 md:hidden">
+                {/* Theme Toggle - Mobile */}
+                <motion.button
+                  onClick={toggleTheme}
+                  className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors hover:cursor-pointer"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  {theme === "light" ? (
+                    <IoSunny size={20} className="text-yellow-400" />
+                  ) : (
+                    <IoMoon size={20} className="text-purple-500" />
+                  )}
+                </motion.button>
+
                 {/* Language Switcher dropdown menu */}
                 <LanguageSwitcher />
 
@@ -72,7 +109,7 @@ function Navbar() {
                     src="/images/Mobile-Menu-Button.png"
                     alt="Hamburger Menu Button"
                     className="h-[44px] w-[48px] cursor-pointer"
-                  ></img>
+                  />
                 </motion.button>
               </div>
             </div>
@@ -101,8 +138,22 @@ function Navbar() {
                 </li>
               </ul>
 
-              {/* Login / Sign up */}
+              {/* Login / Sign up / Controls */}
               <div className="text-base font-normal flex items-center space-x-8 relative">
+                {/* Theme Toggle - Desktop */}
+                <motion.button
+                  onClick={toggleTheme}
+                  className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors hover:cursor-pointer"
+                  transition={{ duration: 0.4 }}
+                  whileHover={{ scale: 1.1 }}
+                >
+                  {theme === "light" ? (
+                    <IoSunny size={22} className="text-yellow-400" />
+                  ) : (
+                    <IoMoon size={22} className="text-purple-500" />
+                  )}
+                </motion.button>
+
                 {/* Language Switcher dropdown menu */}
                 <LanguageSwitcher />
 
@@ -122,9 +173,9 @@ function Navbar() {
                     </MotionLink>
                     <MotionLink
                       to="/sign-up"
-                      transition={{ duration: 0.5 }}
-                      whileHover={{ scale: 1.1 }}
-                      className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] transition-colors duration-150 hover:bg-light-purple cursor-pointer"
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      whileHover={{ scale: 1.07 }}
+                      className="bg-purple text-white text-base font-normal px-8 py-3 rounded-[8px] transition-colors duration-150 hover:bg-light-purple cursor-pointer"
                     >
                       {t("navbar.signUp")}
                     </MotionLink>
@@ -133,11 +184,12 @@ function Navbar() {
               </div>
             </div>
           </div>
+
           {/* Drop-down menu - Mobile */}
           <AnimatePresence>
             {isOpen && (
               <AnimatedDropdownDiv
-                className="md:hidden bg-white/5 rounded-[20px] mt-4 p-8 space-y-4"
+                className="md:hidden bg-white/5 dark:bg-gray-800 rounded-[20px] mt-4 p-8 space-y-4"
                 ref={menuDropdownRef}
               >
                 <ul className="text-base font-medium space-y-4">

@@ -82,7 +82,7 @@ function SatisfactionSection() {
 
   return (
     <section className="flex flex-col items-center text-center">
-      <h1 className="md:text-6xl text-5xl font-extrabold m-10">
+      <h1 className="md:text-5xl text-4xl font-extrabold m-10">
         {t("satisfactions.title")}
       </h1>
       <p className="text-lg font-normal m-2 text-center 2xl:mx-100 xl:mx-50 mx-20">
@@ -116,7 +116,7 @@ function SatisfactionSection() {
               name="last_name"
               value={formData.last_name}
               onChange={handleChange}
-              className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+              className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
               placeholder={t("satisfactions.lastNamePlaceholder")}
               disabled={isSubmitting}
               required
@@ -130,7 +130,7 @@ function SatisfactionSection() {
               name="first_name"
               value={formData.first_name}
               onChange={handleChange}
-              className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+              className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
               placeholder={t("satisfactions.firstNamePlaceholder")}
               disabled={isSubmitting}
               required
@@ -146,7 +146,7 @@ function SatisfactionSection() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
             placeholder={t("satisfactions.emailPlaceholder")}
             disabled={isSubmitting}
             required
@@ -162,14 +162,14 @@ function SatisfactionSection() {
             cols="50"
             value={formData.description}
             onChange={handleChange}
-            className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
             placeholder={t("satisfactions.messagePlaceholder")}
             disabled={isSubmitting}
             required
           />
         </div>
 
-        <div className="text-base font-normal flex justify-center">
+        <div className="text-base text-white font-normal flex justify-center">
           <motion.button
             type="submit"
             className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] hover:bg-light-purple cursor-pointer transition duration-100"

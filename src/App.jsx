@@ -8,7 +8,7 @@ import ScrollToTop from "./components/ui/ScrollToTop";
 
 function App() {
   return (
-    <div className="font-roboto bg-dark-blue text-white">
+    <div className="font-roboto bg-white text-dark-blue dark:bg-dark-blue dark:text-white">
       {/* Scroll to top */}
       <ScrollToTop />
       {/* Header */}

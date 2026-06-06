@@ -52,7 +52,7 @@ function SignUpForm() {
 
   return (
     <section className="flex flex-col items-center my-10">
-      <h1 className="md:text-6xl text-5xl font-extrabold">
+      <h1 className="md:text-5xl text-4xl font-extrabold">
         {t("signUp.title")}
       </h1>
 
@@ -71,7 +71,7 @@ function SignUpForm() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
             placeholder={t("signUp.email")}
             required
             disabled={loading}
@@ -85,7 +85,7 @@ function SignUpForm() {
             name="first_name"
             value={formData.first_name}
             onChange={handleChange}
-            className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
             placeholder={t("signUp.firstName")}
             required
             disabled={loading}
@@ -99,7 +99,7 @@ function SignUpForm() {
             name="last_name"
             value={formData.last_name}
             onChange={handleChange}
-            className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
             placeholder={t("signUp.lastName")}
             required
             disabled={loading}
@@ -113,14 +113,14 @@ function SignUpForm() {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
             placeholder={t("signUp.password")}
             required
             disabled={loading}
           />
         </div>
 
-        <div className="text-base font-normal flex justify-center">
+        <div className="text-base text-white font-normal flex justify-center">
           <motion.button
             type="submit"
             className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] hover:bg-light-purple cursor-pointer transition duration-100 disabled:opacity-50 disabled:cursor-not-allowed"
