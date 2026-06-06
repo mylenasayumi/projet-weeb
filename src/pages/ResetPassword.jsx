@@ -67,7 +67,7 @@ function ResetPassword() {
 
   return (
     <section className="flex flex-col items-center my-10">
-      <h2 className="md:text-6xl text-5xl font-extrabold">
+      <h2 className="md:text-5xl text-4xl font-extrabold">
         {t("password.titleResetPassword")}
       </h2>
 
@@ -88,7 +88,7 @@ function ResetPassword() {
             type="password"
             id="password"
             value={password}
-            className="text-light-purple text-center mt-1 block w-full px-4 py-2 border-2 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            className="text-purple dark:text-light-purple text-center mt-1 block w-full px-4 py-2 border-2 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
             onChange={(e) => setPassword(e.target.value)}
             required
             placeholder={t("password.newPasswordPlaceholder")}
@@ -100,7 +100,7 @@ function ResetPassword() {
             type="password"
             id="confirmPassword"
             value={confirmPassword}
-            className="text-light-purple text-center mt-1 block w-full px-4 py-2 border-2 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            className="text-purple dark:text-light-purple text-center mt-1 block w-full px-4 py-2 border-2 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
             placeholder={t("password.confirmPasswordPlaceholder")}
@@ -108,7 +108,7 @@ function ResetPassword() {
           />
         </div>
 
-        <div className="text-base font-normal flex justify-center">
+        <div className="text-base text-white font-normal flex justify-center">
           <motion.button
             type="submit"
             className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] hover:bg-light-purple cursor-pointer transition duration-100 disabled:opacity-50 disabled:cursor-not-allowed"

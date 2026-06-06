@@ -5,6 +5,7 @@ import errorPage from "./errorPage";
 import footer from "./footer";
 import login from "./login";
 import navbar from "./navbar";
+import newsletter from "./newsletter";
 import password from "./password";
 import satisfactions from "./satisfactions";
 import signUp from "./signUp";
@@ -20,6 +21,7 @@ const en = {
   signUp,
   aboutUs,
   auth,
+  newsletter,
 };
 
 export default en;

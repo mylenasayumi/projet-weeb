@@ -92,7 +92,7 @@ function LoginSection() {
 
   return (
     <section className="flex flex-col items-center my-10">
-      <h1 className="md:text-6xl text-5xl font-extrabold">
+      <h1 className="md:text-5xl text-4xl font-extrabold">
         {t("login.title")}
       </h1>
 
@@ -131,7 +131,7 @@ function LoginSection() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
             placeholder={t("login.email")}
             required
             disabled={loading}
@@ -145,14 +145,14 @@ function LoginSection() {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-light-purple shadow-sm focus:outline-none focus:ring-2 focus:ring-purple"
+            className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
             placeholder={t("login.password")}
             required
             disabled={loading}
           />
         </div>
 
-        <div className="text-base font-normal flex justify-center">
+        <div className="text-base text-white font-normal flex justify-center">
           <motion.button
             type="submit"
             className="bg-purple text-base font-normal px-8 py-3 rounded-[8px] hover:bg-light-purple cursor-pointer transition duration-100 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -169,9 +169,12 @@ function LoginSection() {
         {t("login.forgotPasswordButton")}
       </Link>
 
-      <p className="text-light-gray my-10 mx-10 text-center">
+      <p className="text-black dark:text-light-gray my-10 mx-10 text-center">
         {t("login.createAccountText")}
-        <Link to="/sign-up" className="text-white hover:text-light-purple">
+        <Link
+          to="/sign-up"
+          className="text-purple dark:text-white hover:text-light-purple"
+        >
           {t("login.createAccountButton")}
         </Link>
       </p>

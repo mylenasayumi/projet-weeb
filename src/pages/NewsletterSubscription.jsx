@@ -1,49 +1,33 @@
-// ForgotPassword.jsx
+// NewsletterSubscription.jsx
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../languages/LanguageContext";
-import passwordResetService from "../services/PasswordResetService";
 
-function ForgotPassword() {
+function NewsletterSubscription() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { t } = useLanguage();
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/", { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setMessage("");
     setError("");
     setLoading(true);
 
-    try {
-      const response = await passwordResetService.requestResetPassword(email);
-      setMessage(t("password.forgotPasswordMessage") || response.message);
+    setTimeout(() => {
+      setMessage(t("newsletter.subscriptionSuccess"));
       setEmail("");
-    } catch (err) {
-      setError(t("password.errorMessage") || err.message);
-      console.log("Password error message: ", err.message);
-    } finally {
       setLoading(false);
-    }
+    }, 2000);
   };
 
   return (
     <section className="flex flex-col items-center my-10">
       <h1 className="md:text-5xl text-4xl font-extrabold">
-        {t("password.titleForgotPassword")}
+        {t("newsletter.subscription")}
       </h1>
 
       <form onSubmit={handleSubmit} className="p-8 w-full max-w-md space-y-8">
@@ -65,8 +49,8 @@ function ForgotPassword() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder={t("password.email")}
-            className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple focus:outline-none focus:ring-2 focus:ring-purple"
+            placeholder={t("newsletter.email")}
+            className="text-purple dark:text-light-purple text-center placeholder:text-center mt-1 block w-full px-4 py-2 border-b-1 border-purple dark:border-light-purple"
             disabled={loading}
           />
         </div>
@@ -79,7 +63,9 @@ function ForgotPassword() {
             transition={{ duration: 0.3 }}
             disabled={loading}
           >
-            {loading ? t("password.sending") : t("password.sendButton")}
+            {loading
+              ? t("newsletter.sending")
+              : t("newsletter.subscribeButton")}
           </motion.button>
         </div>
       </form>
@@ -87,4 +73,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default NewsletterSubscription;

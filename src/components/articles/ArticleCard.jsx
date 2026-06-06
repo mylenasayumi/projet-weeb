@@ -32,7 +32,7 @@ function ArticleCard({
       >
         <div className="flex items-center justify-center text-center h-full">
           <BsFillPlusCircleFill size={24} className="inline-block mr-2" />
-          <span className="text-gray-300 text-xl font-bold">
+          <span className="text-gray dark:text-gray-300 text-xl font-bold">
             {t("articles.addArticle")}
           </span>
         </div>
@@ -91,7 +91,7 @@ function ArticleCard({
         <div className={!article.image ? "" : "ml-auto"}>
           <button
             onClick={() => onOpen(article.id)}
-            className="text-white hover:underline hover:cursor-pointer text-sm flex items-center gap-2"
+            className="text-purple dark:text-white hover:underline hover:cursor-pointer text-sm flex items-center gap-2"
           >
             <BsArrowRight className="inline-block" />
             {t("articles.readMore")}

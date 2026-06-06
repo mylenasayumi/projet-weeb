@@ -1,6 +1,9 @@
 /* Global style file for the entire application. */
 @import "tailwindcss";
 
+/* Dark theme variant */
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-roboto: "Roboto";
   --color-white: #ffffff;

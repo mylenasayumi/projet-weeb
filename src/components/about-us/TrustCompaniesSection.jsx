@@ -14,35 +14,42 @@ function TrustCompaniesSection() {
       <div className="grid lg:grid-cols-5 md:grid-cols-5 sm:grid-cols-1 place-items-center gap-9 mx-14 mb-20">
         <motion.img
           src="/images/Logo-SmartFinder.png"
-          className="w-[176.16px] h-[32px] drop-shadow-2xl"
+          className="hidden dark:block w-[176.16px] h-[32px] drop-shadow-2xl"
+          alt="Logo-SmartFinder"
+          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.2 }}
+        ></motion.img>
+        <motion.img
+          src="/images/Logo-SmartFinder.png"
+          className="block dark:hidden w-[176.16px] h-[32px] drop-shadow-2xl invert"
           alt="Logo-SmartFinder"
           transition={{ duration: 0.5 }}
           whileHover={{ scale: 1.2 }}
         ></motion.img>
         <motion.img
           src="/images/Logo-Zoomer.png"
-          className="w-[133px] h-[32px] drop-shadow-2xl"
+          className="w-[133px] h-[32px] drop-shadow-2xl brightness-0 dark:invert"
           alt="Logo-Zoomer"
           transition={{ duration: 0.5 }}
           whileHover={{ scale: 1.2 }}
         ></motion.img>
         <motion.img
           src="/images/Logo-Shells.png"
-          className="w-[124.4px] h-[32px] drop-shadow-2xl"
+          className="w-[124.4px] h-[32px] drop-shadow-2xl brightness-0 dark:invert"
           alt="Logo-Shells"
           transition={{ duration: 0.5 }}
           whileHover={{ scale: 1.2 }}
         ></motion.img>
         <motion.img
           src="/images/Logo-Waves.png"
-          className="w-[109.03px] h-[32px] drop-shadow-2xl"
+          className="w-[109.03px] h-[32px] drop-shadow-2xl brightness-0 dark:invert"
           alt="Logo-Waves"
           transition={{ duration: 0.5 }}
           whileHover={{ scale: 1.2 }}
         ></motion.img>
         <motion.img
           src="/images/Logo-ArtVenue.png"
-          className="w-[165.81px] h-[32px] drop-shadow-2xl"
+          className="w-[165.81px] h-[32px] drop-shadow-2xl brightness-0 dark:invert"
           alt="Logo-ArtVenue"
           transition={{ duration: 0.5 }}
           whileHover={{ scale: 1.2 }}

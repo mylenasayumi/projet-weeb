@@ -32,7 +32,7 @@ function UserDropdown({ user, onLogout }) {
       </div>
       {/* Dropdown */}
       {isOpen && (
-        <AnimatedDropdownDiv className="bg-white text-black right-0 mt-4 w-40 text-center rounded-lg shadow-lg p-1.5 absolute z-50">
+        <AnimatedDropdownDiv className="bg-white text-dark-blue border-2 dark:border-0 right-0 mt-4 w-40 text-center rounded-[18px] shadow-lg p-1.5 absolute z-50">
           <button
             onClick={onLogout}
             className="w-full text-center px-4 py-2 rounded"

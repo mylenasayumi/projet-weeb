@@ -9,9 +9,9 @@ function Footer() {
   const { t } = useLanguage();
 
   return (
-    <section className="bg-white text-black text-base font-normal p-2">
+    <section className="shadow-[0_0_40px_rgba(0,0,0,0.15)] border-t border-gray-200 bg-white text-dark-blue text-base font-normal p-2">
       <div className="flex flex-col lg:flex-row p-10 gap-10 lg:gap-4 items-start">
-        {/* Weeb  */}
+        {/* Weeb */}
         <div className="px-10">
           <p className="font-bold text-3xl">weeb</p>
         </div>

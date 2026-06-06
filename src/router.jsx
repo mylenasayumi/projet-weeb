@@ -12,6 +12,7 @@ import CreateArticle from "./pages/CreateArticle.jsx";
 import ErrorLayout from "./pages/ErrorLayout.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import Login from "./pages/Login.jsx";
+import NewsletterSubscription from "./pages/NewsletterSubscription.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import UpdateArticle from "./pages/UpdateArticle.jsx";
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: "reset-password",
         element: <ResetPassword />,
+      },
+      {
+        path: "newsletter-subscription",
+        element: <NewsletterSubscription />,
       },
     ],
   },

@@ -110,15 +110,15 @@ function UpdateArticle() {
 
   if (loading) {
     return (
-      <p className="bg-dark-blue text-white text-center text-2xl font-bold py-20">
+      <p className="text-center text-2xl font-bold py-20">
         {t("articles.loadingArticle")}
       </p>
     );
   }
 
   return (
-    <section className="bg-dark-blue text-white max-w-3xl mx-auto p-6 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-4 text-white text-center text-[40px]">
+    <section className="max-w-2xl mx-auto p-6 my-10 shadow-2xl border-1 dark:border-white p-10 rounded-[18px]">
+      <h1 className="text-2xl font-bold mb-4 text-center text-[40px]">
         {t("articles.updateArticlePage")}
       </h1>
       {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -134,7 +134,7 @@ function UpdateArticle() {
             value={formData.title}
             onChange={handleChange}
             disabled={saving || !!error}
-            className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full border-b-1 border-gray-300 px-4 py-2"
           />
         </div>
         <div>
@@ -147,7 +147,7 @@ function UpdateArticle() {
             placeholder={t("articles.description")}
             onChange={handleChange}
             disabled={saving || !!error}
-            className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full border-b-1 border-gray-300 px-4 py-2"
             rows={6}
           />
         </div>
@@ -162,7 +162,7 @@ function UpdateArticle() {
             placeholder={t("articles.image")}
             onChange={handleChange}
             disabled={saving || !!error}
-            className="w-full border-2 border-gray-300 px-4 py-2 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full border-b-1 border-gray-300 px-4 py-2"
           />
         </div>
         <motion.button
