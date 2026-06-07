@@ -129,6 +129,15 @@ function Navbar() {
                 </li>
                 <li>
                   <MotionLink
+                    to="/articles"
+                    whileHover={{ scale: 1.1 }}
+                    className="transition-colors duration-150 hover:text-purple"
+                  >
+                    {t("navbar.articles")}
+                  </MotionLink>
+                </li>
+                <li>
+                  <MotionLink
                     to="/contact"
                     whileHover={{ scale: 1.1 }}
                     className="transition-colors duration-150 hover:text-purple"
@@ -200,6 +209,15 @@ function Navbar() {
                       onClick={() => setIsOpen(false)}
                     >
                       {t("navbar.aboutUs")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/articles"
+                      className="block hover:text-purple"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {t("navbar.articles")}
                     </Link>
                   </li>
                   <li>
