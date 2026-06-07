@@ -1,4 +1,4 @@
-name: Frontend CI (Lint, Test and Build Check)
+name: Frontend CI (Lint, Test with Coverage and Build Check)
 
 on:
   push:
@@ -26,8 +26,8 @@ jobs:
       - name: Run Linter (ESLint)
         run: npm run lint
 
-      - name: Run Unit Tests (Vitest)
-        run: npm run test
+      - name: Run Unit Tests with Coverage (Vitest)
+        run: npx vitest run --coverage
         env:
             CI: "true"
 
