@@ -1,3 +1,5 @@
+![Coverage](https://raw.githubusercontent.com/mylenasayumi/projet-weeb/main/coverage.svg)
+
 # projet-weeb
 
 FR :
