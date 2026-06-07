@@ -4,10 +4,7 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    react()
-  ],
+  plugins: [tailwindcss(), react()],
   test: {
     globals: true,
     environment: "jsdom",
@@ -17,7 +14,7 @@ export default defineConfig({
     restoreMocks: true,
     coverage: {
       provider: "v8",
-      reporter: ["text", "html"],
+      reporter: ["text", "json-summary", "json", "html"],
       include: ["src/**/*.{js,jsx}"],
       exclude: [
         "src/main.jsx",
@@ -27,6 +24,6 @@ export default defineConfig({
         "src/languages/fr/**",
         "src/languages/en/**",
       ],
-    }
-  }
-})
+    },
+  },
+});

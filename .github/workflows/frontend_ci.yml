@@ -1,0 +1,50 @@
+name: Frontend CI (Lint, Test with Coverage and Build Check)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  lint-test-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Linter (ESLint)
+        run: npm run lint
+
+      - name: Run Unit Tests with Coverage (Vitest)
+        run: npx vitest run --coverage
+        env:
+          CI: "true"
+
+      - name: Generate Coverage Badge
+        run: |
+          PCT=$(jq '.total.lines.pct' coverage/coverage-summary.json)
+          COLOR=$(jq -r 'if .total.lines.pct < 60 then "red" elif .total.lines.pct < 80 then "yellow" else "green" end' coverage/coverage-summary.json)
+          curl -s "https://img.shields.io/badge/coverage-${PCT}%25-${COLOR}" > coverage.svg
+
+      - name: Commit and Push Badge
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update coverage badge [skip ci]"
+          file_pattern: "coverage.svg"
+
+      - name: Verify Production Build
+        run: npm run build
