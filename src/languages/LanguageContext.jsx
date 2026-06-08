@@ -5,14 +5,19 @@ import { translations } from "./translations";
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState("fr");
+  const [lang, setLang] = useState("en");
 
   useEffect(() => {
     const savedLang = localStorage.getItem("lang");
-    if (["fr", "en"].includes(savedLang)) {
+    if (["en", "fr"].includes(savedLang)) {
       setLang(savedLang);
     }
   }, []);
+
+  // Updates the document's lang attribute whenever the language changes
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const changeLanguage = (newLang) => {
     setLang(newLang);

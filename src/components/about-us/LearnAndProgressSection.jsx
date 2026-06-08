@@ -13,21 +13,22 @@ function LearnAndProgressSection() {
       <div className="container max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center px-8 md:px-16 gap-12">
         <div className="flex-1 space-y-6">
           <p className="text-xl font-bold">{t("aboutUs.resources")}</p>
-          <h1 className="text-purple dark:text-light-purple md:text-7xl text-5xl font-extrabold">
+          <h2 className="text-purple dark:text-light-purple md:text-7xl text-5xl font-extrabold">
             {t("aboutUs.learn")}
             <span className="text-dark-blue dark:text-white">
               {t("aboutUs.and")}
             </span>
             {t("aboutUs.progress")}
-          </h1>
+          </h2>
           <p className="text-lg font-normal">
             {t("aboutUs.learnAndProgressText")}
           </p>
           <div className="flex items-center space-x-8">
             <MotionLink
-              to="/resources"
-              transition={{ duration: 0.5 }}
+              to="/articles"
+              transition={{ duration: 0.2 }}
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               className="text-xl font-medium py-2 hover:text-light-purple cursor-pointer"
             >
               {t("aboutUs.exploreResourcesButton")}
@@ -39,10 +40,10 @@ function LearnAndProgressSection() {
             src="/images/Desktop-App.png"
             alt="Desktop Screen Image"
             className="w-full max-w-[632px] h-auto drop-shadow-2xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            whileHover={{ scale: 1.05 }}
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            viewport={{ once: true }}
           ></motion.img>
         </div>
       </div>

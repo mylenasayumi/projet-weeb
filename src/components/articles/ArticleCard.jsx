@@ -48,7 +48,7 @@ function ArticleCard({
         transition={{ duration: 0.5 }}
         whileHover={{ scale: 1.1 }}
         onClick={onCreate}
-        className={`w-[400px] h-[360px] border-2 p-2 rounded-2xl shadow-lg
+        className={`w-full max-w-[400px] h-[360px] border-2 p-2 rounded-2xl shadow-lg
                     ${
                       isAuthenticated
                         ? "bg-light-purple/6 border-purple hover:cursor-pointer"
@@ -74,7 +74,7 @@ function ArticleCard({
       exit={{ opacity: 0, x: 20 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.1 }}
-      className="w-[400px] h-[360px] bg-light-purple/6 border-2 border-purple rounded-2xl shadow-lg flex flex-col overflow-hidden"
+      className="w-full max-w-[400px] h-[360px] bg-light-purple/6 border-2 border-purple rounded-2xl shadow-lg flex flex-col overflow-hidden"
     >
       {/* Image with views badge superimposed */}
       {article.image && (
