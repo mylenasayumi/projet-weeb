@@ -26,16 +26,18 @@ function ExploreTheWebSection() {
       <div className="text-lg md:text-xl font-medium flex items-center m-6 my-10 space-x-8">
         <MotionLink
           to="/articles"
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.2 }}
           whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
           className="bg-purple text-white px-4 py-4 rounded-[8px] shadow-2xl hover:bg-light-purple cursor-pointer"
         >
           {t("aboutUs.discoverArticles")}
         </MotionLink>
         <MotionLink
           to="/newsletter-subscription"
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.2 }}
           whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
           className="px-4 py-3 rounded-[8px] border-2 shadow-2xl hover:bg-light-purple cursor-pointer"
         >
           {t("aboutUs.subscribeNewsletter")}
@@ -47,7 +49,7 @@ function ExploreTheWebSection() {
         className="w-full max-w-[1100px] h-auto drop-shadow-2xl mt-8 px-10 md:px-15"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.5 }}
         whileHover={{ scale: 1.05 }}
       ></motion.img>
     </section>

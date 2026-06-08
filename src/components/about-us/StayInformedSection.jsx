@@ -22,18 +22,19 @@ function StayInformedSection() {
         </div>
         <div className="flex-1 space-y-6 mt-30 xl:mt-0">
           <p className="text-xl font-bold">{t("aboutUs.evolvingEcosystem")}</p>
-          <h1 className="md:text-7xl text-5xl font-extrabold">
+          <h2 className="md:text-7xl text-5xl font-extrabold">
             {t("aboutUs.stayInformed")}
             <span className="text-purple dark:text-light-purple">
               {t("aboutUs.trends")}
             </span>
-          </h1>
+          </h2>
           <p className="text-lg font-normal">{t("aboutUs.stayInformedText")}</p>
           <div className="flex items-center space-x-8">
             <MotionLink
               to="/articles"
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.2 }}
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               className="text-xl font-medium py-2 hover:text-light-purple cursor-pointer"
             >
               {t("aboutUs.articlesButton")}

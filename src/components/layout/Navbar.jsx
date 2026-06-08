@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { IoSunny, IoMoon } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { useLanguage } from "../../languages/LanguageContext";
@@ -10,12 +10,23 @@ import LanguageSwitcher from "../../languages/LanguageSwitcher";
 import AnimatedDropdownDiv from "../ui/AnimatedDropdownDiv";
 import UserDropdown from "../ui/UserDropdown";
 
+const navClassDesktop = ({ isActive }) =>
+  `transition-colors duration-150 hover:text-purple ${
+    isActive ? "underline underline-offset-4" : ""
+  }`;
+
+const navClassMobile = ({ isActive }) =>
+  `block transition-colors duration-150 hover:text-purple ${
+    isActive ? "underline underline-offset-4" : ""
+  }`;
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false); // State to open/close the menu.
   const navigate = useNavigate();
   const menuDropdownRef = useRef(null);
   const menuButtonRef = useRef(null);
   const MotionLink = motion(Link);
+  const MotionNavLink = motion(NavLink);
   const { t } = useLanguage();
   const { user, logout } = useAuth();
 
@@ -39,7 +50,6 @@ function Navbar() {
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-    console.log("Clicou no botão", theme);
   };
 
   useEffect(() => {
@@ -80,6 +90,11 @@ function Navbar() {
                 {/* Theme Toggle - Mobile */}
                 <motion.button
                   onClick={toggleTheme}
+                  aria-label={
+                    theme === "light"
+                      ? t("navbar.switchToDarkMode")
+                      : t("navbar.switchToLightMode")
+                  }
                   className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors hover:cursor-pointer"
                   whileHover={{ scale: 1.1 }}
                 >
@@ -101,6 +116,11 @@ function Navbar() {
                 <motion.button
                   ref={menuButtonRef}
                   type="button"
+                  aria-label={
+                    isOpen ? t("navbar.closeMenu") : t("navbar.openMenu")
+                  }
+                  aria-expanded={isOpen}
+                  aria-controls="mobile-menu"
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   whileHover={{ scale: 1.1 }}
                   onClick={() => setIsOpen((prev) => !prev)}
@@ -119,31 +139,19 @@ function Navbar() {
               {/* Navbar Links */}
               <ul className="flex space-x-8 text-base font-medium">
                 <li>
-                  <MotionLink
-                    to="/"
-                    whileHover={{ scale: 1.1 }}
-                    className="transition-colors duration-150 hover:text-purple"
-                  >
+                  <MotionNavLink to="/" end className={navClassDesktop}>
                     {t("navbar.aboutUs")}
-                  </MotionLink>
+                  </MotionNavLink>
                 </li>
                 <li>
-                  <MotionLink
-                    to="/articles"
-                    whileHover={{ scale: 1.1 }}
-                    className="transition-colors duration-150 hover:text-purple"
-                  >
+                  <MotionNavLink to="/articles" className={navClassDesktop}>
                     {t("navbar.articles")}
-                  </MotionLink>
+                  </MotionNavLink>
                 </li>
                 <li>
-                  <MotionLink
-                    to="/contact"
-                    whileHover={{ scale: 1.1 }}
-                    className="transition-colors duration-150 hover:text-purple"
-                  >
+                  <MotionNavLink to="/contact" className={navClassDesktop}>
                     {t("navbar.contact")}
-                  </MotionLink>
+                  </MotionNavLink>
                 </li>
               </ul>
 
@@ -152,6 +160,11 @@ function Navbar() {
                 {/* Theme Toggle - Desktop */}
                 <motion.button
                   onClick={toggleTheme}
+                  aria-label={
+                    theme === "light"
+                      ? t("navbar.switchToDarkMode")
+                      : t("navbar.switchToLightMode")
+                  }
                   className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors hover:cursor-pointer"
                   transition={{ duration: 0.4 }}
                   whileHover={{ scale: 1.1 }}
@@ -173,13 +186,9 @@ function Navbar() {
                   </div>
                 ) : (
                   <>
-                    <MotionLink
-                      to="/login"
-                      whileHover={{ scale: 1.1 }}
-                      className="transition-colors duration-150 hover:text-purple"
-                    >
+                    <MotionNavLink to="/login" className={navClassDesktop}>
                       {t("navbar.login")}
-                    </MotionLink>
+                    </MotionNavLink>
                     <MotionLink
                       to="/sign-up"
                       transition={{ duration: 0.4, ease: "easeOut" }}
@@ -198,47 +207,49 @@ function Navbar() {
           <AnimatePresence>
             {isOpen && (
               <AnimatedDropdownDiv
+                id="mobile-menu"
                 className="md:hidden bg-white/5 dark:bg-gray-800 rounded-[20px] mt-4 p-8 space-y-4"
                 ref={menuDropdownRef}
               >
                 <ul className="text-base font-medium space-y-4">
                   <li>
-                    <Link
+                    <MotionNavLink
                       to="/"
-                      className="block hover:text-purple"
+                      end
+                      className={navClassMobile}
                       onClick={() => setIsOpen(false)}
                     >
                       {t("navbar.aboutUs")}
-                    </Link>
+                    </MotionNavLink>
                   </li>
                   <li>
-                    <Link
+                    <MotionNavLink
                       to="/articles"
-                      className="block hover:text-purple"
+                      className={navClassMobile}
                       onClick={() => setIsOpen(false)}
                     >
                       {t("navbar.articles")}
-                    </Link>
+                    </MotionNavLink>
                   </li>
                   <li>
-                    <Link
+                    <MotionNavLink
                       to="/contact"
-                      className="block hover:text-purple"
+                      className={navClassMobile}
                       onClick={() => setIsOpen(false)}
                     >
                       {t("navbar.contact")}
-                    </Link>
+                    </MotionNavLink>
                   </li>
                   {!user && (
                     <>
                       <li>
-                        <Link
+                        <MotionNavLink
                           to="/login"
-                          className="block hover:text-purple"
+                          className={navClassMobile}
                           onClick={() => setIsOpen(false)}
                         >
                           {t("navbar.login")}
-                        </Link>
+                        </MotionNavLink>
                       </li>
                       <li>
                         <Link
