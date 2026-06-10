@@ -51,6 +51,9 @@ const articles = {
   notOwnerUpdateArticleError:
     "Vous n'êtes pas autorisé à modifier cet article.",
   updateArticleError: "Erreur lors de la mise à jour de l'article.",
+
+  // Article Detail
+  backToArticles: "Retour aux Articles",
 };
 
 export default articles;

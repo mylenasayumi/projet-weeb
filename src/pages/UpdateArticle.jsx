@@ -117,7 +117,7 @@ function UpdateArticle() {
   }
 
   return (
-    <section className="max-w-2xl mx-auto p-6 my-10 shadow-2xl border-1 dark:border-white p-10 rounded-[18px]">
+    <section className="max-w-2xl mx-auto p-16 my-10 shadow-2xl border-1 dark:border-white rounded-[18px]">
       <h1 className="text-2xl font-bold mb-4 text-center text-[40px]">
         {t("articles.updateArticlePage")}
       </h1>

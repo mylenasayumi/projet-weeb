@@ -1,6 +1,7 @@
 // UserDropdown.jsx
 // User dropdown component for the user menu in the navbar.
 import { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 
 import { useLanguage } from "../../languages/LanguageContext";
 
@@ -32,10 +33,17 @@ function UserDropdown({ user, onLogout }) {
       </div>
       {/* Dropdown */}
       {isOpen && (
-        <AnimatedDropdownDiv className="bg-white text-dark-blue border-2 dark:border-0 right-0 mt-4 w-40 text-center rounded-[18px] shadow-lg p-1.5 absolute z-50">
+        <AnimatedDropdownDiv className="bg-white text-dark-blue border-1 right-0 mt-4 w-40 text-center rounded-[18px] shadow-2xl p-1.5 absolute z-50">
+          <Link
+            to="/profile"
+            onClick={() => setIsOpen(false)}
+            className="block w-full text-center px-4 py-2 rounded hover:text-purple"
+          >
+            {t("navbar.myProfile")}
+          </Link>
           <button
             onClick={onLogout}
-            className="w-full text-center px-4 py-2 rounded"
+            className="w-full text-center px-4 py-2 rounded hover:text-purple cursor-pointer"
           >
             {t("navbar.logout")}
           </button>

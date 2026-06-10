@@ -5,6 +5,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import AboutUs from "./pages/AboutUs.jsx";
+import ArticleDetail from "./pages/ArticleDetail.jsx";
 import Articles from "./pages/Articles.jsx";
 import AuthCallback from "./pages/AuthCallback.jsx";
 import Contact from "./pages/Contact.jsx";
@@ -13,6 +14,7 @@ import ErrorLayout from "./pages/ErrorLayout.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import Login from "./pages/Login.jsx";
 import NewsletterSubscription from "./pages/NewsletterSubscription.jsx";
+import Profile from "./pages/Profile.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import UpdateArticle from "./pages/UpdateArticle.jsx";
@@ -51,11 +53,19 @@ const router = createBrowserRouter([
             path: "contact",
             element: <Contact />,
           },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
         ],
       },
       {
         path: "articles",
         element: <Articles />,
+      },
+      {
+        path: "articles/:id",
+        element: <ArticleDetail />,
       },
       {
         path: "auth/callback",

@@ -44,6 +44,9 @@ const articles = {
   loggedInUpdateArticleError: "You must be logged in to edit an article.",
   notOwnerUpdateArticleError: "You are not authorized to edit this article.",
   updateArticleError: "Error updating article.",
+
+  // Article Detail
+  backToArticles: "Back to Articles",
 };
 
 export default articles;
