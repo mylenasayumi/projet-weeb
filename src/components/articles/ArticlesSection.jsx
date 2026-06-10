@@ -16,6 +16,8 @@ import ArticleFilters from "./ArticleFilters";
 import ArticleModal from "./ArticleModal";
 import Pagination from "./Pagination";
 
+const PAGE_SIZE = 5;
+
 function ArticlesSection() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -48,7 +50,7 @@ function ArticlesSection() {
 
       // likes_count comes from the backend
       setArticles(data.results || []);
-      setTotalPages(Math.max(1, Math.ceil((data.count || 0) / 5))); // PAGE_SIZE = 5
+      setTotalPages(Math.max(1, Math.ceil((data.count || 0) / PAGE_SIZE)));
     } catch (err) {
       console.error(err);
       setError(t("articles.loadingArticlesError"));
@@ -290,8 +292,8 @@ function ArticlesSection() {
       <Pagination
         page={page}
         totalPages={totalPages}
-        onPrevious={() => setPage((prev) => prev - 1)}
-        onNext={() => setPage((prev) => prev + 1)}
+        onPreviousPage={() => setPage((prev) => prev - 1)}
+        onNextPage={() => setPage((prev) => prev + 1)}
       />
 
       {/* Modal for article details */}

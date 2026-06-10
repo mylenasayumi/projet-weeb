@@ -47,6 +47,7 @@ const articles = {
 
   // Article Detail
   backToArticles: "Back to Articles",
+  cancel: "Cancel",
 };
 
 export default articles;

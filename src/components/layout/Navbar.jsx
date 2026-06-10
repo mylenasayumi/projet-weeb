@@ -101,7 +101,7 @@ function Navbar() {
                   {theme === "light" ? (
                     <IoSunny size={20} className="text-yellow-400" />
                   ) : (
-                    <IoMoon size={20} className="text-purple-500" />
+                    <IoMoon size={20} className="text-purple" />
                   )}
                 </motion.button>
 
@@ -172,7 +172,7 @@ function Navbar() {
                   {theme === "light" ? (
                     <IoSunny size={22} className="text-yellow-400" />
                   ) : (
-                    <IoMoon size={22} className="text-purple-500" />
+                    <IoMoon size={22} className="text-purple" />
                   )}
                 </motion.button>
 
