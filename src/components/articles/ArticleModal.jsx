@@ -1,5 +1,6 @@
 // src/components/articles/ArticleModal.jsx
 // Modal for article details
+// Delete this modal after.
 import { motion } from "framer-motion";
 import { BsEye } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";

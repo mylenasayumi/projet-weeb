@@ -8,6 +8,7 @@ import login from "./login";
 import navbar from "./navbar";
 import newsletter from "./newsletter";
 import password from "./password";
+import profile from "./profile";
 import satisfactions from "./satisfactions";
 import signUp from "./signUp";
 
@@ -24,6 +25,7 @@ const en = {
   auth,
   newsletter,
   likes,
+  profile,
 };
 
 export default en;

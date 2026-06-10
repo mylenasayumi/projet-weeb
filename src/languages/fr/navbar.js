@@ -10,6 +10,7 @@ const navbar = {
   openMenu: "Ouvrir Menu",
   switchToDarkMode: "Passer en Mode Sombre",
   switchToLightMode: "Passer en Mode Clair",
+  myProfile: "Mon Profil",
 };
 
 export default navbar;

@@ -7,6 +7,7 @@ import {
   BsHeart,
   BsHeartFill,
 } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 import { useLanguage } from "../../languages/LanguageContext";
 
@@ -22,6 +23,7 @@ function ArticleCard({
   const { t } = useLanguage();
   const isLiked = likedArticleIds.includes(article?.id);
   const [floatingHearts, setFloatingHearts] = useState([]);
+  const navigate = useNavigate();
 
   // Handles floating herts when user likes the article
   const handleLikeClick = (e) => {
@@ -160,7 +162,7 @@ function ArticleCard({
           </div>
           {/* Read more button */}
           <button
-            onClick={() => onOpen(article.id)}
+            onClick={() => navigate(`/articles/${article.id}`)}
             className="text-purple dark:text-white hover:underline hover:cursor-pointer text-sm flex items-center gap-2"
           >
             <BsArrowRight className="inline-block" />
