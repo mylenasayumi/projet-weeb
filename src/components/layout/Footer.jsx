@@ -20,50 +20,50 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-x-6 gap-y-10 w-full max-w-screen-lg mx-auto px-10">
           <div className="flex flex-col gap-4">
             <p className="font-medium text-gray">{t("footer.product")}</p>
-            <a href="/prices" className="hover:text-purple">
+            <Link to="/prices" className="hover:text-purple">
               {t("footer.prices")}
-            </a>
-            <a href="/preview" className="hover:text-purple">
+            </Link>
+            <Link to="/preview" className="hover:text-purple">
               {t("footer.preview")}
-            </a>
-            <a href="/browse" className="hover:text-purple">
+            </Link>
+            <Link to="/browse" className="hover:text-purple">
               {t("footer.browse")}
-            </a>
-            <a href="/accessibility" className="hover:text-purple">
+            </Link>
+            <Link to="/accessibility" className="hover:text-purple">
               {t("footer.accessibility")}
-            </a>
-            <a href="/five" className="hover:text-purple">
+            </Link>
+            <Link to="/five" className="hover:text-purple">
               {t("footer.five")}
-            </a>
+            </Link>
           </div>
 
           <div className="flex flex-col gap-4">
             <p className="font-medium text-gray">{t("footer.solutions")}</p>
-            <a href="/brainstorming" className="hover:text-purple">
+            <Link to="/brainstorming" className="hover:text-purple">
               {t("footer.brainstorming")}
-            </a>
-            <a href="/idea-generation" className="hover:text-purple">
+            </Link>
+            <Link to="/idea-generation" className="hover:text-purple">
               {t("footer.ideaGeneration")}
-            </a>
-            <a href="/prototyping" className="hover:text-purple">
+            </Link>
+            <Link to="/prototyping" className="hover:text-purple">
               {t("footer.prototyping")}
-            </a>
-            <a href="/research" className="hover:text-purple">
+            </Link>
+            <Link to="/research" className="hover:text-purple">
               {t("footer.research")}
-            </a>
+            </Link>
           </div>
 
           <div className="flex flex-col gap-4">
             <p className="font-medium text-gray">{t("footer.resources")}</p>
-            <a href="/help-center" className="hover:text-purple">
+            <Link to="/help-center" className="hover:text-purple">
               {t("footer.helpCenter")}
-            </a>
-            <a href="/blog" className="hover:text-purple">
+            </Link>
+            <Link to="/blog" className="hover:text-purple">
               {t("footer.blog")}
-            </a>
-            <a href="/tutorials" className="hover:text-purple">
+            </Link>
+            <Link to="/tutorials" className="hover:text-purple">
               {t("footer.tutorials")}
-            </a>
+            </Link>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -71,15 +71,15 @@ function Footer() {
             <Link to="/" className="hover:text-purple">
               {t("footer.aboutUs")}
             </Link>
-            <a href="/press" className="hover:text-purple">
+            <Link to="/press" className="hover:text-purple">
               {t("footer.press")}
-            </a>
-            <a href="/events" className="hover:text-purple">
+            </Link>
+            <Link to="/events" className="hover:text-purple">
               {t("footer.events")}
-            </a>
-            <a href="/careers" className="hover:text-purple">
+            </Link>
+            <Link to="/careers" className="hover:text-purple">
               {t("footer.careers")}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

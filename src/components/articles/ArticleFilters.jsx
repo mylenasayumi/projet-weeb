@@ -27,7 +27,7 @@ function ArticleFilters({
             onKeyDown={(e) => e.key === "Enter" && onSearchSubmit()}
           />
           <motion.button
-            className="absolute right-2 top-1/2 -translate-y-1/2 hover: cursor-pointer"
+            className="absolute right-2 top-1/2 -translate-y-1/2 hover:cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2 }}

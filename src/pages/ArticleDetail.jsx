@@ -178,6 +178,7 @@ function ArticleDetail() {
           <img
             src={article.image}
             alt={article.title}
+            loading="lazy"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40" />

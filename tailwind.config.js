@@ -8,7 +8,7 @@ export default {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
       },
-      color: {
+      colors: {
         "dark-blue": "#0f172a",
         purple: "#9333ea",
         "light-purple": "#c084fc",
@@ -17,5 +17,4 @@ export default {
       },
     },
   },
-  plugins: [require("@tailwindcss/line-clamp")],
 };
