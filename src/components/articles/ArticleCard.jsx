@@ -76,7 +76,8 @@ function ArticleCard({
       exit={{ opacity: 0, x: 20 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.1 }}
-      className="w-full max-w-[400px] h-[360px] bg-light-purple/6 border-2 border-purple rounded-2xl shadow-lg flex flex-col overflow-hidden"
+      onClick={() => onOpen && onOpen(article.id)}
+      className="w-full max-w-[400px] h-[360px] bg-light-purple/6 border-2 border-purple rounded-2xl shadow-lg flex flex-col overflow-hidden cursor-pointer"
     >
       {/* Image with views badge superimposed */}
       {article.image && (
@@ -84,6 +85,7 @@ function ArticleCard({
           <img
             src={article.image}
             alt={article.title}
+            loading="lazy"
             className="w-full h-full object-cover"
           />
           {/* Gradient to smooth the image -> background transition */}
@@ -99,7 +101,7 @@ function ArticleCard({
       <div
         className={`px-7 pt-2 flex-grow overflow-hidden flex flex-col ${!article.image ? "mt-5" : ""}`}
       >
-        <h3 className="mt-4 font-semibold text-base text-light-purple leading-snug line-clamp-2 mb-2">
+        <h3 className="mt-4 font-semibold text-base text-purple dark:text-light-purple leading-snug line-clamp-2 mb-2">
           {article.title}
         </h3>
         <p className="font-normal text-gray text-sm line-clamp-5 text-justify break-words leading-relaxed flex-grow">
@@ -162,7 +164,10 @@ function ArticleCard({
           </div>
           {/* Read more button */}
           <button
-            onClick={() => navigate(`/articles/${article.id}`)}
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/articles/${article.id}`);
+            }}
             className="text-purple dark:text-white hover:underline hover:cursor-pointer text-sm flex items-center gap-2"
           >
             <BsArrowRight className="inline-block" />

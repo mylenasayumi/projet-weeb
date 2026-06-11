@@ -193,6 +193,7 @@ function ProfileSection({
                 <img
                   src={article.image}
                   alt={article.title}
+                  loading="lazy"
                   onClick={() => onView(article)}
                   className="w-20 h-20 object-cover rounded-xl flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
                 />
