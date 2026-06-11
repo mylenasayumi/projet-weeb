@@ -117,7 +117,7 @@ function UpdateArticle() {
   }
 
   return (
-    <section className="max-w-2xl mx-auto p-6 my-10 shadow-2xl border-1 dark:border-white p-10 rounded-[18px]">
+    <section className="max-w-2xl mx-auto p-16 my-10 shadow-2xl border-1 dark:border-white rounded-[18px]">
       <h1 className="text-2xl font-bold mb-4 text-center text-[40px]">
         {t("articles.updateArticlePage")}
       </h1>
@@ -165,17 +165,27 @@ function UpdateArticle() {
             className="w-full border-b-1 border-gray-300 px-4 py-2"
           />
         </div>
-        <motion.button
-          type="submit"
-          className="bg-purple text-white px-6 py-2 rounded-[8px] hover:bg-light-purple cursor-pointer transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.2 }}
-          disabled={saving || !!error}
-        >
-          {saving
-            ? t("articles.updateArticleSavingButton")
-            : t("articles.updateArticleSaveButton")}
-        </motion.button>
+        <div className="flex gap-3">
+          <motion.button
+            type="submit"
+            className="bg-purple text-white px-6 py-2 rounded-[8px] hover:bg-light-purple cursor-pointer transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+            disabled={saving || !!error}
+          >
+            {saving
+              ? t("articles.updateArticleSavingButton")
+              : t("articles.updateArticleSaveButton")}
+          </motion.button>
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            disabled={saving}
+            className="px-6 py-2 rounded-[8px] border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+          >
+            {t("articles.cancel")}
+          </button>
+        </div>
       </form>
     </section>
   );
