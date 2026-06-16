@@ -11,6 +11,7 @@ const navbar = {
   switchToDarkMode: "Passer en Mode Sombre",
   switchToLightMode: "Passer en Mode Clair",
   myProfile: "Mon Profil",
+  scrollToTopButton: "Button remonter en haut",
 };
 
 export default navbar;
