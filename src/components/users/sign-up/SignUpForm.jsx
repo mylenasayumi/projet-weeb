@@ -1,6 +1,7 @@
 // SignUpForm.jsx
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 import { API_BASE_URL } from "../../../constants/api";
@@ -151,9 +152,10 @@ function SignUpForm() {
           }}
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.4 }}
-          className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
+          className="flex items-center justify-center gap-2 bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
         >
-          {t("signUp.githubButton")}
+          <FaGithub size={26} />
+          <span>{t("signUp.githubButton")}</span>
         </motion.button>
       </div>
     </section>

@@ -1,6 +1,7 @@
 // LoginSection.jsx
 import { motion } from "framer-motion";
 import { useState, useEffect, useMemo } from "react";
+import { FaGithub } from "react-icons/fa";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 import { API_BASE_URL } from "../../../constants/api";
@@ -195,9 +196,10 @@ function LoginSection() {
           }}
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.4 }}
-          className="bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
+          className="flex items-center justify-center gap-2 bg-gray-700 text-white px-6 py-3 rounded-[8px] border-2 border-white hover:bg-gray-600 cursor-pointer"
         >
-          {t("login.githubButton")}
+          <FaGithub size={26} />
+          <span>{t("login.githubButton")}</span>
         </motion.button>
       </div>
     </section>
