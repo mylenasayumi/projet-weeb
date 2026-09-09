@@ -49,9 +49,7 @@ describe("AuthCallback", () => {
     });
     renderAuthCallback();
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/", {
-        replace: true,
-      });
+      expect(mockNavigate).toHaveBeenCalledWith("/");
     });
   });
 
@@ -62,10 +60,7 @@ describe("AuthCallback", () => {
     renderAuthCallback();
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith(
-        "/login?error=github_access_denied",
-        {
-          replace: true,
-        }
+        "/login?error=github_access_denied"
       );
     });
   });

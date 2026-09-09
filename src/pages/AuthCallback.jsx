@@ -16,10 +16,10 @@ function AuthCallback() {
       try {
         const user = await authCallbackService.handleAuthCallback();
         setAuthenticatedUser(user);
-        navigate("/", { replace: true });
+        navigate("/");
       } catch (error) {
         console.error("Error handling auth callback:", error);
-        navigate(`/login?error=${error.message}`, { replace: true });
+        navigate(`/login?error=${error.message}`);
       }
     };
 
