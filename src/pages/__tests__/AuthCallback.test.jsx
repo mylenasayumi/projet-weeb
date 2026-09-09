@@ -3,6 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
+import { AuthProvider } from "../../contexts/AuthContext";
 import authCallbackService from "../../services/AuthCallbackService";
 import AuthCallback from "../AuthCallback";
 
@@ -27,44 +28,45 @@ describe("AuthCallback", () => {
     mockNavigate.mockClear();
   });
 
-  it("shows authenticating text", () => {
-    authCallbackService.handleAuthCallback.mockResolvedValue({});
+  const renderAuthCallback = () =>
     render(
       <MemoryRouter>
-        <AuthCallback />
+        <AuthProvider>
+          <AuthCallback />
+        </AuthProvider>
       </MemoryRouter>
     );
-    expect(screen.getByText("auth.authentification")).toBeInTheDocument();
+
+  it("shows authenticating text", async () => {
+    authCallbackService.handleAuthCallback.mockResolvedValue({});
+    renderAuthCallback();
+    expect(await screen.findByText("auth.authentication")).toBeInTheDocument();
   });
 
   it("navigates to / on success", async () => {
     authCallbackService.handleAuthCallback.mockResolvedValue({
       email: "a@b.com",
     });
-    render(
-      <MemoryRouter>
-        <AuthCallback />
-      </MemoryRouter>
-    );
-    await waitFor(() =>
-      expect(mockNavigate).toHaveBeenCalledWith("/", { replace: true })
-    );
+    renderAuthCallback();
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/", {
+        replace: true,
+      });
+    });
   });
 
   it("navigates to /login?error= on failure", async () => {
     authCallbackService.handleAuthCallback.mockRejectedValue(
       new Error("github_access_denied")
     );
-    render(
-      <MemoryRouter>
-        <AuthCallback />
-      </MemoryRouter>
-    );
-    await waitFor(() =>
+    renderAuthCallback();
+    await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith(
         "/login?error=github_access_denied",
-        { replace: true }
-      )
-    );
+        {
+          replace: true,
+        }
+      );
+    });
   });
 });
