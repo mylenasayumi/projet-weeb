@@ -50,6 +50,7 @@ function ArticleCard({
         transition={{ duration: 0.5 }}
         whileHover={{ scale: 1.1 }}
         onClick={onCreate}
+        data-testid="add-article-card"
         className={`w-full max-w-[400px] h-[360px] border-2 p-2 rounded-2xl shadow-lg
                     ${
                       isAuthenticated
@@ -112,7 +113,10 @@ function ArticleCard({
       {/* Footer: views with no image + like button + read more button */}
       <div className="px-7 pb-6 pt-3 flex items-center justify-between">
         {!article.image && (
-          <div className="flex items-center gap-1 text-xs text-light-purple">
+          <div
+            data-testid="article-views"
+            className="flex items-center gap-1 text-xs text-light-purple"
+          >
             <BsEye size={13} />
             {article.views ?? 0} {t("articles.views")}
           </div>
@@ -127,6 +131,7 @@ function ArticleCard({
               {floatingHearts.map((id) => (
                 <motion.span
                   key={id}
+                  data-testid="floating-heart"
                   className="absolute text-red-500 pointer-events-none text-xs"
                   initial={{ opacity: 1, y: 0, x: "-50%" }}
                   animate={{ opacity: 0, y: -30 }}
